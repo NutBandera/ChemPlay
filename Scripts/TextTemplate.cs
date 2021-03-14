@@ -106,8 +106,6 @@ public static class TextTemplate
                         }
                         index++;
                     }
-
-                    // reiniciar slots
                     
                     SlotTemplate.createSlotsFromNumberOfElements(slots, slot.transform.position.x, slot.transform.position.y, 
                     slot.GetComponent<RectTransform>().rect.width, slot.GetComponent<RectTransform>().rect.height,
