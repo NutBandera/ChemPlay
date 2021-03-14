@@ -146,7 +146,7 @@ public static class SlotTemplate
         plane.transform.parent = panel.transform;
         int[] coordinates;
         foreach (var item in slots){
-            coordinates = convertPosition(item.Key, width, height);
+            coordinates = convertPosition(item.Key, xElements, yElements);
             GameObject gridPlane = (GameObject)Object.Instantiate(plane);
             gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1], 
             plane.transform.position.y - sizeY*coordinates[0], 0f);

@@ -99,15 +99,15 @@ public static class TextTemplate
                             endIndexValue = -1;
                         }
 
-                        if (key >= 0 && String.IsNullOrEmpty(value)){
+                        if (key >= 0 && !String.IsNullOrEmpty(value)){
                             slots.Add(key, value);
                             key = -1;
                             value = "";
                         }
                         index++;
                     }
-                    
-                    SlotTemplate.createSlotsFromNumberOfElements(slots, slot.transform.position.x, slot.transform.position.y, 
+
+                    SlotTemplate.createSlotsFromDimensions(slots, slot.transform.position.x, slot.transform.position.y, 
                     slot.GetComponent<RectTransform>().rect.width, slot.GetComponent<RectTransform>().rect.height,
                     width, height);
 

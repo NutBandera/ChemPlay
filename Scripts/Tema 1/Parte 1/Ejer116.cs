@@ -16,6 +16,7 @@ public class Ejer116 : MonoBehaviour
 
         BaseTemplate.setup(panel);
         TextTemplate.setup(panel);
+        SlotTemplate.setup(panel);
         BaseTemplate.colocarEnunciado(enunciadoPath);
 
         List<string> images = new List<string>{"una", "o", "n", "horizontal", 
