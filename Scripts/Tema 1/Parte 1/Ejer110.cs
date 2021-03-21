@@ -10,6 +10,8 @@ public class Ejer110 : MonoBehaviour
     [SerializeField] private string enunciadoPath;
     [SerializeField] private int ajuste;
 
+    
+
     void Start()
     {
         panel.GetComponent<Image>().sprite = null;
