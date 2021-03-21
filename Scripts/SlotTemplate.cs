@@ -71,6 +71,18 @@ public static class SlotTemplate
         }
     }
 
+    public static void colocarTitulo(string path, int index, int sizeX, int sizeY) {
+        var title = new GameObject(); 
+        title.AddComponent<CanvasGroup>();
+        title.AddComponent<Image>();
+        title.GetComponent<Image>().sprite = Resources.Load<Sprite>(path);
+        title.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX, sizeY);
+        title.transform.parent = panel.transform;
+        title.transform.position = new Vector3(exerciseItems[index].transform.position.x, 
+        exerciseItems[index].transform.position.y +
+        exerciseItems[index].GetComponent<RectTransform>().rect.height/2 + 60, 0f); 
+    }
+
     public static void calculateNumberOfSlots(int xElements, int yElements){
         width = 1 + 2 * xElements;
         height = 1 + 2 * yElements;
@@ -92,37 +104,27 @@ public static class SlotTemplate
 
     public static void createExerciseItem(int ancho, int alto, int ajuste, string photoName, Dictionary <int, string> slots){
         createBase(ancho, alto, photoName, ajuste);
-       // calculateNumberOfSlots(ancho, alto);
-       thisAjuste = ajuste;
+        thisAjuste = ajuste;
     }
 
-    public static void clocarSlots(Dictionary <int, string> slots, int index){
-        calculateNumberOfSlots((int)exerciseItems[index].GetComponent<RectTransform>().rect.width/thisAjuste, 
-        (int)exerciseItems[index].GetComponent<RectTransform>().rect.height/thisAjuste);
-        plane = new GameObject(); // move inside loop
-        plane.AddComponent<CanvasGroup>();
-        plane.AddComponent<ItemSlot>(); 
-        plane.GetComponent<ItemSlot>().setCorrectItem("sp"); 
-        plane.AddComponent<Image>();
-        plane.GetComponent<Image>().sprite = Resources.Load<Sprite>("Slots/cuadrado"); 
-        plane.transform.position = new Vector3(exerciseItems[index].transform.position.x 
-        + 20-50*((exerciseItems[index].GetComponent<RectTransform>().rect.width-20)/100), 
-        exerciseItems[index].transform.position.y - 20+50*((exerciseItems[index].GetComponent<RectTransform>().rect.height-20)/100), 0f); 
-        plane.AddComponent<RectTransform>();
-        float sizeX = exerciseItems[index].GetComponent<RectTransform>().rect.width/width;
-        float sizeY = exerciseItems[index].GetComponent<RectTransform>().rect.height/height;
-        plane.GetComponent<RectTransform>().sizeDelta = new Vector2((float)44.44444, (float)42.85714);
-       // plane.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
-        plane.transform.parent = panel.transform;
-        int[] coordinates;
-        foreach (var item in slots){
-            coordinates = convertPosition(item.Key, width, height);
-            GameObject gridPlane = (GameObject)Object.Instantiate(plane);
-            gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1] - 10, 
-            plane.transform.position.y - sizeY*coordinates[0], 0f);
-            gridPlane.GetComponent<ItemSlot>().setCorrectItem(item.Value);
-            gridPlane.transform.parent = panel.transform;
-        }
+    public static void clocarSlotsNumberOfElements(Dictionary <int, string> slots,
+        int index, int xElements, int yElements){
+        createSlotsFromNumberOfElements(slots, exerciseItems[index].transform.position.x,
+        exerciseItems[index].transform.position.y,
+        exerciseItems[index].GetComponent<RectTransform>().rect.width,
+        exerciseItems[index].GetComponent<RectTransform>().rect.height, xElements, yElements);
+    }
+
+        public static void clocarSlotsDimensions(Dictionary <int, string> slots,
+        int index, int xElements, int yElements){
+        createSlotsFromDimensions(slots, exerciseItems[index].transform.position.x,
+        exerciseItems[index].transform.position.y,
+        exerciseItems[index].GetComponent<RectTransform>().rect.width,
+        exerciseItems[index].GetComponent<RectTransform>().rect.height, xElements, yElements);
+    }
+
+        public static void clocarSlots(Dictionary <int, string> slots, int index){
+        // BORRAR 
     }
 
 

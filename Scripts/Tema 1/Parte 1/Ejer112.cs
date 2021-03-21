@@ -72,13 +72,17 @@ public class Ejer112 : MonoBehaviour
         
         SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio2/1", slotsA);       
         SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio2/2", slotsB);       
-        SlotTemplate.createExerciseItem(2, 3, ajuste, "Tema1/Parte1/Ejercicio2/3", slotsC);       
+        SlotTemplate.createExerciseItem(3, 3, ajuste, "Tema1/Parte1/Ejercicio2/3", slotsC);       
         SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio2/4", slotsD);
         SlotTemplate.colocarExerciseItems();
-        SlotTemplate.clocarSlots(slotsA, 0);
-        SlotTemplate.clocarSlots(slotsB, 1);
-        SlotTemplate.clocarSlots(slotsC, 2);
-        SlotTemplate.clocarSlots(slotsD, 3);
+        SlotTemplate.clocarSlotsNumberOfElements(slotsA, 0, 4, 3);
+        SlotTemplate.colocarTitulo("Tema1/Parte1/Ejercicio2/title1", 0, 280, 80);
+        SlotTemplate.clocarSlotsNumberOfElements(slotsB, 1, 4, 3);
+        SlotTemplate.colocarTitulo("Tema1/Parte1/Ejercicio2/title2", 1, 280, 80);
+        SlotTemplate.clocarSlotsNumberOfElements(slotsC, 2, 2, 3);
+        SlotTemplate.colocarTitulo("Tema1/Parte1/Ejercicio2/title3", 2, 280, 80);
+        SlotTemplate.clocarSlotsNumberOfElements(slotsD, 3, 4, 3);
+        SlotTemplate.colocarTitulo("Tema1/Parte1/Ejercicio2/title4", 3, 280, 80);
         BaseTemplate.createItems(images, 1, 50);
     }
 

@@ -149,10 +149,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 368947928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b0d47e6f5c49cf4699ec9a10909c2f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 74bc6cea01f68c549872dd1201a11e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 1983382844}
+  enunciadoPath: Tema1/Parte1/ejercicio10/enunciado10
+  ajuste: 70
 --- !u!4 &368947930
 Transform:
   m_ObjectHideFlags: 0

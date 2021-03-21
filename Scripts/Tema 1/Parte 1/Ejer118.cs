@@ -16,38 +16,61 @@ public class Ejer118 : MonoBehaviour
         panel.GetComponent<Image>().color = new Color(1f,1f,1f,1f);
 
         SlotTemplate.setup(panel);
-        SlotTemplate.colocarEnunciado(enunciadoPath, panel);
+        BaseTemplate.setup(panel);
+        BaseTemplate.colocarEnunciado(enunciadoPath);
 
-        Dictionary<int, string> slotsA = new Dictionary<int, string> {
-            [0] = "sp",
-            [12] = "sp2",
+        Dictionary<int, string> slots1 = new Dictionary<int, string> {
+            [3] = "h",
+            [14] = "una",
+            [23] = "h",
+            [24] = "una",
+            [26] = "una",
+            [28] = "una",
+            [36] = "una",
+            [47] = "h"
         };
-         Dictionary<int, string> slotsB = new Dictionary<int, string> {
-            [3] = "sp",
-            [1] = "sp2",
+        Dictionary<int, string> slots2 = new Dictionary<int, string> {
+            [5] = "h",
+            [16] = "una",
+            [23] = "h",
+            [24] = "una",
+            [26] = "dos",
+            [28] = "una",
+            [30] = "una",
+            [31] = "h"
         };
-         Dictionary<int, string> slotsC = new Dictionary<int, string> {
-            [3] = "sp",
-            [1] = "sp2",
+         Dictionary<int, string> slots3 = new Dictionary<int, string> {
+            [5] = "h",
+            [16] = "una",
+            [23] = "h",
+            [24] = "una",
+            [26] = "dos",
+            [28] = "una",
+            [30] = "una",
+            [31] = "h"
         };
-        Dictionary<int, string> slotsD = new Dictionary<int, string> {
-            [3] = "sp",
-            [1] = "sp2",
+        Dictionary<int, string> slots4 = new Dictionary<int, string> {
+            [23] = "h",
+            [24] = "una",
+            [26] = "una",
+            [28] = "dos",
+            [36] = "una",
+            [38] = "una",
+            [47] = "h",
+            [49] = "h"
         };
 
-        List<string> images = new List<string>{"c"};
+        List<string> images = new List<string>{"h", "una", "dos", "tres", "vertical", "horizontal"};
 
-        // alternativa -> lista con elementos correctos (null, sp, sp3, null null, ...) 
-
-        SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio2/1", slotsA); 
-        SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio2/2", slotsB);
-        SlotTemplate.createExerciseItem(2, 3, ajuste, "Tema1/Parte1/Ejercicio2/3", slotsC);
-        SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio2/4", slotsD);
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/cno", slots1); 
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/nco", slots2); 
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/cno", slots3);
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/nco", slots4);
         SlotTemplate.colocarExerciseItems();
-        SlotTemplate.clocarSlots(slotsA, 0);
-        SlotTemplate.clocarSlots(slotsB, 1);
-        SlotTemplate.clocarSlots(slotsC, 2);
-        SlotTemplate.clocarSlots(slotsD, 3);
-        SlotTemplate.createItems(images);
+        SlotTemplate.clocarSlotsDimensions(slots1, 0, 11, 5);
+        SlotTemplate.clocarSlotsDimensions(slots2, 1, 11, 5);
+        SlotTemplate.clocarSlotsDimensions(slots3, 2, 11, 5);
+        SlotTemplate.clocarSlotsDimensions(slots4, 3, 11, 5);
+        BaseTemplate.createItems(images, 1, 70);
     }
 }

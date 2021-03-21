@@ -21,40 +21,40 @@ public class Ejer114 : MonoBehaviour
 
         Dictionary<int, string> slots1 = new Dictionary<int, string> {};
          Dictionary<int, string> slots2 = new Dictionary<int, string> {
-            [23] = "menos",
-            [38] = "mas",
+            [9] = "menos",
+            [19] = "mas",
         };
          Dictionary<int, string> slots3 = new Dictionary<int, string> {
             [3] = "mas",
         };
         Dictionary<int, string> slots4 = new Dictionary<int, string> {
-            [21] = "mas"
+            [35] = "mas"
         };
         Dictionary<int, string> slots5 = new Dictionary<int, string> {
-            [11] = "mas",
-            [15] = "menos",
-            [25] = "menos",
+            [16] = "mas",
+            [19] = "menos",
+            [29] = "menos",
         };
         Dictionary<int, string> slots6 = new Dictionary<int, string> {
-            [1] = "menos",
-            [3] = "mas",
+            [0] = "menos",
+            [2] = "mas",
         };
 
         List<string> images = new List<string>{"mas", "menos"};
 
-        SlotTemplate.createExerciseItem(2, 2, ajuste, "Tema1/Parte1/Ejercicio4/slot1", slots1); 
-        SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio4/slot2", slots2); // pass size
-        SlotTemplate.createExerciseItem(3, 1, ajuste, "Tema1/Parte1/Ejercicio4/slot3", slots3);
-        SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio4/slot4", slots4);
-        SlotTemplate.createExerciseItem(3, 3, ajuste, "Tema1/Parte1/Ejercicio4/slot5", slots5);
-        SlotTemplate.createExerciseItem(2, 2, ajuste, "Tema1/Parte1/Ejercicio4/slot6", slots6);
+        SlotTemplate.createExerciseItem(3, 3, ajuste, "Tema1/Parte1/Ejercicio4/slot1", slots1); 
+        SlotTemplate.createExerciseItem(5, 4, ajuste, "Tema1/Parte1/Ejercicio4/slot2", slots2); 
+        SlotTemplate.createExerciseItem(4, 2, ajuste, "Tema1/Parte1/Ejercicio4/slot3", slots3);
+        SlotTemplate.createExerciseItem(6, 5, ajuste, "Tema1/Parte1/Ejercicio4/slot4", slots4);
+        SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio4/slot5", slots5);
+        SlotTemplate.createExerciseItem(3, 2, ajuste, "Tema1/Parte1/Ejercicio4/slot6", slots6);
         SlotTemplate.colocarExerciseItems();
-        SlotTemplate.clocarSlots(slots1, 0);
-        SlotTemplate.clocarSlots(slots2, 1);
-        SlotTemplate.clocarSlots(slots3, 2);
-        SlotTemplate.clocarSlots(slots4, 3);
-        SlotTemplate.clocarSlots(slots5, 4);
-        SlotTemplate.clocarSlots(slots6, 5);
-        BaseTemplate.createItems(images, 1, 50);
+        SlotTemplate.clocarSlotsDimensions(slots1, 0, 0, 0);
+        SlotTemplate.clocarSlotsDimensions(slots2, 1, 6, 5);
+        SlotTemplate.clocarSlotsDimensions(slots3, 2, 6, 2);
+        SlotTemplate.clocarSlotsDimensions(slots4, 3, 8, 5);
+        SlotTemplate.clocarSlotsDimensions(slots5, 4, 6, 5);
+        SlotTemplate.clocarSlotsDimensions(slots6, 5, 3, 2);
+        BaseTemplate.createItems(images, 1, 70);
     }
 }

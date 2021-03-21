@@ -15,39 +15,50 @@ public class Ejer115 : MonoBehaviour
         panel.GetComponent<Image>().sprite = null;
         panel.GetComponent<Image>().color = new Color(1f,1f,1f,1f);
 
+       
         SlotTemplate.setup(panel);
-        SlotTemplate.colocarEnunciado(enunciadoPath, panel);
+        BaseTemplate.setup(panel);
+        BaseTemplate.colocarEnunciado(enunciadoPath);
 
-        Dictionary<int, string> slotsA = new Dictionary<int, string> {
-            [0] = "sp",
-            [12] = "sp2",
+        Dictionary<int, string> slots1 = new Dictionary<int, string> {
+            [1] = "pos"
         };
-         Dictionary<int, string> slotsB = new Dictionary<int, string> {
-            [3] = "sp",
-            [1] = "sp2",
+        Dictionary<int, string> slots2 = new Dictionary<int, string> {
+            [6] = "pos",
+            [14] = "neg",
         };
-         Dictionary<int, string> slotsC = new Dictionary<int, string> {
-            [3] = "sp",
-            [1] = "sp2",
+         Dictionary<int, string> slots3 = new Dictionary<int, string> {
+            [0] = "pos",
+            [2] = "neg"
         };
-        Dictionary<int, string> slotsD = new Dictionary<int, string> {
-            [3] = "sp",
-            [1] = "sp2",
+        Dictionary<int, string> slots4 = new Dictionary<int, string> {
+            [2] = "neg",
+            [10] = "pos"
+        };
+        Dictionary<int, string> slots5 = new Dictionary<int, string> {
+            [1] = "pos",
+            [3] = "neg"
+        };
+        Dictionary<int, string> slots6 = new Dictionary<int, string> {
+            [10] = "pos",
+            [12] = "neg",
         };
 
-        List<string> images = new List<string>{"c"};
+        List<string> images = new List<string>{"pos", "neg"};
 
-        // alternativa -> lista con elementos correctos (null, sp, sp3, null null, ...) 
-
-        SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio2/1", slotsA); 
-        SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio2/2", slotsB);
-        SlotTemplate.createExerciseItem(2, 3, ajuste, "Tema1/Parte1/Ejercicio2/3", slotsC);
-        SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio2/4", slotsD);
+        SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio5/slot1", slots1); 
+        SlotTemplate.createExerciseItem(5, 4, ajuste, "Tema1/Parte1/Ejercicio5/slot2", slots2); 
+        SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio5/slot3", slots3);
+        SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio5/slot4", slots4);
+        SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio5/slot5", slots5);
+        SlotTemplate.createExerciseItem(5, 4, ajuste, "Tema1/Parte1/Ejercicio5/slot6", slots6);
         SlotTemplate.colocarExerciseItems();
-        SlotTemplate.clocarSlots(slotsA, 0);
-        SlotTemplate.clocarSlots(slotsB, 1);
-        SlotTemplate.clocarSlots(slotsC, 2);
-        SlotTemplate.clocarSlots(slotsD, 3);
-        SlotTemplate.createItems(images);
+        SlotTemplate.clocarSlotsDimensions(slots1, 0, 3, 5);
+        SlotTemplate.clocarSlotsDimensions(slots2, 1, 5, 5);
+        SlotTemplate.clocarSlotsDimensions(slots3, 2, 3, 2);
+        SlotTemplate.clocarSlotsDimensions(slots4, 3, 3, 4);
+        SlotTemplate.clocarSlotsDimensions(slots5, 4, 4, 2);
+        SlotTemplate.clocarSlotsDimensions(slots6, 5, 9, 5);
+        BaseTemplate.createItems(images, 1, 70);
     }
 }

@@ -570,7 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 1473866197}
-  enunciadoPath: Slots/logo
+  enunciadoPath: Tema1/Parte1/ejercicio4/enunciado4
   ajuste: 70
 --- !u!4 &1796133298
 Transform:

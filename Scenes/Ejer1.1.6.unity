@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 1983382844}
-  enunciadoPath: Slots/logo
+  enunciadoPath: Tema1/Parte1/ejercicio6/enunciado6
 --- !u!4 &368947930
 Transform:
   m_ObjectHideFlags: 0

@@ -1,0 +1,14 @@
+// Dimensiones: 1,1
+:Q1:: 1. ¿Electrones de valencia? { =0 -> 16. }
+// Dimensiones: 1,1
+:Q2:: 2. ¿Átomo central? { =0 -> c. }
+// Dimensiones: 0,0
+:Q3:: 3. En la casilla inferior, dibuja el esqueleto y une los átomos con enlaces simples {}
+// Dimensiones: 1,1
+:Q4:: 4. ¿Electrones restantes? { =0 -> 12. }
+// Dimensiones: 0,0
+:Q5:: 5. Colócalos {}
+// Dimensiones: 1,1
+:Q6:: 6. El átomo central ¿tiene el octeto? { =0 -> no. }
+// Dimensiones: 7,3
+:Q7:: 7. Mueve los electrones de pares solitarios de los átomos terminales para completar el octeto del átomo central { =0 -> }
