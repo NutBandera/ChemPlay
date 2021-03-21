@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.IO;
+using UnityEngine.UI;
 
 public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
@@ -13,6 +15,8 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     public Vector3 defaultPos;
     public bool droppedOnSlot;
     public string name;
+    public string image;
+    public Vector2 slotSize;
 
     private void Awake(){
         rectTransform = GetComponent<RectTransform>();
@@ -39,7 +43,13 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
      public void OnEndDrag(PointerEventData eventData){
         canvasGroup.blocksRaycasts = true;
         if (droppedOnSlot){ // if droppedInCorrect slot
-            defaultPos = this.rectTransform.localPosition;
+            defaultPos = this.rectTransform.localPosition; 
+            if (!string.IsNullOrEmpty(image)){
+                // change image
+                gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(image);
+                // change size
+                gameObject.GetComponent<RectTransform>().sizeDelta = slotSize;
+            }
         } else {
             this.rectTransform.localPosition = defaultPos;   
             // Delete clon

@@ -153,6 +153,7 @@ public static class SlotTemplate
             gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1], 
             plane.transform.position.y - sizeY*coordinates[0], 0f);
             gridPlane.GetComponent<ItemSlot>().setCorrectItem(item.Value);
+            gridPlane.GetComponent<ItemSlot>().setFinalImage("Items-final/"+item.Value);
             gridPlane.transform.parent = panel.transform;
         }
     }
