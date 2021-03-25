@@ -21,7 +21,7 @@ public class Ejer119 : MonoBehaviour
 
         Dictionary<int, string> slots1 = new Dictionary<int, string> {
             [3] = "h",
-            [14] = "una",
+            [14] = "enlace1",
             [23] = "h",
             [24] = "una",
             [26] = "una",
@@ -80,7 +80,7 @@ public class Ejer119 : MonoBehaviour
             [49] = "h"
         };
 
-        List<string> images = new List<string>{"una", "dos", "tres", "menos", "mas", "horizontal", "c", "o", "n", "h", "f"};
+        List<string> images = new List<string>{"enlace", "dos", "tres", "menos", "mas", "horizontal", "c", "o", "n", "h", "f"};
 
         SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio9/c-left", slots1); 
         SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio9/o", slots2); 
@@ -88,7 +88,7 @@ public class Ejer119 : MonoBehaviour
         SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio9/b", slots4);
         SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio9/n", slots5);
         SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio9/c", slots6);
-        SlotTemplate.colocarExerciseItems();
+        SlotTemplate.colocarExerciseItems(3, 2);
         SlotTemplate.clocarSlotsDimensions(slots1, 0, 11, 5);
         SlotTemplate.colocarTitulo("Tema1/Parte1/Ejercicio9/title1", 0, 200, 70);
         SlotTemplate.clocarSlotsDimensions(slots2, 1, 11, 5);

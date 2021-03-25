@@ -37,11 +37,11 @@ public class Ejer110 : MonoBehaviour
             [10] = "f"
         };
 
-        List<string> images = new List<string>{"una", "dos", "menos", "mas", "horizontal", "cl", "f", "8", "10", "12"};
+        List<string> images = new List<string>{"enlace", "dos", "menos", "mas", "horizontal", "cl", "f", "8", "10", "12"};
 
         SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio9/c-left", slots1); 
         SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio9/o", slots2); 
-        SlotTemplate.colocarExerciseItems();
+        SlotTemplate.colocarExerciseItems(2, 1);
         SlotTemplate.clocarSlotsDimensions(slots1, 0, 3, 3);
         SlotTemplate.clocarSlotsDimensions(slots2, 1, 3, 4);
         BaseTemplate.createItems(images, 2, 70);

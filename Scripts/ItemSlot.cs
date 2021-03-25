@@ -13,9 +13,10 @@ public class ItemSlot : MonoBehaviour, IDropHandler
       if (eventData.pointerDrag != null){
           eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
       }
-      if (eventData.pointerDrag.GetComponent<DragAndDrop>().name == correctItem) {
+     // if (eventData.pointerDrag.GetComponent<DragAndDrop>().name == correctItem) {
+         if (correctItem.Contains(eventData.pointerDrag.GetComponent<DragAndDrop>().name)) {
           eventData.pointerDrag.GetComponent<DragAndDrop>().droppedOnSlot = true;
-          eventData.pointerDrag.GetComponent<DragAndDrop>().image = finalImage;
+          eventData.pointerDrag.GetComponent<DragAndDrop>().image = finalImage; 
           eventData.pointerDrag.GetComponent<DragAndDrop>().slotSize = gameObject.GetComponent<RectTransform>().sizeDelta;
       } else {
           errors++; // no contar si es posición inicial

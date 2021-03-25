@@ -45,8 +45,8 @@ public static class SlotTemplate
         photo.transform.parent = panel.transform;
     }
 
-    public static void colocarExerciseItems(){
-        int itemsPerRow = exerciseItems.Count/2;
+    public static void colocarExerciseItems(int itemsPerRow, int rows){
+      //  int itemsPerRow = exerciseItems.Count/2; // pass as param
         int counter = 1;
         int index = 0;
         int ajuste = 0;
@@ -62,7 +62,7 @@ public static class SlotTemplate
             exerciseItems[index].transform.position = new Vector3(x*i+n*ajuste, y, 0f);
             index++;
             ajuste++;
-            if (counter<2 && i==itemsPerRow){
+            if (counter<rows && i==itemsPerRow){
                 i=0;
                 counter++;
                 y = y/2;

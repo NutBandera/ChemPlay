@@ -48,7 +48,7 @@ public class Ejer114 : MonoBehaviour
         SlotTemplate.createExerciseItem(6, 5, ajuste, "Tema1/Parte1/Ejercicio4/slot4", slots4);
         SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio4/slot5", slots5);
         SlotTemplate.createExerciseItem(3, 2, ajuste, "Tema1/Parte1/Ejercicio4/slot6", slots6);
-        SlotTemplate.colocarExerciseItems();
+        SlotTemplate.colocarExerciseItems(3, 2);
         SlotTemplate.clocarSlotsDimensions(slots1, 0, 0, 0);
         SlotTemplate.clocarSlotsDimensions(slots2, 1, 6, 5);
         SlotTemplate.clocarSlotsDimensions(slots3, 2, 6, 2);
