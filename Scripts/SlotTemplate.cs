@@ -12,6 +12,7 @@ public static class SlotTemplate
     private static int height;
     private static GameObject plane;
     private static int thisAjuste;
+    private static int numberRowsItems = 1;
 
     public static void setup(GameObject p){
         panel = p;
@@ -45,6 +46,10 @@ public static class SlotTemplate
         photo.transform.parent = panel.transform;
     }
 
+    public static void setNumberRowsItems(int rows){
+        numberRowsItems = rows;
+    }
+
     public static void colocarExerciseItems(int itemsPerRow, int rows){
       //  int itemsPerRow = exerciseItems.Count/2; // pass as param
         int counter = 1;
@@ -53,7 +58,7 @@ public static class SlotTemplate
         int n = 300;
         int m = 100;
         var x = Screen.width/(itemsPerRow+1)-100;
-        var y = Screen.height/2-m;
+        var y = Screen.height/2-m - 100*(numberRowsItems-1);
         if (itemsPerRow == 3){
             n = 200;
             m = 50;

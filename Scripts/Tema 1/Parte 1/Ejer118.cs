@@ -60,7 +60,7 @@ public class Ejer118 : MonoBehaviour
             [49] = "h"
         };
 
-        List<string> images = new List<string>{"h", "una", "dos", "tres", "vertical", "horizontal"};
+        List<string> images = new List<string>{"h", "enlace", "dos", "tres", "vertical", "horizontal"};
 
         SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/cno", slots1); 
         SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/nco", slots2); 
