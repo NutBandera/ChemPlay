@@ -149,7 +149,7 @@ public static class SlotTemplate
         initialPosY, 0f); 
         plane.AddComponent<RectTransform>();
         plane.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX, sizeY);
-       // plane.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
+        plane.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
         plane.transform.parent = panel.transform;
         int[] coordinates;
         foreach (var item in slots){
