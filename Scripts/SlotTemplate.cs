@@ -71,7 +71,7 @@ public static class SlotTemplate
         }
     }
 
-    public static void colocarTitulo(string path, int index, int sizeX, int sizeY) {
+    public static void colocarTitulo(string path, int index, int sizeX, int sizeY) { // move to base template
         var title = new GameObject(); 
         title.AddComponent<CanvasGroup>();
         title.AddComponent<Image>();

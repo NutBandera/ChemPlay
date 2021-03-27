@@ -22,6 +22,21 @@ public static class BaseTemplate
         enunciado.transform.parent = panel.transform;
     }
 
+    public static void addSlot(float x, float y, string correctItem) {
+        var slot = new GameObject(); 
+        slot.AddComponent<CanvasGroup>();
+        slot.AddComponent<ItemSlot>(); 
+        slot.GetComponent<ItemSlot>().setCorrectItem(correctItem); 
+        slot.GetComponent<ItemSlot>().setFinalImage("Items-final/"+correctItem);
+        slot.AddComponent<Image>();
+        slot.GetComponent<Image>().sprite = Resources.Load<Sprite>("Slots/cuadrado"); // change picture
+        slot.transform.position = new Vector3(x, y, 0f); 
+        slot.AddComponent<RectTransform>();
+        slot.GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
+        slot.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
+        slot.transform.parent = panel.transform;
+    }
+
       public static void createItems(List<string> images, int numeroFilas, int size){ 
         var nItemsPerRow = images.Count/numeroFilas;
         var pos = Screen.width/(nItemsPerRow+1)+50; 
