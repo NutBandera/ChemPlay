@@ -149,16 +149,39 @@ public static class SlotTemplate
         initialPosY, 0f); 
         plane.AddComponent<RectTransform>();
         plane.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX, sizeY);
-        plane.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
+      //  plane.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
         plane.transform.parent = panel.transform;
         int[] coordinates;
         foreach (var item in slots){
             coordinates = convertPosition(item.Key, xElements, yElements);
+            // if correct item contains "double" -> size/2
             GameObject gridPlane = (GameObject)Object.Instantiate(plane);
-            gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1], 
-            plane.transform.position.y - sizeY*coordinates[0], 0f);
-            gridPlane.GetComponent<ItemSlot>().setCorrectItem(item.Value);
-            gridPlane.GetComponent<ItemSlot>().setFinalImage("Items-final/"+item.Value);
+            if (item.Value.Contains("double")){
+                // clonar
+                gridPlane.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX/2, sizeY);
+                GameObject gridPlane2 = (GameObject)Object.Instantiate(gridPlane);
+
+                gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1] - sizeX/3, 
+                plane.transform.position.y - sizeY*coordinates[0], 0f);
+
+                gridPlane2.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1] + sizeX/3, 
+                plane.transform.position.y - sizeY*coordinates[0], 0f);
+
+                var finalCorrectItem = item.Value.Split('-')[0];
+
+                gridPlane.GetComponent<ItemSlot>().setCorrectItem(finalCorrectItem);
+                gridPlane.GetComponent<ItemSlot>().setFinalImage("Items-final/"+finalCorrectItem);
+
+                gridPlane2.GetComponent<ItemSlot>().setCorrectItem(finalCorrectItem);
+                gridPlane2.GetComponent<ItemSlot>().setFinalImage("Items-final/"+finalCorrectItem);
+
+                gridPlane2.transform.parent = panel.transform;
+            } else {
+                gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1], 
+                plane.transform.position.y - sizeY*coordinates[0], 0f);
+                gridPlane.GetComponent<ItemSlot>().setCorrectItem(item.Value);
+                gridPlane.GetComponent<ItemSlot>().setFinalImage("Items-final/"+item.Value);
+            }
             gridPlane.transform.parent = panel.transform;
         }
     }

@@ -10,5 +10,7 @@
 :Q5:: 5. Colócalos {}
 // Dimensiones: 1,1
 :Q6:: 6. El átomo central ¿tiene el octeto? { =0 -> no. }
-// Dimensiones: 7,3
-:Q7:: 7. Mueve los electrones de pares solitarios de los átomos terminales para completar el octeto del átomo central { =0 -> }
+// Dimensiones: 0,0
+:Q7:: 7. Mueve los electrones de pares solitarios de los átomos terminales para completar el octeto del átomo central {}
+// Dimensiones: 0,0
+:Q8:: 8. Determina la carga formal de cada uno de los átomos {}

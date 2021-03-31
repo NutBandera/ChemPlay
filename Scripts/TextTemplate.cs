@@ -41,8 +41,9 @@ public static class TextTemplate
                     text.color = Color.black;
                     text.GetComponent<RectTransform>().sizeDelta = new Vector3(1000, 100);
                     
-                    var slot = new GameObject();
-                    slot.AddComponent<Image>();
+                    if (width > 0){
+                        var slot = new GameObject();
+                        slot.AddComponent<Image>();
 
                     switch (width){ 
 
@@ -110,11 +111,11 @@ public static class TextTemplate
                     SlotTemplate.createSlotsFromDimensions(slots, slot.transform.position.x, slot.transform.position.y, 
                     slot.GetComponent<RectTransform>().rect.width, slot.GetComponent<RectTransform>().rect.height,
                     width, height);
-
-                    increment+=100;
-                    break;
-            }
-        }
+                    }
+                increment+=100;
+                break;
+                }
+        }   
     }
 
     private static void createQuestion() {

@@ -19,9 +19,8 @@ public class Ejer116 : MonoBehaviour
         SlotTemplate.setup(panel);
         BaseTemplate.colocarEnunciado(enunciadoPath);
 
-        List<string> images = new List<string>{"una", "o", "n", "horizontal", 
-        "vertical", "si", "no", "14", "17", "18", "menos", "mas"};
-        TextTemplate.createExerciseItem("Assets/Resources/Tema1/Parte1/ejercicio1/ejercicio1.txt");
+        List<string> images = new List<string>{"enlace", "o", "n", "horizontal", "vertical", "si", "no", "14", "17", "18", "menos", "mas"};
+        TextTemplate.createExerciseItem("Assets/Resources/Tema1/Parte1/ejercicio6/ejercicio6.txt");
         BaseTemplate.createItems(images, 2, 80);
     }
 }
