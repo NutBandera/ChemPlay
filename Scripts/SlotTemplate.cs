@@ -156,16 +156,29 @@ public static class SlotTemplate
             coordinates = convertPosition(item.Key, xElements, yElements);
             // if correct item contains "double" -> size/2
             GameObject gridPlane = (GameObject)Object.Instantiate(plane);
+            GameObject gridPlane2 = (GameObject)Object.Instantiate(gridPlane);
+
             if (item.Value.Contains("double")){
                 // clonar
-                gridPlane.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX/2, sizeY);
-                GameObject gridPlane2 = (GameObject)Object.Instantiate(gridPlane);
+                if (item.Value.Contains("vertical")){
+                    gridPlane.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX/2, sizeY);
+                    gridPlane2.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX/2, sizeY);
 
-                gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1] - sizeX/3, 
-                plane.transform.position.y - sizeY*coordinates[0], 0f);
+                    gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1] - sizeX/3, 
+                    plane.transform.position.y - sizeY*coordinates[0], 0f);
 
-                gridPlane2.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1] + sizeX/3, 
-                plane.transform.position.y - sizeY*coordinates[0], 0f);
+                    gridPlane2.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1] + sizeX/3, 
+                    plane.transform.position.y - sizeY*coordinates[0], 0f);
+                } else {
+                    gridPlane.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX, sizeY/2);
+                    gridPlane2.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX, sizeY/2);
+
+                    gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1], 
+                    plane.transform.position.y - sizeY*coordinates[0] - sizeY/3, 0f);
+
+                    gridPlane2.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1], 
+                    plane.transform.position.y - sizeY*coordinates[0] + sizeY/3, 0f);
+                }
 
                 var finalCorrectItem = item.Value.Split('-')[0];
 

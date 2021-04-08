@@ -20,7 +20,14 @@ public class Ejer112 : MonoBehaviour
         BaseTemplate.colocarEnunciado(enunciadoPath);
 
         Dictionary<int, string> slotsA = new Dictionary<int, string> {
-            [13] = "vertical-double"
+            [13] = "vertical-double",
+            [15] = "vertical",
+            [21] = "horizontal-double",
+            [23] = "horizontal",
+            [29] = "vertical",
+            [31] = "vertical",
+            [33] = "vertical",
+            [39] = "horizontal",
         };
 
          Dictionary<int, string> slotsB = new Dictionary<int, string> {
