@@ -121,11 +121,12 @@ public static class SlotTemplate
     }
 
         public static void clocarSlotsDimensions(Dictionary <int, string> slots,
-        int index, int xElements, int yElements){
+        int index, int xElements, int yElements, int xElementsPixels = -1, int yElementsPixels = -1){
         createSlotsFromDimensions(slots, exerciseItems[index].transform.position.x,
         exerciseItems[index].transform.position.y,
         exerciseItems[index].GetComponent<RectTransform>().rect.width,
-        exerciseItems[index].GetComponent<RectTransform>().rect.height, xElements, yElements);
+        exerciseItems[index].GetComponent<RectTransform>().rect.height, xElements, yElements,
+        xElementsPixels, yElementsPixels);
     }
 
         public static void clocarSlots(Dictionary <int, string> slots, int index){
@@ -134,15 +135,22 @@ public static class SlotTemplate
 
 
     public static void createSlotsFromDimensions(Dictionary <int, string> slots, float x, float y, 
-    float width, float height, int xElements, int yElements){
+    float width, float height, int xElements, int yElements, int xElementsPixels = -1, int yElementsPixels = -1){
         plane = new GameObject(); // move inside loop
         plane.AddComponent<CanvasGroup>();
         plane.AddComponent<ItemSlot>(); 
         plane.GetComponent<ItemSlot>().setCorrectItem("sp"); 
         plane.AddComponent<Image>();
         plane.GetComponent<Image>().sprite = Resources.Load<Sprite>("Slots/cuadrado");
-        float sizeX = width/xElements;
-        float sizeY = height/yElements; 
+        float sizeX = 0;
+        float sizeY = 0;
+        if (xElementsPixels < 0){
+            sizeX = width/xElements;
+            sizeY = height/yElements; 
+        } else {
+            sizeX = width/xElementsPixels;
+            sizeY = height/yElementsPixels; 
+        }
         var initialPosX = x-width/2 + sizeX/2;
         var initialPosY = y+height/2 - sizeY/2;
         plane.transform.position = new Vector3(initialPosX, 
