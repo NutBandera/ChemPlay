@@ -84,6 +84,9 @@ public class Ejer112 : MonoBehaviour
         SlotTemplate.clocarSlotsNumberOfElements(slotsD, 3, 4, 3);
         SlotTemplate.colocarTitulo("Tema1/Parte1/Ejercicio2/title4", 3, 280, 80);
         BaseTemplate.createItems(images, 1, 50);
+
+        string [] correctItems = new string[] {"sp", "sp", "sp"};
+        SlotTemplate.createHierarchy(3, correctItems, 200);
     }
 
 }

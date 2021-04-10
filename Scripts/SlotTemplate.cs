@@ -199,6 +199,35 @@ public static class SlotTemplate
         }
     }
 
+    public static void createHierarchy(int numberOfElements, string[] correctItems, int y){ // > by default
+        var pos = Screen.width/(numberOfElements*2-1); 
+        var index = 0;
+
+        for (int i=0; i<numberOfElements; i++){
+            var slot = new GameObject(); 
+            slot.AddComponent<CanvasGroup>();
+            slot.AddComponent<ItemSlot>(); 
+            slot.GetComponent<ItemSlot>().setCorrectItem(correctItems[i]); 
+            slot.AddComponent<Image>();
+            slot.GetComponent<Image>().sprite = Resources.Load<Sprite>("Slots/slot");
+            slot.GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
+            slot.transform.position = new Vector3(pos+(index+1)*100, y, 0f); 
+            slot.transform.parent = panel.transform;
+            index++;
+            if (i<numberOfElements-1){
+                // put > sign
+                var sign = new GameObject(); 
+                sign.AddComponent<CanvasGroup>();
+                sign.AddComponent<Image>();
+                sign.GetComponent<Image>().sprite = Resources.Load<Sprite>("Slots/mayor");
+                sign.GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
+                sign.transform.position = new Vector3(pos+(index+1)*100, y, 0f); 
+                sign.transform.parent = panel.transform;
+                index++;
+            }
+        }
+    }
+
   public static void createSlotsFromNumberOfElements(Dictionary <int, string> slots, float x, 
                                  float y, float width, float height, int xElements, int yElements){
     int[] dimensions = calculateNumberSlots(xElements, yElements);
