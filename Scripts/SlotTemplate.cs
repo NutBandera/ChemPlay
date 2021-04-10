@@ -144,19 +144,18 @@ public static class SlotTemplate
         plane.GetComponent<Image>().sprite = Resources.Load<Sprite>("Slots/cuadrado");
         float sizeX = 0;
         float sizeY = 0;
-        if (xElementsPixels < 0){
-            sizeX = width/xElements;
-            sizeY = height/yElements; 
-        } else {
-            sizeX = width/xElementsPixels;
-            sizeY = height/yElementsPixels; 
-        }
+        sizeX = width/xElements;
+        sizeY = height/yElements; 
         var initialPosX = x-width/2 + sizeX/2;
         var initialPosY = y+height/2 - sizeY/2;
         plane.transform.position = new Vector3(initialPosX, 
         initialPosY, 0f); 
         plane.AddComponent<RectTransform>();
-        plane.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX, sizeY);
+        if (xElementsPixels < 0) {
+            plane.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX, sizeY);
+        } else {
+            plane.GetComponent<RectTransform>().sizeDelta = new Vector2(width/xElementsPixels, height/yElementsPixels);
+        }
       //  plane.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
         plane.transform.parent = panel.transform;
         int[] coordinates;
@@ -197,7 +196,7 @@ public static class SlotTemplate
                 gridPlane2.GetComponent<ItemSlot>().setFinalImage("Items-final/"+finalCorrectItem);
 
                 gridPlane2.transform.parent = panel.transform;
-            } else {
+            } else { 
                 gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1], 
                 plane.transform.position.y - sizeY*coordinates[0], 0f);
                 gridPlane.GetComponent<ItemSlot>().setCorrectItem(item.Value);

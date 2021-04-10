@@ -20,14 +20,7 @@ public class Ejer111 : MonoBehaviour
         BaseTemplate.colocarEnunciado(enunciadoPath);
 
         Dictionary<int, string> slots1 = new Dictionary<int, string> {
-            [3] = "h",
-            [14] = "una",
-            [23] = "h",
-            [24] = "una",
-            [26] = "una",
-            [28] = "una",
-            [36] = "una",
-            [47] = "h"
+            [162] = "sp"
         };
         Dictionary<int, string> slots2 = new Dictionary<int, string> {
             [5] = "h",
@@ -59,18 +52,43 @@ public class Ejer111 : MonoBehaviour
             [47] = "h",
             [49] = "h"
         };
+        Dictionary<int, string> slots5 = new Dictionary<int, string> {
+            [5] = "h",
+            [16] = "una",
+            [23] = "h",
+            [24] = "una",
+            [26] = "dos",
+            [28] = "una",
+            [30] = "una",
+            [31] = "h"
+        };
+        Dictionary<int, string> slots6 = new Dictionary<int, string> {
+            [23] = "h",
+            [24] = "una",
+            [26] = "una",
+            [28] = "dos",
+            [36] = "una",
+            [38] = "una",
+            [47] = "h",
+            [49] = "h"
+        };
 
-        List<string> images = new List<string>{"h", "enlace", "dos", "tres", "vertical", "horizontal"};
+        List<string> images = new List<string>{"sp", "sp2", "sp3"};
 
-        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/cno", slots1); 
-        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/nco", slots2); 
-        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/cno", slots3);
-        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/nco", slots4);
-        SlotTemplate.colocarExerciseItems(2, 2);
-        SlotTemplate.clocarSlotsDimensions(slots1, 0, 11, 5);
-        SlotTemplate.clocarSlotsDimensions(slots2, 1, 11, 5);
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base1", slots1); 
+      /*  SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base2", slots2); 
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base3", slots3);
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base4", slots4);
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base5", slots5);
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base6", slots6);*/
+       // SlotTemplate.colocarExerciseItems(3, 2);
+        SlotTemplate.colocarExerciseItems(1, 1);
+        SlotTemplate.clocarSlotsDimensions(slots1, 0, 43, 19, 11, 5);
+       /* SlotTemplate.clocarSlotsDimensions(slots2, 1, 11, 5);
         SlotTemplate.clocarSlotsDimensions(slots3, 2, 11, 5);
         SlotTemplate.clocarSlotsDimensions(slots4, 3, 11, 5);
+        SlotTemplate.clocarSlotsDimensions(slots3, 4, 11, 5);
+        SlotTemplate.clocarSlotsDimensions(slots4, 5, 11, 5);*/
         BaseTemplate.createItems(images, 1, 70);
     }
 }

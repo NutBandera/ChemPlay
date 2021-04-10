@@ -16,11 +16,11 @@ public class Ejer113 : MonoBehaviour
         panel.GetComponent<Image>().color = new Color(1f,1f,1f,1f);
 
         SlotTemplate.setup(panel);
-        SlotTemplate.colocarEnunciado(enunciadoPath, panel);
+        BaseTemplate.setup(panel);
+        BaseTemplate.colocarEnunciado(enunciadoPath);
 
         Dictionary<int, string> slotsA = new Dictionary<int, string> {
-            [0] = "sp",
-            [12] = "sp2",
+            [107] = "sp"
         };
          Dictionary<int, string> slotsB = new Dictionary<int, string> {
             [3] = "sp",
@@ -35,19 +35,17 @@ public class Ejer113 : MonoBehaviour
             [1] = "sp2",
         };
 
-         List<string> images = new List<string>{"c"};
+        List<string> images = new List<string>{"item1", "pi", "item2", "alpha", "item3"};
 
-        // alternativa -> lista con elementos correctos (null, sp, sp3, null null, ...) 
-
-        SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio2/1", slotsA); 
-        SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio2/2", slotsB);
-        SlotTemplate.createExerciseItem(2, 3, ajuste, "Tema1/Parte1/Ejercicio2/3", slotsC);
-        SlotTemplate.createExerciseItem(4, 3, ajuste, "Tema1/Parte1/Ejercicio2/4", slotsD);
+        SlotTemplate.createExerciseItem(6, 4, ajuste, "Tema1/Parte1/Ejercicio3/base1", slotsA); 
+        SlotTemplate.createExerciseItem(7, 5, ajuste, "Tema1/Parte1/Ejercicio3/base2", slotsB);
+        SlotTemplate.createExerciseItem(7, 5, ajuste, "Tema1/Parte1/Ejercicio3/base3", slotsC);
+        SlotTemplate.createExerciseItem(6, 5, ajuste, "Tema1/Parte1/Ejercicio3/base4", slotsD);
         SlotTemplate.colocarExerciseItems(2, 2);
-        SlotTemplate.clocarSlots(slotsA, 0);
-        SlotTemplate.clocarSlots(slotsB, 1);
-        SlotTemplate.clocarSlots(slotsC, 2);
-        SlotTemplate.clocarSlots(slotsD, 3);
-        SlotTemplate.createItems(images);
+        SlotTemplate.clocarSlotsDimensions(slotsA, 0, 43, 19);
+        SlotTemplate.clocarSlotsDimensions(slotsB, 1, 11, 5);
+        SlotTemplate.clocarSlotsDimensions(slotsC, 2, 11, 5);
+        SlotTemplate.clocarSlotsDimensions(slotsD, 3, 11, 5);
+        BaseTemplate.createItems(images, 1, 90); 
     }
 }
