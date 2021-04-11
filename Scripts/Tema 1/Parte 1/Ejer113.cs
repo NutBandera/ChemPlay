@@ -20,19 +20,23 @@ public class Ejer113 : MonoBehaviour
         BaseTemplate.colocarEnunciado(enunciadoPath);
 
         Dictionary<int, string> slotsA = new Dictionary<int, string> {
-            [107] = "sp"
+            [13] = "item3",
+            [19] = "pi",
+            [63] = "item1"
         };
          Dictionary<int, string> slotsB = new Dictionary<int, string> {
-            [3] = "sp",
-            [1] = "sp2",
+            [35] = "alpha",
+            [105] = "pi",
         };
          Dictionary<int, string> slotsC = new Dictionary<int, string> {
-            [3] = "sp",
-            [1] = "sp2",
+            [22] = "item2",
+            [42] = "item2",
+            [77] = "item2"
         };
         Dictionary<int, string> slotsD = new Dictionary<int, string> {
-            [3] = "sp",
-            [1] = "sp2",
+            [22] = "alpha",
+            [47] = "pi",
+            [64] = "item2"
         };
 
         List<string> images = new List<string>{"item1", "pi", "item2", "alpha", "item3"};
@@ -42,10 +46,10 @@ public class Ejer113 : MonoBehaviour
         SlotTemplate.createExerciseItem(7, 5, ajuste, "Tema1/Parte1/Ejercicio3/base3", slotsC);
         SlotTemplate.createExerciseItem(6, 5, ajuste, "Tema1/Parte1/Ejercicio3/base4", slotsD);
         SlotTemplate.colocarExerciseItems(2, 2);
-        SlotTemplate.clocarSlotsDimensions(slotsA, 0, 43, 19);
-        SlotTemplate.clocarSlotsDimensions(slotsB, 1, 11, 5);
-        SlotTemplate.clocarSlotsDimensions(slotsC, 2, 11, 5);
-        SlotTemplate.clocarSlotsDimensions(slotsD, 3, 11, 5);
+        SlotTemplate.clocarSlotsDimensions(slotsA, 0, 11, 7, 5, 4);
+        SlotTemplate.clocarSlotsDimensions(slotsB, 1, 14, 9, 5, 4);
+        SlotTemplate.clocarSlotsDimensions(slotsC, 2, 15, 9, 5, 4);
+        SlotTemplate.clocarSlotsDimensions(slotsD, 3, 10, 8, 5, 4);
         BaseTemplate.createItems(images, 1, 90); 
     }
 }
