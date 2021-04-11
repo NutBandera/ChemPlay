@@ -20,75 +20,52 @@ public class Ejer111 : MonoBehaviour
         BaseTemplate.colocarEnunciado(enunciadoPath);
 
         Dictionary<int, string> slots1 = new Dictionary<int, string> {
-            [162] = "sp"
+            [40] = "sp3",
+            [140] = "sp3",
+            [176] = "sp2" 
         };
         Dictionary<int, string> slots2 = new Dictionary<int, string> {
-            [5] = "h",
-            [16] = "una",
-            [23] = "h",
-            [24] = "una",
-            [26] = "dos",
-            [28] = "una",
-            [30] = "una",
-            [31] = "h"
+            [34] = "sp3",
+            [101] = "sp2",
+            [110] = "sp2"
         };
          Dictionary<int, string> slots3 = new Dictionary<int, string> {
-            [5] = "h",
-            [16] = "una",
-            [23] = "h",
-            [24] = "una",
-            [26] = "dos",
-            [28] = "una",
-            [30] = "una",
-            [31] = "h"
+            [101] = "sp",
+            [165] = "sp3",
+            [347] = "sp2"
         };
         Dictionary<int, string> slots4 = new Dictionary<int, string> {
-            [23] = "h",
-            [24] = "una",
-            [26] = "una",
-            [28] = "dos",
-            [36] = "una",
-            [38] = "una",
-            [47] = "h",
-            [49] = "h"
+            [61] = "sp3",
+            [131] = "sp2",
+            [165] = "sp2"
         };
         Dictionary<int, string> slots5 = new Dictionary<int, string> {
-            [5] = "h",
-            [16] = "una",
-            [23] = "h",
-            [24] = "una",
-            [26] = "dos",
-            [28] = "una",
-            [30] = "una",
-            [31] = "h"
+            [74] = "sp2",
+            [149] = "sp3",
+            [207] = "sp3",
+            [281] = "sp3",
         };
         Dictionary<int, string> slots6 = new Dictionary<int, string> {
-            [23] = "h",
-            [24] = "una",
-            [26] = "una",
-            [28] = "dos",
-            [36] = "una",
-            [38] = "una",
-            [47] = "h",
-            [49] = "h"
+            [77] = "sp3",
+            [188] = "sp3",
+            [201] = "sp"
         };
 
         List<string> images = new List<string>{"sp", "sp2", "sp3"};
 
-        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base1", slots1); 
-      /*  SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base2", slots2); 
-        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base3", slots3);
+        SlotTemplate.createExerciseItem(7, 3, ajuste, "Tema1/Parte1/Ejercicio1/base1", slots1); 
+        SlotTemplate.createExerciseItem(6, 4, ajuste, "Tema1/Parte1/Ejercicio1/base2", slots2); 
+        SlotTemplate.createExerciseItem(7, 5, ajuste, "Tema1/Parte1/Ejercicio1/base3", slots3);
         SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base4", slots4);
-        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base5", slots5);
-        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base6", slots6);*/
-       // SlotTemplate.colocarExerciseItems(3, 2);
-        SlotTemplate.colocarExerciseItems(1, 1);
-        SlotTemplate.clocarSlotsDimensions(slots1, 0, 43, 19, 11, 5);
-       /* SlotTemplate.clocarSlotsDimensions(slots2, 1, 11, 5);
-        SlotTemplate.clocarSlotsDimensions(slots3, 2, 11, 5);
-        SlotTemplate.clocarSlotsDimensions(slots4, 3, 11, 5);
-        SlotTemplate.clocarSlotsDimensions(slots3, 4, 11, 5);
-        SlotTemplate.clocarSlotsDimensions(slots4, 5, 11, 5);*/
+        SlotTemplate.createExerciseItem(7, 5, ajuste, "Tema1/Parte1/Ejercicio1/base5", slots5);
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base6", slots6);
+        SlotTemplate.colocarExerciseItems(3, 2);
+        SlotTemplate.clocarSlotsDimensions(slots1, 0, 23, 10, 11, 5); // pass size directly ?
+        SlotTemplate.clocarSlotsDimensions(slots2, 1, 18, 10, 11, 5);
+        SlotTemplate.clocarSlotsDimensions(slots3, 2, 26, 15, 11, 5);
+        SlotTemplate.clocarSlotsDimensions(slots4, 3, 20, 11, 11, 5);
+        SlotTemplate.clocarSlotsDimensions(slots5, 4, 21, 15, 11, 5);
+        SlotTemplate.clocarSlotsDimensions(slots6, 5, 22, 11, 11, 5);
         BaseTemplate.createItems(images, 1, 70);
     }
 }
