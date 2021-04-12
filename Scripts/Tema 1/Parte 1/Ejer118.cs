@@ -71,6 +71,6 @@ public class Ejer118 : MonoBehaviour
         SlotTemplate.clocarSlotsDimensions(slots2, 1, 11, 5);
         SlotTemplate.clocarSlotsDimensions(slots3, 2, 11, 5);
         SlotTemplate.clocarSlotsDimensions(slots4, 3, 11, 5);
-        BaseTemplate.createItems(images, 1, 70);
+        BaseTemplate.createItems(images, 1, 50);
     }
 }
