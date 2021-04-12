@@ -21,41 +21,41 @@ public class Ejer118 : MonoBehaviour
 
         Dictionary<int, string> slots1 = new Dictionary<int, string> {
             [3] = "h",
-            [14] = "una",
+            [14] = "enlace3",
             [23] = "h",
-            [24] = "una",
-            [26] = "una",
-            [28] = "una",
-            [36] = "una",
+            [24] = "enlace",
+            [26] = "enlace",
+            [28] = "dos",
+            [36] = "enlace3",
             [47] = "h"
         };
         Dictionary<int, string> slots2 = new Dictionary<int, string> {
             [5] = "h",
-            [16] = "una",
+            [16] = "enlace3",
             [23] = "h",
-            [24] = "una",
+            [24] = "enlace",
             [26] = "dos",
-            [28] = "una",
-            [30] = "una",
+            [28] = "enlace",
+            [30] = "enlace",
             [31] = "h"
         };
          Dictionary<int, string> slots3 = new Dictionary<int, string> {
-            [5] = "h",
-            [16] = "una",
-            [23] = "h",
-            [24] = "una",
-            [26] = "dos",
-            [28] = "una",
-            [30] = "una",
-            [31] = "h"
+            [12] = "h",
+            [24] = "enlace1",
+            [37] = "dos",
+            [39] = "enlace",
+            [41] = "enlace",
+            [42] = "h",
+            [46] = "enlace2",
+            [56] = "h"
         };
         Dictionary<int, string> slots4 = new Dictionary<int, string> {
             [23] = "h",
-            [24] = "una",
-            [26] = "una",
+            [24] = "enlace",
+            [26] = "enlace",
             [28] = "dos",
-            [36] = "una",
-            [38] = "una",
+            [36] = "enlace3",
+            [38] = "enlace3",
             [47] = "h",
             [49] = "h"
         };
@@ -69,7 +69,7 @@ public class Ejer118 : MonoBehaviour
         SlotTemplate.colocarExerciseItems(2, 2);
         SlotTemplate.clocarSlotsDimensions(slots1, 0, 11, 5);
         SlotTemplate.clocarSlotsDimensions(slots2, 1, 11, 5);
-        SlotTemplate.clocarSlotsDimensions(slots3, 2, 11, 5);
+        SlotTemplate.clocarSlotsDimensions(slots3, 2, 11, 7);
         SlotTemplate.clocarSlotsDimensions(slots4, 3, 11, 5);
         BaseTemplate.createItems(images, 1, 50);
     }
