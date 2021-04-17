@@ -119,7 +119,7 @@ public class Ejer119 : MonoBehaviour
         List<string> images = new List<string>{"enlace", "dos", "tres", "menos", "mas", "horizontal", "c", "o", "n", "h", "f"};
         SlotTemplate.setNumberRowsItems(2);
         
-        SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio9/c-left", slots1); 
+        SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio9/c-left1", slots1); 
         SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio9/o", slots2); 
         SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio9/c-left", slots3);
         SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio9/b", slots4);
