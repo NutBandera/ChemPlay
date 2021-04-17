@@ -37,7 +37,7 @@ public class Ejer119 : MonoBehaviour
         Dictionary<int, string> slots2 = new Dictionary<int, string> {
             [3] = "horizontal",
             [10] = "n",
-            [16] = "dos",
+            [16] = "dos-b",
             [18] = "enlace1",
             [19] = "horizontal",
             [20] = "menos",
