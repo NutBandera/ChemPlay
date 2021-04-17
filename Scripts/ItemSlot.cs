@@ -10,11 +10,14 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     private int errors; 
 
   public void OnDrop(PointerEventData eventData){
+      var auxName = correctItem;
       if (eventData.pointerDrag != null){
           eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
       }
-     // if (eventData.pointerDrag.GetComponent<DragAndDrop>().name == correctItem) {
-         if (correctItem.Contains(eventData.pointerDrag.GetComponent<DragAndDrop>().name)) {
+      if (correctItem.Contains("-")){
+          auxName = correctItem.Split('-')[0].ToString();
+      }
+      if (eventData.pointerDrag.GetComponent<DragAndDrop>().name == auxName) {
           eventData.pointerDrag.GetComponent<DragAndDrop>().droppedOnSlot = true;
           eventData.pointerDrag.GetComponent<DragAndDrop>().image = finalImage; 
           eventData.pointerDrag.GetComponent<DragAndDrop>().slotSize = gameObject.GetComponent<RectTransform>().sizeDelta;
