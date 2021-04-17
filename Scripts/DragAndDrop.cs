@@ -47,6 +47,7 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
             if (!string.IsNullOrEmpty(image)){
                 // change image 
                 gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(image);
+                gameObject.GetComponent<Image>().rectTransform.sizeDelta = slotSize;
             }
         } else {
             this.rectTransform.localPosition = defaultPos;   

@@ -20,10 +20,10 @@ public class Ejer112 : MonoBehaviour
         BaseTemplate.colocarEnunciado(enunciadoPath);
 
         Dictionary<int, string> slotsA = new Dictionary<int, string> {
-            [13] = "vertical-double",
+            [13] = "vertical",
             [15] = "vertical",
-            [21] = "horizontal-double",
-            [23] = "horizontal",
+            [21] = "horizontal",
+            [23] = "horizontal-double",
             [29] = "vertical",
             [31] = "vertical",
             [33] = "vertical",
@@ -80,7 +80,7 @@ public class Ejer112 : MonoBehaviour
         SlotTemplate.clocarSlotsNumberOfElements(slotsB, 1, 4, 3);
         SlotTemplate.colocarTitulo("Tema1/Parte1/Ejercicio2/title2", 1, 280, 80);
         SlotTemplate.clocarSlotsNumberOfElements(slotsC, 2, 2, 3);
-        SlotTemplate.colocarTitulo("Tema1/Parte1/Ejercicio2/title3", 2, 280, 80);
+        SlotTemplate.colocarTitulo("Tema1/Parte1/Ejercicio2/title3", 2, 150, 80);
         SlotTemplate.clocarSlotsNumberOfElements(slotsD, 3, 4, 3);
         SlotTemplate.colocarTitulo("Tema1/Parte1/Ejercicio2/title4", 3, 280, 80);
         BaseTemplate.createItems(images, 1, 50);

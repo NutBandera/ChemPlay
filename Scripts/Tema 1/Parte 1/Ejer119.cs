@@ -48,13 +48,35 @@ public class Ejer119 : MonoBehaviour
             [33] = "horizontal"
         };
         Dictionary<int, string> slots3 = new Dictionary<int, string> {
-            [1] = "h",
-            [6] = "una",
-            [7] = "h",
-            [21] = "una",
-            [28] = "dos",
-            [14] = "una",
-            [35] = "una"
+            [6] = "h",
+            [10] = "h",
+            [18] = "enlace1",
+            [20] = "enlace2",
+            [24] = "h",
+            [26] = "o",
+            [30] = "c",
+            [35] = "enlace3",
+            [37] = "enlace3",
+            [39] = "mas",
+            [40] = "enlace2",
+            [42] = "enlace1",
+            [44] = "h",
+            [45] = "enlace",
+            [47] = "enlace",
+            [48] = "c",
+            [49] = "enlace",
+            [50] = "o",
+            [54] = "h",
+            [57] = "enlace3",
+            [62] = "enlace1",
+            [68] = "h",
+            [72] = "h",
+            [73] = "enlace",
+            [74] = "c",
+            [75] = "enlace",
+            [76] = "h",
+            [85] = "enlace3",
+            [96] = "h"
         };
         Dictionary<int, string> slots4 = new Dictionary<int, string> {
             [10] = "f",
@@ -108,7 +130,7 @@ public class Ejer119 : MonoBehaviour
         SlotTemplate.colocarTitulo("Tema1/Parte1/Ejercicio9/title1", 0, 200, 70);
         SlotTemplate.clocarSlotsDimensions(slots2, 1, 7, 8);
         SlotTemplate.colocarTitulo("Tema1/Parte1/Ejercicio9/title2", 1, 130, 80);
-        SlotTemplate.clocarSlotsDimensions(slots3, 2, 7, 6);
+        SlotTemplate.clocarSlotsDimensions(slots3, 2, 11, 11);
         SlotTemplate.colocarTitulo("Tema1/Parte1/Ejercicio9/title3", 2, 250, 80);
         SlotTemplate.clocarSlotsDimensions(slots4, 3, 7, 7);
         SlotTemplate.colocarTitulo("Tema1/Parte1/Ejercicio9/title4", 3, 130, 70);
