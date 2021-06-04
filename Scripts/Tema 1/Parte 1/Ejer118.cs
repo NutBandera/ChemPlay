@@ -62,10 +62,10 @@ public class Ejer118 : MonoBehaviour
 
         List<string> images = new List<string>{"h", "enlace", "dos", "tres", "vertical", "horizontal"};
 
-        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/cno", slots1); 
-        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/nco", slots2); 
-        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/cno", slots3);
-        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/nco", slots4);
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/cno"); 
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/nco"); 
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/cno");
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio8/nco");
         SlotTemplate.colocarExerciseItems(2, 2);
         SlotTemplate.clocarSlotsDimensions(slots1, 0, 11, 5);
         SlotTemplate.clocarSlotsDimensions(slots2, 1, 11, 5);

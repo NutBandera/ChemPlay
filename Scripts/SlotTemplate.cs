@@ -37,6 +37,16 @@ public static class SlotTemplate
         exerciseItems.Add(photo);
     }
 
+    public static void creatEmptyeBase(int xElements, int yElements, string photoName, int ajuste, int x, int y){
+         GameObject photo = new GameObject();
+        photo.AddComponent<RectTransform>();
+        photo.GetComponent<RectTransform>().sizeDelta = new Vector2(ajuste*xElements, ajuste*yElements); 
+        photo.AddComponent<Image>();
+        photo.GetComponent<Image>().sprite = Resources.Load<Sprite>(photoName);
+        photo.transform.parent = panel.transform;
+        photo.transform.position = new Vector3(x, y, 0f);
+    }
+
       public static void createBase2(int width, int height, string photoName){
         GameObject photo = new GameObject();
         photo.AddComponent<RectTransform>();
@@ -107,9 +117,18 @@ public static class SlotTemplate
         return res;
     }
 
-    public static void createExerciseItem(int ancho, int alto, int ajuste, string photoName, Dictionary <int, string> slots){
+    public static void createExerciseItem(int ancho, int alto, int ajuste, string photoName){
         createBase(ancho, alto, photoName, ajuste);
         thisAjuste = ajuste;
+    }
+
+     public static void createEmptyExerciseItem(string photoName, int xElements, int yElements, int x, int y){
+        // pass ancho y alto
+        creatEmptyeBase(xElements, yElements, photoName, 100, x, y);
+        // put slots
+        colocarSlotsCompleto(x, y, xElements, yElements, xElements*100, yElements*100); // pass width and height
+        // arreglar esto
+        // x,y,xElements,yElements,width,height
     }
 
     public static void clocarSlotsNumberOfElements(Dictionary <int, string> slots,
@@ -127,6 +146,37 @@ public static class SlotTemplate
         exerciseItems[index].GetComponent<RectTransform>().rect.width,
         exerciseItems[index].GetComponent<RectTransform>().rect.height, xElements, yElements,
         xElementsPixels, yElementsPixels);
+    }
+
+    public static void colocarSlotsCompleto(int x, int y, int xElements, int yElements, float width, float height) {
+        GameObject baseSlot = new GameObject(); // move inside loop
+        baseSlot.AddComponent<CanvasGroup>();
+        //baseSlot.AddComponent<ItemSlot>(); 
+        baseSlot.AddComponent<Image>();
+        baseSlot.GetComponent<Image>().sprite = Resources.Load<Sprite>("Slots/cuadrado");
+        float sizeX = 0;
+        float sizeY = 0;
+        sizeX = width/xElements;
+        sizeY = height/yElements; 
+        var initialPosX = x-width/2 + sizeX/2;
+        var initialPosY = y+height/2 - sizeY/2;
+        baseSlot.transform.position = new Vector3(initialPosX, 
+        initialPosY, 0f); 
+        baseSlot.AddComponent<RectTransform>();
+        baseSlot.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100);
+        //baseSlot.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
+        baseSlot.transform.parent = panel.transform;
+        for (var i=0; i<xElements; i++) {
+            for (var j=0; j<yElements; j++) {
+                // slot for coordinate
+                GameObject slot = (GameObject)Object.Instantiate(baseSlot);
+                slot.transform.position = new Vector3(baseSlot.transform.position.x + sizeX*j, 
+                baseSlot.transform.position.y - sizeY*i, 0f);
+                // slot.GetComponent<ItemSlot>().setCorrectItem(); set this when in pos -> create another script
+                //slot.GetComponent<ItemSlot>().setFinalImage("Items-final/"+item.Value);
+                slot.transform.parent = panel.transform;
+            }
+        }
     }
 
         public static void clocarSlots(Dictionary <int, string> slots, int index){

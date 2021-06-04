@@ -15,7 +15,9 @@ public class ExerciseType1 : MonoBehaviour
 
         SlotTemplate.setup(panel);
         BaseTemplate.setup(panel);
-        BaseTemplate.colocarEnunciado(Interface.getEnunciado()); 
+        BaseTemplate.colocarEnunciado(CurrentExercise.getEnunciado());
+        // create exercise items
+        BaseTemplate.createItems(CurrentExercise.getItems(), 1, 50); // number of lines !!!! -> create another method that does it alone?
 
     }
 }

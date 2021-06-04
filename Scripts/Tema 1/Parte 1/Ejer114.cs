@@ -42,12 +42,12 @@ public class Ejer114 : MonoBehaviour
 
         List<string> images = new List<string>{"mas", "menos"};
 
-        SlotTemplate.createExerciseItem(3, 3, ajuste, "Tema1/Parte1/Ejercicio4/slot1", slots1); 
-        SlotTemplate.createExerciseItem(5, 4, ajuste, "Tema1/Parte1/Ejercicio4/slot2", slots2); 
-        SlotTemplate.createExerciseItem(4, 2, ajuste, "Tema1/Parte1/Ejercicio4/slot3", slots3);
-        SlotTemplate.createExerciseItem(6, 5, ajuste, "Tema1/Parte1/Ejercicio4/slot4", slots4);
-        SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio4/slot5", slots5);
-        SlotTemplate.createExerciseItem(3, 2, ajuste, "Tema1/Parte1/Ejercicio4/slot6", slots6);
+        SlotTemplate.createExerciseItem(3, 3, ajuste, "Tema1/Parte1/Ejercicio4/slot1"); 
+        SlotTemplate.createExerciseItem(5, 4, ajuste, "Tema1/Parte1/Ejercicio4/slot2"); 
+        SlotTemplate.createExerciseItem(4, 2, ajuste, "Tema1/Parte1/Ejercicio4/slot3");
+        SlotTemplate.createExerciseItem(6, 5, ajuste, "Tema1/Parte1/Ejercicio4/slot4");
+        SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio4/slot5");
+        SlotTemplate.createExerciseItem(3, 2, ajuste, "Tema1/Parte1/Ejercicio4/slot6");
         SlotTemplate.colocarExerciseItems(3, 2);
         SlotTemplate.clocarSlotsDimensions(slots1, 0, 0, 0);
         SlotTemplate.clocarSlotsDimensions(slots2, 1, 6, 5);

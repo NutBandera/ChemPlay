@@ -37,10 +37,12 @@ public static class BaseTemplate
         slot.transform.parent = panel.transform;
     }
 
-      public static void createItems(List<string> images, int numeroFilas, int size){ 
+      public static void createItems(List<string> images, int numeroFilas, int size, int y = 0){ 
         var nItemsPerRow = images.Count/numeroFilas;
         var pos = Screen.width/(nItemsPerRow+1)+50; 
-        var y = Screen.height-Screen.height/3-100;
+        if (y == 0){
+            y = Screen.height-Screen.height/3-100;
+        }
         var index = 0;
         for (int i=0; i<images.Count; i++){
             if (i == nItemsPerRow){

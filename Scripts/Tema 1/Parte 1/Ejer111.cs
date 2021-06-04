@@ -53,12 +53,12 @@ public class Ejer111 : MonoBehaviour
 
         List<string> images = new List<string>{"sp", "sp2", "sp3"};
 
-        SlotTemplate.createExerciseItem(7, 3, ajuste, "Tema1/Parte1/Ejercicio1/base1", slots1); 
-        SlotTemplate.createExerciseItem(6, 4, ajuste, "Tema1/Parte1/Ejercicio1/base2", slots2); 
-        SlotTemplate.createExerciseItem(7, 5, ajuste, "Tema1/Parte1/Ejercicio1/base3", slots3);
-        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base4", slots4);
-        SlotTemplate.createExerciseItem(7, 5, ajuste, "Tema1/Parte1/Ejercicio1/base5", slots5);
-        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base6", slots6);
+        SlotTemplate.createExerciseItem(7, 3, ajuste, "Tema1/Parte1/Ejercicio1/base1"); 
+        SlotTemplate.createExerciseItem(6, 4, ajuste, "Tema1/Parte1/Ejercicio1/base2"); 
+        SlotTemplate.createExerciseItem(7, 5, ajuste, "Tema1/Parte1/Ejercicio1/base3");
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base4");
+        SlotTemplate.createExerciseItem(7, 5, ajuste, "Tema1/Parte1/Ejercicio1/base5");
+        SlotTemplate.createExerciseItem(7, 4, ajuste, "Tema1/Parte1/Ejercicio1/base6");
         SlotTemplate.colocarExerciseItems(3, 2);
         SlotTemplate.clocarSlotsDimensions(slots1, 0, 23, 10, 11, 5); // pass size directly ?
         SlotTemplate.clocarSlotsDimensions(slots2, 1, 18, 10, 11, 5);

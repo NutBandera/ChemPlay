@@ -50,8 +50,8 @@ public class Ejer110 : MonoBehaviour
 
         List<string> images = new List<string>{"enlace", "dos", "menos", "mas", "horizontal", "cl", "f", "8", "10", "12"};
 
-        SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio10/p", slots1); 
-        SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio10/s", slots2); 
+        SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio10/p"); 
+        SlotTemplate.createExerciseItem(4, 4, ajuste, "Tema1/Parte1/Ejercicio10/s"); 
         SlotTemplate.colocarExerciseItems(2, 1);
         SlotTemplate.clocarSlotsDimensions(slots1, 0, 5, 5);
         SlotTemplate.clocarSlotsDimensions(slots2, 1, 5, 5);
