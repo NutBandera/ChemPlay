@@ -172,8 +172,8 @@ public static class SlotTemplate
                 // set position
                 GameObject slot = (GameObject)Object.Instantiate(baseSlot);
                 //slot.tag = "slot";
-                slot.transform.position = new Vector3(baseSlot.transform.position.x + sizeX*i, 
-                baseSlot.transform.position.y - sizeY*j, 0f);
+                slot.transform.position = new Vector3(baseSlot.transform.position.x + sizeX*j, 
+                baseSlot.transform.position.y - sizeY*i, 0f);
 
                 pos = i*xElements+j;
                 
@@ -194,6 +194,12 @@ public static class SlotTemplate
     public static void createSlotsFromDimensions(Dictionary <int, string> slots, float x, float y, 
     float width, float height, int xElements, int yElements, int xElementsPixels = -1, int yElementsPixels = -1){
         plane = new GameObject(); // move inside loop
+        Debug.Log(x);
+        Debug.Log(y);
+        Debug.Log(width);
+        Debug.Log(height);
+        Debug.Log(xElements);
+        Debug.Log(yElements);
         plane.AddComponent<CanvasGroup>();
         plane.AddComponent<ItemSlot>(); 
         plane.GetComponent<ItemSlot>().setCorrectItem("sp"); 

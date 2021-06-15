@@ -17,13 +17,13 @@ public class ExerciseType1 : MonoBehaviour
         BaseTemplate.setup(panel);
         BaseTemplate.colocarEnunciado(CurrentExercise.getEnunciado());
         // colocar bases SIZE
-        SlotTemplate.createExerciseItem(5, 5, 50, CurrentExercise.getBase());   
+        SlotTemplate.createExerciseItem(5, 5, 100, CurrentExercise.getBase());   
         SlotTemplate.colocarExerciseItems(1, 1);
         // colocar slots
         SlotTemplate.clocarSlotsDimensions(CurrentExercise.getSolutions(),
          0, CurrentExercise.getWidth(), CurrentExercise.getHeight());
          // create exercise items
-        BaseTemplate.createItems(CurrentExercise.getItems(), 1, 50); // number of lines !!!! -> create another method that does it alone?
+        BaseTemplate.createItems(CurrentExercise.getItems(), 1, 100); // number of lines !!!! -> create another method that does it alone?
 
     }
 }

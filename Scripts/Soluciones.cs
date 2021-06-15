@@ -25,7 +25,8 @@ public class Soluciones : MonoBehaviour
 
         // x, y -> depende de la matriz seleccionada
         // posiciones relativas
-        SlotTemplate.createEmptyExerciseItem(CurrentExercise.getBase(), 5, 5, Screen.width/3, 1000);// which dimensions??
+        int x = (Screen.width / 2) - 500/4; // width, not 500
+        SlotTemplate.createEmptyExerciseItem(CurrentExercise.getBase(), 5, 5, 558, 1000);// which dimensions??
         // maybe separate in two
         BaseTemplate.createItems(CurrentExercise.getMockItems(), 1, 100, 1500); // + pos
     }
@@ -63,7 +64,7 @@ public class Soluciones : MonoBehaviour
        foreach (InterfaceItemSlot slot in slots) {
             Destroy(slot.gameObject);
         }
-       SlotTemplate.colocarSlotsCompleto(Screen.width/3, 1000, int.Parse(xInput.text), int.Parse(yInput.text), 500, 500);
+       SlotTemplate.colocarSlotsCompleto(558, 1000, int.Parse(xInput.text), int.Parse(yInput.text), 500, 500);
        // no dejar dar a aceptar sin numeros
    }
  
