@@ -151,7 +151,7 @@ public static class SlotTemplate
     public static void colocarSlotsCompleto(int x, int y, int xElements, int yElements, float width, float height) {
         GameObject baseSlot = new GameObject(); // move inside loop
         baseSlot.AddComponent<CanvasGroup>();
-        //baseSlot.AddComponent<ItemSlot>(); 
+        baseSlot.AddComponent<InterfaceItemSlot>(); 
         baseSlot.AddComponent<Image>();
         baseSlot.GetComponent<Image>().sprite = Resources.Load<Sprite>("Slots/cuadrado");
         float sizeX = 0;
@@ -166,17 +166,25 @@ public static class SlotTemplate
         baseSlot.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100);
         //baseSlot.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
         baseSlot.transform.parent = panel.transform;
-        for (var i=0; i<xElements; i++) {
-            for (var j=0; j<yElements; j++) {
+        int pos;
+        for (int i=0; i<xElements; i++) {
+            for (int j=0; j<yElements; j++) {
                 // slot for coordinate
+                // set position
                 GameObject slot = (GameObject)Object.Instantiate(baseSlot);
+                //slot.tag = "slot";
                 slot.transform.position = new Vector3(baseSlot.transform.position.x + sizeX*j, 
                 baseSlot.transform.position.y - sizeY*i, 0f);
+
+                pos = i*xElements+j;
+                
+                slot.GetComponent<InterfaceItemSlot>().setPosition(pos);
                 // slot.GetComponent<ItemSlot>().setCorrectItem(); set this when in pos -> create another script
                 //slot.GetComponent<ItemSlot>().setFinalImage("Items-final/"+item.Value);
                 slot.transform.parent = panel.transform;
             }
         }
+        GameObject.Destroy(baseSlot); // another option: move inside loop
     }
 
         public static void clocarSlots(Dictionary <int, string> slots, int index){
@@ -214,6 +222,8 @@ public static class SlotTemplate
             // if correct item contains "double" -> size/2
             GameObject gridPlane = (GameObject)Object.Instantiate(plane);
             GameObject gridPlane2 = (GameObject)Object.Instantiate(gridPlane);
+
+            Debug.Log(item.Value);
 
             if (item.Value.Contains("double")){
                 // clonar

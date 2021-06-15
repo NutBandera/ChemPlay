@@ -10,15 +10,18 @@ using SFB;
 public class Soluciones : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
+    private InterfaceItemSlot[] slots;
+    private Dictionary<int, string> dic;
+
     void Start() {
-        this.selectBase();
+        this.selectBase(); // what if user doesnt select
+        dic = new Dictionary<int, string>();
+        // permitir quitar elemento arrastrado
         BaseTemplate.setup(panel);
         SlotTemplate.setup(panel);
-                // set items
-        // add slots to base -> everywhere (visible?) and with no correct answer (new method)
 
-        
         // x, y -> depende de la matriz seleccionada
+        // posiciones relativas
         SlotTemplate.createEmptyExerciseItem(CurrentExercise.getBase(), 5, 5, Screen.width/3, 1000);// which dimensions??
 
         BaseTemplate.createItems(CurrentExercise.getMockItems(), 1, 100, 1500); // + pos
@@ -33,13 +36,26 @@ public class Soluciones : MonoBehaviour
 
         CurrentExercise.setBase(baseName);
     }
-   public void aceptar() {
-       // save solutions
-        // CurrentExercise.setSolutions();
-       // go back to "crear contenido" page
-       SceneManager.LoadScene("Scenes/Interface/CrearContenido");
-   }
 
+    public void selectMatrixSize(){
+        // CurrentExercise.setWidth(x);
+        // CurrentExercise.setHeight(y);
+    }
+    
+   public void aceptar() {
+       // iterar por slots, crear diccionario
+        slots = FindObjectsOfType<InterfaceItemSlot>();
+        foreach (InterfaceItemSlot slot in slots)
+        {
+           if (!string.IsNullOrEmpty(slot.getCorrectItem())){
+               dic.Add(slot.getPosition(), slot.getCorrectItem());
+           }
+        }
+        CurrentExercise.setSolutions(dic);
+       // go back to "crear contenido" page
+       SceneManager.LoadScene("Scenes/Interface/interface");
+   }
+ 
    public void cancelar() {
        // go back to "crear contenido" page
        SceneManager.LoadScene("Scenes/Interface/CrearContenido");

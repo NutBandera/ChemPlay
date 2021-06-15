@@ -10,7 +10,7 @@ using SFB;
 public class CreateExercise : MonoBehaviour
 {
     [SerializeField] private Text selectedEnunciado;
-    [SerializeField] private GameObject baseImage;
+    [SerializeField] private Text selectedItems;
     
     public void createExercise() {
         SceneManager.LoadScene("Scenes/ExerciseType1"); // depende del tipo de ejericio
@@ -29,23 +29,17 @@ public class CreateExercise : MonoBehaviour
     }
 
     public void selectItems() {
-        var paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", true);
-        List<string> items = new List<string>();
-        var elementName = "";
-        for (int i=0; i<paths.Length; i++){
-            var pathSplitted = paths[i].Split('/');
-            elementName = pathSplitted[pathSplitted.Length - 1].ToString().Split('.')[0];
-            items.Add(elementName);
-        }
-        CurrentExercise.setItems(items);
+        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", true);
+        var pathSplitted = path[0].Split('/');
+        var elementName = pathSplitted[pathSplitted.Length - 1].ToString().Split('.')[0];
+        CurrentExercise.addItem(elementName);
 
         // show items selected
-
+        selectedItems.text += " " + elementName;
     }
 
     public void crearContenido() {
         // Go to "Crear contenido" page
         SceneManager.LoadScene("Scenes/Interface/CrearContenido");
-
     }
 }
