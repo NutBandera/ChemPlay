@@ -16,7 +16,7 @@ public class ExerciseType1 : MonoBehaviour
         SlotTemplate.setup(panel);
         BaseTemplate.setup(panel);
         BaseTemplate.colocarEnunciado(CurrentExercise.getEnunciado());
-        // colocar bases
+        // colocar bases SIZE
         SlotTemplate.createExerciseItem(5, 5, 50, CurrentExercise.getBase());   
         SlotTemplate.colocarExerciseItems(1, 1);
         // colocar slots

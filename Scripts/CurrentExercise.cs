@@ -12,8 +12,6 @@ public static class CurrentExercise
     private static int _width;
     private static int _height;
 
-    // dimensions
-    
     public static string getEnunciado() {
         return _enunciado;
     }

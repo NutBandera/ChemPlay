@@ -153,7 +153,7 @@ public static class SlotTemplate
         baseSlot.AddComponent<CanvasGroup>();
         baseSlot.AddComponent<InterfaceItemSlot>(); 
         baseSlot.AddComponent<Image>();
-        baseSlot.GetComponent<Image>().sprite = Resources.Load<Sprite>("Slots/cuadrado");
+        baseSlot.GetComponent<Image>().sprite = Resources.Load<Sprite>("Slots/matrix");
         float sizeX = 0;
         float sizeY = 0;
         sizeX = width/xElements;
@@ -163,8 +163,7 @@ public static class SlotTemplate
         baseSlot.transform.position = new Vector3(initialPosX, 
         initialPosY, 0f); 
         baseSlot.AddComponent<RectTransform>();
-        baseSlot.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100);
-        //baseSlot.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
+        baseSlot.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX, sizeY);
         baseSlot.transform.parent = panel.transform;
         int pos;
         for (int i=0; i<xElements; i++) {
@@ -173,8 +172,8 @@ public static class SlotTemplate
                 // set position
                 GameObject slot = (GameObject)Object.Instantiate(baseSlot);
                 //slot.tag = "slot";
-                slot.transform.position = new Vector3(baseSlot.transform.position.x + sizeX*j, 
-                baseSlot.transform.position.y - sizeY*i, 0f);
+                slot.transform.position = new Vector3(baseSlot.transform.position.x + sizeX*i, 
+                baseSlot.transform.position.y - sizeY*j, 0f);
 
                 pos = i*xElements+j;
                 
