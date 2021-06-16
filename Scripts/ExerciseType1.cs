@@ -21,7 +21,7 @@ public class ExerciseType1 : MonoBehaviour
         SlotTemplate.colocarExerciseItems(1, 1);
         // colocar slots
         SlotTemplate.clocarSlotsDimensions(CurrentExercise.getSolutions(),
-         0, CurrentExercise.getWidth(), CurrentExercise.getHeight());
+         0, CurrentExercise.getWidth(), CurrentExercise.getHeight(), CurrentExercise.getPixelsX(), CurrentExercise.getPixelsY());
          // create exercise items
         BaseTemplate.createItems(CurrentExercise.getItems(), 1, 100); // number of lines !!!! -> create another method that does it alone?
 

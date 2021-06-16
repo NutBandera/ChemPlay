@@ -26,7 +26,7 @@ public class Soluciones : MonoBehaviour
         // x, y -> depende de la matriz seleccionada
         // posiciones relativas
         int x = (Screen.width / 2) - 500/4; // width, not 500
-        SlotTemplate.createEmptyExerciseItem(CurrentExercise.getBase(), 5, 5, 558, 1000);// which dimensions??
+        SlotTemplate.createEmptyExerciseItem(CurrentExercise.getBase(), 5, 5, 558, 1000,false);// which dimensions??
         // maybe separate in two
         BaseTemplate.createItems(CurrentExercise.getMockItems(), 1, 100, 1500); // + pos
     }
@@ -51,8 +51,6 @@ public class Soluciones : MonoBehaviour
            }
         }
         CurrentExercise.setSolutions(dic);
-        CurrentExercise.setWidth(int.Parse(xInput.text));
-        CurrentExercise.setHeight(int.Parse(yInput.text));
        // go back to "crear contenido" page
        SceneManager.LoadScene("Scenes/Interface/interface");
    }
@@ -64,8 +62,24 @@ public class Soluciones : MonoBehaviour
        foreach (InterfaceItemSlot slot in slots) {
             Destroy(slot.gameObject);
         }
-       SlotTemplate.colocarSlotsCompleto(558, 1000, int.Parse(xInput.text), int.Parse(yInput.text), 500, 500);
+       SlotTemplate.colocarSlotsCompleto(558, 1000, int.Parse(xInput.text), int.Parse(yInput.text), 500, 500, false);
        // no dejar dar a aceptar sin numeros
+       CurrentExercise.setPixelsX(-1);
+       CurrentExercise.setPixelsY(-1);
+       CurrentExercise.setWidth(int.Parse(xInput.text));
+       CurrentExercise.setHeight(int.Parse(yInput.text));
+   }
+
+   public void changeToPixels() {
+       slots = FindObjectsOfType<InterfaceItemSlot>();
+       foreach (InterfaceItemSlot slot in slots) {
+            Destroy(slot.gameObject);
+        }
+       SlotTemplate.colocarSlotsCompleto(558, 1000, 20, 20, 500, 500, true); // pas true to hide the pixels
+       CurrentExercise.setPixelsX(5);
+       CurrentExercise.setPixelsY(5);
+       CurrentExercise.setWidth(20);
+       CurrentExercise.setHeight(20);
    }
  
    public void cancelar() {

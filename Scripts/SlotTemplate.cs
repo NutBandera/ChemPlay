@@ -122,11 +122,11 @@ public static class SlotTemplate
         thisAjuste = ajuste;
     }
 
-     public static void createEmptyExerciseItem(string photoName, int xElements, int yElements, int x, int y){
+     public static void createEmptyExerciseItem(string photoName, int xElements, int yElements, int x, int y, bool hide){
         // pass ancho y alto
         creatEmptyeBase(xElements, yElements, photoName, 100, x, y);
         // put slots
-        colocarSlotsCompleto(x, y, xElements, yElements, xElements*100, yElements*100); // pass width and height
+        colocarSlotsCompleto(x, y, xElements, yElements, xElements*100, yElements*100, hide); // pass width and height
         // arreglar esto
         // x,y,xElements,yElements,width,height
     }
@@ -148,7 +148,7 @@ public static class SlotTemplate
         xElementsPixels, yElementsPixels);
     }
 
-    public static void colocarSlotsCompleto(int x, int y, int xElements, int yElements, float width, float height) {
+    public static void colocarSlotsCompleto(int x, int y, int xElements, int yElements, float width, float height, bool hide) {
         GameObject baseSlot = new GameObject(); // move inside loop
         baseSlot.AddComponent<CanvasGroup>();
         baseSlot.AddComponent<InterfaceItemSlot>(); 
@@ -164,6 +164,9 @@ public static class SlotTemplate
         initialPosY, 0f); 
         baseSlot.AddComponent<RectTransform>();
         baseSlot.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX, sizeY);
+        if (hide) {
+            baseSlot.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
+        }
         baseSlot.transform.parent = panel.transform;
         int pos;
         for (int i=0; i<xElements; i++) {
@@ -190,16 +193,13 @@ public static class SlotTemplate
         // BORRAR 
     }
 
-
+    /*
+    * Metodo para colocar los slots con las respuestas correctas
+    * @param xElementsPixels
+    */
     public static void createSlotsFromDimensions(Dictionary <int, string> slots, float x, float y, 
     float width, float height, int xElements, int yElements, int xElementsPixels = -1, int yElementsPixels = -1){
         plane = new GameObject(); // move inside loop
-        Debug.Log(x);
-        Debug.Log(y);
-        Debug.Log(width);
-        Debug.Log(height);
-        Debug.Log(xElements);
-        Debug.Log(yElements);
         plane.AddComponent<CanvasGroup>();
         plane.AddComponent<ItemSlot>(); 
         plane.GetComponent<ItemSlot>().setCorrectItem("sp"); 
@@ -262,7 +262,7 @@ public static class SlotTemplate
 
                 gridPlane2.transform.parent = panel.transform;
             } else { 
-                gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1], 
+                gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1],
                 plane.transform.position.y - sizeY*coordinates[0], 0f);
                 gridPlane.GetComponent<ItemSlot>().setCorrectItem(item.Value);
                 gridPlane.GetComponent<ItemSlot>().setFinalImage("Items-final/"+item.Value);

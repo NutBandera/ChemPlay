@@ -11,6 +11,8 @@ public static class CurrentExercise
     private static Dictionary<int, string> _solutions;
     private static int _width;
     private static int _height;
+    private static int _pixelsX = -1;
+    private static int _pixelsY = -1;
 
     public static string getEnunciado() {
         return _enunciado;
@@ -58,6 +60,20 @@ public static class CurrentExercise
     }
     public static void setHeight(int height) {
         _height = height;
+    }
+
+    public static int getPixelsX() {
+        return _pixelsX;
+    }
+    public static void setPixelsX(int pixelsX) {
+        _pixelsX = pixelsX;
+    }
+
+    public static int getPixelsY() {
+        return _pixelsY;
+    }
+    public static void setPixelsY(int pixelsY) {
+        _pixelsY = pixelsY;
     }
 
 }
