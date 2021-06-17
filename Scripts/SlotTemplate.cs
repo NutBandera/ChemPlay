@@ -60,7 +60,7 @@ public static class SlotTemplate
         numberRowsItems = rows;
     }
 
-    public static void colocarExerciseItems(int itemsPerRow, int rows){
+    public static void colocarExerciseItems(int itemsPerRow, int rows){ // auto
       //  int itemsPerRow = exerciseItems.Count/2; // pass as param
         int counter = 1;
         int index = 0;
@@ -169,8 +169,8 @@ public static class SlotTemplate
         }
         baseSlot.transform.parent = panel.transform;
         int pos;
-        for (int i=0; i<xElements; i++) {
-            for (int j=0; j<yElements; j++) {
+        for (int i=0; i<yElements; i++) {
+            for (int j=0; j<xElements; j++) {
                 // slot for coordinate
                 // set position
                 GameObject slot = (GameObject)Object.Instantiate(baseSlot);

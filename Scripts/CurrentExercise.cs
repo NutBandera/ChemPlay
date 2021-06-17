@@ -9,11 +9,7 @@ public static class CurrentExercise
     private static List<string> _items = new List<string>();
     private static string _base;
     private static Dictionary<int, string> _solutions;
-    private static int _width;
-    private static int _height;
-    private static int _pixelsX = -1;
-    private static int _pixelsY = -1;
-
+    private static List<ParteContenido> contenido = new List<ParteContenido>();
     public static string getEnunciado() {
         return _enunciado;
     }
@@ -33,6 +29,10 @@ public static class CurrentExercise
         _items.Add(item);
     }
 
+    public static void removeItem(string item) {
+        _items.Remove(item);
+    }
+
     public static string getBase() {
         return _base;
     }
@@ -48,32 +48,12 @@ public static class CurrentExercise
         return _solutions;
     }
 
-    public static int getWidth() {
-        return _width;
-    }
-    public static void setWidth(int width) {
-        _width = width;
+    public static void addContenido(ParteContenido parte) {
+        contenido.Add(parte);
     }
 
-    public static int getHeight() {
-        return _height;
-    }
-    public static void setHeight(int height) {
-        _height = height;
-    }
-
-    public static int getPixelsX() {
-        return _pixelsX;
-    }
-    public static void setPixelsX(int pixelsX) {
-        _pixelsX = pixelsX;
-    }
-
-    public static int getPixelsY() {
-        return _pixelsY;
-    }
-    public static void setPixelsY(int pixelsY) {
-        _pixelsY = pixelsY;
+    public static List<ParteContenido> getContenido() {
+        return contenido;
     }
 
 }

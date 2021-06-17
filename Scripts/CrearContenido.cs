@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class CrearContenido : MonoBehaviour
 {
-    public void addSolutions() { // or add base 
-        // examinar
-    
+    public void addSolutions() {
         // Go to "Soluciones" page
         SceneManager.LoadScene("Scenes/Interface/Soluciones");
+    }
 
+    public void createExercise() {
+        SceneManager.LoadScene("Scenes/ExerciseType1");
     }
 }

@@ -14,31 +14,35 @@ public class Soluciones : MonoBehaviour
     private Dictionary<int, string> dic;
     [SerializeField] private InputField xInput;
     [SerializeField] private InputField yInput;
-    private GameObject baseImage;
+    private ParteContenido part;
 
     void Start() {
+        part = new ParteContenido();
         this.selectBase(); // what if user doesnt select
         dic = new Dictionary<int, string>();
         // permitir quitar elemento arrastrado
         BaseTemplate.setup(panel);
         SlotTemplate.setup(panel);
 
+        part.setWidth(5);
+        part.setHeight(5);
+        part.setPixelsX(-1);
+        part.setPixelsY(-1);
+
         // x, y -> depende de la matriz seleccionada
         // posiciones relativas
         int x = (Screen.width / 2) - 500/4; // width, not 500
-        SlotTemplate.createEmptyExerciseItem(CurrentExercise.getBase(), 5, 5, 558, 1000,false);// which dimensions??
+        SlotTemplate.createEmptyExerciseItem(part.getBaseName(), 5, 5, 558, 1000,false);// which dimensions??
         // maybe separate in two
-        BaseTemplate.createItems(CurrentExercise.getMockItems(), 1, 100, 1500); // + pos
+        BaseTemplate.createItems(CurrentExercise.getItems(), 1, 100, 1500); // + pos
     }
 
      public void selectBase() {
         var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", false); // accepted extions
         var pathSplitted = Regex.Split(path[0], "Resources/");
         var elementName = pathSplitted[1].ToString();
-
         var baseName = elementName.Split('.')[0];
-
-        CurrentExercise.setBase(baseName);
+        part.setBaseName(baseName);
     }
     
    public void aceptar() {
@@ -50,36 +54,38 @@ public class Soluciones : MonoBehaviour
                dic.Add(slot.getPosition(), slot.getCorrectItem());
            }
         }
-        CurrentExercise.setSolutions(dic);
-       // go back to "crear contenido" page
-       SceneManager.LoadScene("Scenes/Interface/interface");
+        part.setSolutions(dic);
+        CurrentExercise.addContenido(part);
+       // create exercise
+       SceneManager.LoadScene("Scenes/Interface/CrearContenido");
+   }
+
+   private void clear() {
+       slots = FindObjectsOfType<InterfaceItemSlot>();
+       foreach (InterfaceItemSlot slot in slots) {
+            Destroy(slot.gameObject);
+        }
    }
 
    public void changeMatrixSize() {
        // look for better way
        // eliminar lo anterior
-       slots = FindObjectsOfType<InterfaceItemSlot>();
-       foreach (InterfaceItemSlot slot in slots) {
-            Destroy(slot.gameObject);
-        }
+       this.clear();
        SlotTemplate.colocarSlotsCompleto(558, 1000, int.Parse(xInput.text), int.Parse(yInput.text), 500, 500, false);
        // no dejar dar a aceptar sin numeros
-       CurrentExercise.setPixelsX(-1);
-       CurrentExercise.setPixelsY(-1);
-       CurrentExercise.setWidth(int.Parse(xInput.text));
-       CurrentExercise.setHeight(int.Parse(yInput.text));
+       part.setPixelsX(-1);
+       part.setPixelsY(-1);
+       part.setWidth(int.Parse(xInput.text));
+       part.setHeight(int.Parse(yInput.text));
    }
 
    public void changeToPixels() {
-       slots = FindObjectsOfType<InterfaceItemSlot>();
-       foreach (InterfaceItemSlot slot in slots) {
-            Destroy(slot.gameObject);
-        }
+       this.clear();
        SlotTemplate.colocarSlotsCompleto(558, 1000, 20, 20, 500, 500, true); // pas true to hide the pixels
-       CurrentExercise.setPixelsX(5);
-       CurrentExercise.setPixelsY(5);
-       CurrentExercise.setWidth(20);
-       CurrentExercise.setHeight(20);
+       part.setPixelsX(5);
+       part.setPixelsY(5);
+       part.setWidth(20);
+       part.setHeight(20);
    }
  
    public void cancelar() {

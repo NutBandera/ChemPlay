@@ -17,11 +17,17 @@ public class ExerciseType1 : MonoBehaviour
         BaseTemplate.setup(panel);
         BaseTemplate.colocarEnunciado(CurrentExercise.getEnunciado());
         // colocar bases SIZE
-        SlotTemplate.createExerciseItem(5, 5, 100, CurrentExercise.getBase());   
-        SlotTemplate.colocarExerciseItems(1, 1);
+        foreach (ParteContenido part in CurrentExercise.getContenido()) {
+            SlotTemplate.createExerciseItem(5, 5, 100, part.getBaseName());   
+        }
+        SlotTemplate.colocarExerciseItems(1, 2);
         // colocar slots
-        SlotTemplate.clocarSlotsDimensions(CurrentExercise.getSolutions(),
-         0, CurrentExercise.getWidth(), CurrentExercise.getHeight(), CurrentExercise.getPixelsX(), CurrentExercise.getPixelsY());
+        int index = 0;
+        foreach (ParteContenido part in CurrentExercise.getContenido()) {
+            SlotTemplate.clocarSlotsDimensions(part.getSolutions(),
+            index, part.getWidth(), part.getHeight(), part.getPixelsX(), part.getPixelsY());
+            index++;
+        }
          // create exercise items
         BaseTemplate.createItems(CurrentExercise.getItems(), 1, 100); // number of lines !!!! -> create another method that does it alone?
 
