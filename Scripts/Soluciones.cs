@@ -29,10 +29,8 @@ public class Soluciones : MonoBehaviour
         part.setPixelsX(-1);
         part.setPixelsY(-1);
 
-        // x, y -> depende de la matriz seleccionada
         // posiciones relativas
-        int x = (Screen.width / 2) - 500/4; // width, not 500
-        SlotTemplate.createEmptyExerciseItem(part.getBaseName(), 5, 5, 558, 1000,false);// which dimensions??
+        SlotTemplate.createEmptyExerciseItem(part.getBaseName(), 5, 5, 558, 1000, false);// which dimensions??
         // maybe separate in two
         BaseTemplate.createItems(CurrentExercise.getItems(), 1, 100, 1500); // + pos
     }

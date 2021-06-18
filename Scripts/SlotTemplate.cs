@@ -37,10 +37,10 @@ public static class SlotTemplate
         exerciseItems.Add(photo);
     }
 
-    public static void creatEmptyeBase(int xElements, int yElements, string photoName, int ajuste, int x, int y){
-         GameObject photo = new GameObject();
+    public static void createEmptyeBase(int xElements, int yElements, string photoName, int ajuste, int x, int y){
+        GameObject photo = new GameObject();
         photo.AddComponent<RectTransform>();
-        photo.GetComponent<RectTransform>().sizeDelta = new Vector2(ajuste*xElements, ajuste*yElements); 
+        photo.GetComponent<RectTransform>().sizeDelta = new Vector2(ajuste*xElements+200, ajuste*yElements); 
         photo.AddComponent<Image>();
         photo.GetComponent<Image>().sprite = Resources.Load<Sprite>(photoName);
         photo.transform.parent = panel.transform;
@@ -60,8 +60,19 @@ public static class SlotTemplate
         numberRowsItems = rows;
     }
 
-    public static void colocarExerciseItems(int itemsPerRow, int rows){ // auto
-      //  int itemsPerRow = exerciseItems.Count/2; // pass as param
+    public static void colocarExerciseItems(int itemsPerRow = -1, int rows = 2) {
+        if (itemsPerRow < 0){
+            if (exerciseItems.Count == 1){
+                itemsPerRow = 1;
+                rows = 1;
+            } else {
+                 if (exerciseItems.Count%2 == 0) {
+                itemsPerRow = exerciseItems.Count/2;
+                } else {
+                    itemsPerRow = exerciseItems.Count/2 + 1;
+                }
+            }
+        }
         int counter = 1;
         int index = 0;
         int ajuste = 0;
@@ -124,9 +135,9 @@ public static class SlotTemplate
 
      public static void createEmptyExerciseItem(string photoName, int xElements, int yElements, int x, int y, bool hide){
         // pass ancho y alto
-        creatEmptyeBase(xElements, yElements, photoName, 100, x, y);
+        createEmptyeBase(xElements, yElements, photoName, 100, x, y);
         // put slots
-        colocarSlotsCompleto(x, y, xElements, yElements, xElements*100, yElements*100, hide); // pass width and height
+        colocarSlotsCompleto(x, y, xElements, yElements, xElements*100+200, yElements*100, hide); // pass width and height
         // arreglar esto
         // x,y,xElements,yElements,width,height
     }

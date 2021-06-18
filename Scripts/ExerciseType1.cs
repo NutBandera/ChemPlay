@@ -18,9 +18,9 @@ public class ExerciseType1 : MonoBehaviour
         BaseTemplate.colocarEnunciado(CurrentExercise.getEnunciado());
         // colocar bases SIZE
         foreach (ParteContenido part in CurrentExercise.getContenido()) {
-            SlotTemplate.createExerciseItem(5, 5, 100, part.getBaseName());   
+            SlotTemplate.createExerciseItem(500, 300, 1, part.getBaseName());   
         }
-        SlotTemplate.colocarExerciseItems(1, 2);
+        SlotTemplate.colocarExerciseItems();
         // colocar slots
         int index = 0;
         foreach (ParteContenido part in CurrentExercise.getContenido()) {
