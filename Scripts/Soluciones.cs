@@ -32,7 +32,7 @@ public class Soluciones : MonoBehaviour
         // posiciones relativas
         SlotTemplate.createEmptyExerciseItem(part.getBaseName(), 5, 5, 450, 1000, false);// which dimensions??
         // maybe separate in two
-        BaseTemplate.createItems(CurrentExercise.getItems(), 1, 100, 1500); // + pos
+        BaseTemplate.createItems(CurrentExercise.getItems(), 1, 100, 1500, true); // + pos
     }
 
      public void selectBase() {
@@ -69,17 +69,18 @@ public class Soluciones : MonoBehaviour
        // look for better way
        // eliminar lo anterior
        this.clear();
-       SlotTemplate.colocarSlotsCompleto(558, 1000, int.Parse(xInput.text), int.Parse(yInput.text), 700, 500, false);
+       SlotTemplate.colocarSlotsCompleto(450, 1000, int.Parse(xInput.text), int.Parse(yInput.text), 700, 500, false);
        // no dejar dar a aceptar sin numeros
        part.setPixelsX(-1);
        part.setPixelsY(-1);
        part.setWidth(int.Parse(xInput.text));
        part.setHeight(int.Parse(yInput.text));
+       this.clearItems();
    }
 
    public void changeToPixels() {
        this.clear();
-       SlotTemplate.colocarSlotsCompleto(558, 1000, 20, 20, 700, 500, true); // pas true to hide the pixels
+       SlotTemplate.colocarSlotsCompleto(450, 1000, 20, 20, 700, 500, true); // pas true to hide the pixels
        part.setPixelsX(5);
        part.setPixelsY(5);
        part.setWidth(20);

@@ -9,7 +9,7 @@ public class ItemSlotPapelera : MonoBehaviour, IDropHandler
       if (eventData.pointerDrag != null){
           eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
       }
-      eventData.pointerDrag.GetComponent<DragAndDrop>().removeCorrectItem();
+      eventData.pointerDrag.GetComponent<InterfaceDragAndDrop>().removeCorrectItem();
       Destroy(eventData.pointerDrag.gameObject);
   }
 }

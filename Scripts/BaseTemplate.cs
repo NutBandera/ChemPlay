@@ -37,7 +37,7 @@ public static class BaseTemplate
         slot.transform.parent = panel.transform;
     }
 
-      public static void createItems(List<string> images, int numeroFilas, int size, int y = 0){ 
+      public static void createItems(List<string> images, int numeroFilas, int size, int y = 0, bool isInterface = false){ 
         var nItemsPerRow = images.Count/numeroFilas;
         var pos = Screen.width/(nItemsPerRow+1)+50; 
         if (y == 0){
@@ -56,8 +56,15 @@ public static class BaseTemplate
             item.transform.parent = panel.transform;
             item.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size); 
             item.AddComponent<CanvasGroup>();
-            item.AddComponent<DragAndDrop>(); 
-            item.GetComponent<DragAndDrop>().setName(images[i]); 
+            if (isInterface){
+                item.AddComponent<InterfaceDragAndDrop>(); 
+                item.GetComponent<InterfaceDragAndDrop>().setName(images[i]); 
+            } else {
+                item.AddComponent<DragAndDrop>(); 
+                item.GetComponent<DragAndDrop>().setName(images[i]); 
+            }
+            
+            
             index++;
         }
     }

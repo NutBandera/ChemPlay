@@ -14,15 +14,15 @@ public class InterfaceItemSlot : MonoBehaviour, IDropHandler
           eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
       }
       if (!string.IsNullOrEmpty(this.correctItem)) {
-        eventData.pointerDrag.GetComponent<DragAndDrop>().droppedOnSlot = false;
+        eventData.pointerDrag.GetComponent<InterfaceDragAndDrop>().droppedOnSlot = false;
       } else {
-        eventData.pointerDrag.GetComponent<DragAndDrop>().droppedOnSlot = true;
-        this.setCorrectItem(eventData.pointerDrag.GetComponent<DragAndDrop>().name);
-        eventData.pointerDrag.GetComponent<DragAndDrop>().inInitialPos = false;
+        eventData.pointerDrag.GetComponent<InterfaceDragAndDrop>().droppedOnSlot = true;
+        this.setCorrectItem(eventData.pointerDrag.GetComponent<InterfaceDragAndDrop>().name);
+        eventData.pointerDrag.GetComponent<InterfaceDragAndDrop>().inInitialPos = false;
       // cuando se quite el item quitarle el nombre
-        eventData.pointerDrag.GetComponent<DragAndDrop>().image = finalImage; 
-        eventData.pointerDrag.GetComponent<DragAndDrop>().slotSize = gameObject.GetComponent<RectTransform>().sizeDelta;
-        eventData.pointerDrag.GetComponent<DragAndDrop>().slot = gameObject;
+        eventData.pointerDrag.GetComponent<InterfaceDragAndDrop>().image = finalImage; 
+        eventData.pointerDrag.GetComponent<InterfaceDragAndDrop>().slotSize = gameObject.GetComponent<RectTransform>().sizeDelta;
+        eventData.pointerDrag.GetComponent<InterfaceDragAndDrop>().slot = gameObject;
       }
   }
 
