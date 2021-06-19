@@ -17,11 +17,11 @@ public class ItemSlot : MonoBehaviour, IDropHandler
       if (correctItem.Contains("-")){
           auxName = correctItem.Split('-')[0].ToString();
       }
-      if (eventData.pointerDrag.GetComponent<DragAndDrop>().name == auxName) {
-          eventData.pointerDrag.GetComponent<DragAndDrop>().droppedOnSlot = true;
-          eventData.pointerDrag.GetComponent<DragAndDrop>().image = finalImage; 
-          eventData.pointerDrag.GetComponent<DragAndDrop>().slotSize = gameObject.GetComponent<RectTransform>().sizeDelta;
-          eventData.pointerDrag.GetComponent<DragAndDrop>().inInitialPos = false;
+      if (eventData.pointerDrag.GetComponent<DragAndDrop>().getName() == auxName) {
+          eventData.pointerDrag.GetComponent<DragAndDrop>().setDroppedOnSlot(true);
+          eventData.pointerDrag.GetComponent<DragAndDrop>().setImage(finalImage); 
+          eventData.pointerDrag.GetComponent<DragAndDrop>().setSlotSize(gameObject.GetComponent<RectTransform>().sizeDelta);
+          eventData.pointerDrag.GetComponent<DragAndDrop>().setInInitialPos(false);
       } else {
           errors++; // no contar si es posición inicial
       }

@@ -12,12 +12,12 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private GameObject clone;
-    public Vector3 defaultPos;
-    public bool droppedOnSlot = false;
-    public string name;
-    public string image;
-    public Vector2 slotSize;
-    public bool inInitialPos;
+    private Vector3 defaultPos;
+    private bool droppedOnSlot = false;
+    private string name;
+    private string image;
+    private Vector2 slotSize;
+    private bool inInitialPos;
 
     private void Awake(){
         rectTransform = GetComponent<RectTransform>();
@@ -64,8 +64,35 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
             }
         }
     }
-    public void setName(string n){
-        name = n;
+    public string getName(){
+        return name;
+    }
+    public void setName(string name){
+        this.name = name;
+    }
+    public bool getDroppedOnSlot(){
+        return droppedOnSlot;
+    }
+    public void setDroppedOnSlot(bool droppedOnSlot){
+        this.droppedOnSlot = droppedOnSlot;
+    }
+    public string getImage(){
+        return image;
+    }
+    public void setImage(string image){
+        this.image = image;
+    }
+    public Vector2 getSlotSize(){
+        return slotSize;
+    }
+    public void setSlotSize(Vector2 slotSize){
+        this.slotSize = slotSize;
+    }
+    public bool getInInitialPos(){
+        return inInitialPos;
+    }
+    public void setInInitialPos(bool inInitialPos){
+        this.inInitialPos = inInitialPos;
     }
 
 }

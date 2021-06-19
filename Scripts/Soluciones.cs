@@ -93,9 +93,9 @@ public class Soluciones : MonoBehaviour
    }
 
    public void clearItems() {
-       var items = FindObjectsOfType<DragAndDrop>();
-       foreach (DragAndDrop item in items) {
-           if (!item.inInitialPos)
+       var items = FindObjectsOfType<InterfaceDragAndDrop>();
+       foreach (InterfaceDragAndDrop item in items) {
+           if (!item.getInInitialPos())
             Destroy(item.gameObject);
         }
         slots = FindObjectsOfType<InterfaceItemSlot>();
