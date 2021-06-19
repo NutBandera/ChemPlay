@@ -90,4 +90,16 @@ public class Soluciones : MonoBehaviour
        // go back to "crear contenido" page
        SceneManager.LoadScene("Scenes/Interface/CrearContenido");
    }
+
+   public void clearItems() {
+       var items = FindObjectsOfType<DragAndDrop>();
+       foreach (DragAndDrop item in items) {
+           if (!item.inInitialPos)
+            Destroy(item.gameObject);
+        }
+        slots = FindObjectsOfType<InterfaceItemSlot>();
+        foreach (InterfaceItemSlot slot in slots) {
+            slot.setCorrectItem(null);
+        }
+   }
 }

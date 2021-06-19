@@ -55,7 +55,7 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
             // si se ha cambiado de slot
             if (slotAnterior != null && slot != slotAnterior){
                 // eliminar correct item del slot anterior
-                slotAnterior.GetComponent<InterfaceItemSlot>().removeCorrectItem();
+                this.removeCorrectItem();
             }
             if (!string.IsNullOrEmpty(image)){
                 // change image 
@@ -72,5 +72,9 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     }
     public void setName(string n){
         name = n;
+    }
+
+    public void removeCorrectItem() {
+        slotAnterior.GetComponent<InterfaceItemSlot>().removeCorrectItem();
     }
 }
