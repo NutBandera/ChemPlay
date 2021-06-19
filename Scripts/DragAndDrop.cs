@@ -17,23 +17,31 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     public string name;
     public string image;
     public Vector2 slotSize;
+    public bool inInitialPos;
+    public GameObject slot;
+    public GameObject slotAnterior;
 
     private void Awake(){
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         canvasGroup.blocksRaycasts = true;
         defaultPos = rectTransform.localPosition;
-    }
-    public void OnPointerDown(PointerEventData eventData){
+        inInitialPos = true;
     }
 
      public void OnBeginDrag(PointerEventData eventData){
         canvasGroup.blocksRaycasts = false;
         droppedOnSlot = false;
-        // Create clon
-        clone = Instantiate(gameObject);
-        clone.transform.parent = gameObject.transform.parent;
-        clone.transform.position = gameObject.transform.position;
+        slotAnterior = slot;
+        // Create clon if in initial position only
+        if (inInitialPos) {
+            clone = Instantiate(gameObject);
+            clone.transform.parent = gameObject.transform.parent;
+            clone.transform.position = gameObject.transform.position;
+        } 
+
+    }
+    public void OnPointerDown(PointerEventData eventData){
     }
 
       public void OnDrag(PointerEventData eventData){
@@ -44,20 +52,24 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         canvasGroup.blocksRaycasts = true;
         if (droppedOnSlot){ // if droppedInCorrect slot
             defaultPos = this.rectTransform.localPosition; 
+            // si se ha cambiado de slot
+            if (slotAnterior != null && slot != slotAnterior){
+                // eliminar correct item del slot anterior
+                slotAnterior.GetComponent<InterfaceItemSlot>().removeCorrectItem();
+            }
             if (!string.IsNullOrEmpty(image)){
                 // change image 
-                /*gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(image);
-                gameObject.GetComponent<Image>().rectTransform.sizeDelta = slotSize;*/
-                // change color;
-                gameObject.transform.position = gameObject.transform.position;
+                gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(image);
+                gameObject.GetComponent<Image>().rectTransform.sizeDelta = slotSize;
             }
         } else {
             this.rectTransform.localPosition = defaultPos;   
-            // Delete clon
-            Destroy(clone);
+            // Delete clon if coming from initial position
+            if (inInitialPos) {
+                Destroy(clone);
+            }
         }
     }
-
     public void setName(string n){
         name = n;
     }

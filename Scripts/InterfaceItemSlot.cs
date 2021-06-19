@@ -10,18 +10,28 @@ public class InterfaceItemSlot : MonoBehaviour, IDropHandler
     private int position;
 
   public void OnDrop(PointerEventData eventData){
-       if (eventData.pointerDrag != null){
+      if (eventData.pointerDrag != null){
           eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
       }
-    eventData.pointerDrag.GetComponent<DragAndDrop>().droppedOnSlot = true;
-    this.setCorrectItem(eventData.pointerDrag.GetComponent<DragAndDrop>().name);
-    // cuando s quite el item quitarle el nombre
-    eventData.pointerDrag.GetComponent<DragAndDrop>().image = finalImage; 
-    eventData.pointerDrag.GetComponent<DragAndDrop>().slotSize = gameObject.GetComponent<RectTransform>().sizeDelta;
+      if (!string.IsNullOrEmpty(this.correctItem)) {
+        eventData.pointerDrag.GetComponent<DragAndDrop>().droppedOnSlot = false;
+      } else {
+        eventData.pointerDrag.GetComponent<DragAndDrop>().droppedOnSlot = true;
+        this.setCorrectItem(eventData.pointerDrag.GetComponent<DragAndDrop>().name);
+        eventData.pointerDrag.GetComponent<DragAndDrop>().inInitialPos = false;
+      // cuando se quite el item quitarle el nombre
+        eventData.pointerDrag.GetComponent<DragAndDrop>().image = finalImage; 
+        eventData.pointerDrag.GetComponent<DragAndDrop>().slotSize = gameObject.GetComponent<RectTransform>().sizeDelta;
+        eventData.pointerDrag.GetComponent<DragAndDrop>().slot = gameObject;
+      }
   }
 
   public void setCorrectItem(string name){
       correctItem = name;
+  }
+
+  public void removeCorrectItem() {
+    correctItem = null;
   }
 
   public string getCorrectItem(){

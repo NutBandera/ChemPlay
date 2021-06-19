@@ -60,6 +60,7 @@ public static class SlotTemplate
         numberRowsItems = rows;
     }
 
+
     public static void colocarExerciseItems(int itemsPerRow = -1, int rows = 2) {
         if (itemsPerRow < 0){
             if (exerciseItems.Count == 1){
@@ -137,7 +138,7 @@ public static class SlotTemplate
         // pass ancho y alto
         createEmptyeBase(xElements, yElements, photoName, 100, x, y);
         // put slots
-        colocarSlotsCompleto(x, y, xElements, yElements, xElements*100+200, yElements*100, hide); // pass width and height
+        colocarSlotsCompleto(x, y, xElements, yElements, 700, 500, hide); // pass width and height
         // arreglar esto
         // x,y,xElements,yElements,width,height
     }

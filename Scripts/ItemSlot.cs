@@ -21,6 +21,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
           eventData.pointerDrag.GetComponent<DragAndDrop>().droppedOnSlot = true;
           eventData.pointerDrag.GetComponent<DragAndDrop>().image = finalImage; 
           eventData.pointerDrag.GetComponent<DragAndDrop>().slotSize = gameObject.GetComponent<RectTransform>().sizeDelta;
+          eventData.pointerDrag.GetComponent<DragAndDrop>().inInitialPos = false;
       } else {
           errors++; // no contar si es posición inicial
       }
