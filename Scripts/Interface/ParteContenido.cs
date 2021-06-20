@@ -44,8 +44,8 @@ public class ParteContenido
     public Dictionary<int,string> getSolutions() {
         return solutions;
     }
-
     public void setSolutions(Dictionary<int,string> solutions) {
         this.solutions = solutions;
     }
+
 }

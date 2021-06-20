@@ -4,8 +4,6 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Text.RegularExpressions;
-using SFB;
 
 public class Soluciones : MonoBehaviour
 {
@@ -15,10 +13,11 @@ public class Soluciones : MonoBehaviour
     [SerializeField] private InputField xInput;
     [SerializeField] private InputField yInput;
     private ParteContenido part;
+    private static string selectedBase;
 
     void Start() {
         part = new ParteContenido();
-        this.selectBase(); // what if user doesnt select
+        part.setBaseName(selectedBase);
         dic = new Dictionary<int, string>();
         // permitir quitar elemento arrastrado
         BaseTemplate.setup(panel);
@@ -34,14 +33,6 @@ public class Soluciones : MonoBehaviour
         // maybe separate in two
         BaseTemplate.createItems(CurrentExercise.getItems(), 1, 100, 1500, true); // + pos
     }
-
-     public void selectBase() {
-        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", false); // accepted extions
-        var pathSplitted = Regex.Split(path[0], "Resources/");
-        var elementName = pathSplitted[1].ToString();
-        var baseName = elementName.Split('.')[0];
-        part.setBaseName(baseName);
-    }
     
    public void aceptar() {
        // iterar por slots, crear diccionario
@@ -54,8 +45,8 @@ public class Soluciones : MonoBehaviour
         }
         part.setSolutions(dic);
         CurrentExercise.addContenido(part);
-       // create exercise
-       SceneManager.LoadScene("Scenes/Interface/CrearContenido");
+        SceneManager.LoadScene("Scenes/Interface/CrearContenido");
+        // Set part in scroll
    }
 
    private void clear() {
@@ -103,4 +94,9 @@ public class Soluciones : MonoBehaviour
             slot.setCorrectItem(null);
         }
    }
+
+   public static void setSelectedBase(string name) {
+       selectedBase = name;
+   }
+   
 }

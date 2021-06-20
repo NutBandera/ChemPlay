@@ -10,19 +10,14 @@ using SFB;
 public class CreateExercise : MonoBehaviour
 {
     [SerializeField] private Text selectedEnunciado;
-    [SerializeField] private Text selectedItems;
     [SerializeField] private Button contenidoButton;
-    [SerializeField] private GameObject panel;
     [SerializeField] private GameObject panelItems;
+    [SerializeField] private InputField inputNombre;
     private int xItem = 400;
     private int xCross = 730;
     private float y;
     private List<GameObject> items = new List<GameObject>();
     private List<GameObject> buttons = new List<GameObject>();
-    
-    public void createExercise() {
-        SceneManager.LoadScene("Scenes/ExerciseType1"); // depende del tipo de ejericio
-    }
 
     public void selectEnunciado() {
         var paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", false); // accepted extions
@@ -45,7 +40,7 @@ public class CreateExercise : MonoBehaviour
         var pathSplitted = path[0].Split('/');
         var elementName = pathSplitted[pathSplitted.Length - 1].ToString().Split('.')[0];
 
-        if (!CurrentExercise.getItems().Equals(elementName)) {
+        if (!CurrentExercise.getItems().Contains(elementName)) {
             CurrentExercise.addItem(elementName);
             if (items.Count > 0){
                 y = items[items.Count-1].transform.position.y - 100;
@@ -109,6 +104,7 @@ public class CreateExercise : MonoBehaviour
 
     public void crearContenido() {
         // Go to "Crear contenido" page
+        CurrentExercise.setNombre(inputNombre.text);
         SceneManager.LoadScene("Scenes/Interface/CrearContenido");
     }
 }

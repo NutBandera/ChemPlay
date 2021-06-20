@@ -5,15 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class SwitchScene : MonoBehaviour
 {
-    public void change_scene(string scene_name){
-        SceneManager.LoadScene(scene_name);
-    }
+    [SerializeField] string scene;
 
-     public void showMessage(string message){
-    }
-
-    public void createScene(string name){
-
+    public void switchScene() {
+        SceneManager.LoadScene("Scenes/" + scene);
     }
 
 }
