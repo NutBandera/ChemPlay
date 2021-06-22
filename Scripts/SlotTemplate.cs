@@ -163,7 +163,7 @@ public static class SlotTemplate
     public static void colocarSlotsCompleto(int x, int y, int xElements, int yElements, float width, float height, bool hide) {
         GameObject baseSlot = new GameObject(); // move inside loop
         baseSlot.AddComponent<CanvasGroup>();
-        baseSlot.AddComponent<InterfaceItemSlot>(); 
+        baseSlot.AddComponent<ItemSlot>(); 
         baseSlot.AddComponent<Image>();
         baseSlot.GetComponent<Image>().sprite = Resources.Load<Sprite>("Slots/matrix");
         float sizeX = 0;
@@ -176,6 +176,8 @@ public static class SlotTemplate
         initialPosY, 0f); 
         baseSlot.AddComponent<RectTransform>();
         baseSlot.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX, sizeY);
+        baseSlot.AddComponent<BoxCollider2D>();
+        baseSlot.GetComponent<BoxCollider2D>().size = baseSlot.GetComponent<RectTransform>().sizeDelta;
         if (hide) {
             baseSlot.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
         }
@@ -192,7 +194,7 @@ public static class SlotTemplate
 
                 pos = i*xElements+j;
                 
-                slot.GetComponent<InterfaceItemSlot>().setPosition(pos);
+                slot.GetComponent<ItemSlot>().setPosition(pos);
                 // slot.GetComponent<ItemSlot>().setCorrectItem(); set this when in pos -> create another script
                 //slot.GetComponent<ItemSlot>().setFinalImage("Items-final/"+item.Value);
                 slot.transform.parent = panel.transform;
@@ -226,6 +228,8 @@ public static class SlotTemplate
         plane.transform.position = new Vector3(initialPosX, 
         initialPosY, 0f); 
         plane.AddComponent<RectTransform>();
+        plane.AddComponent<BoxCollider2D>();
+        plane.GetComponent<BoxCollider2D>().size = plane.GetComponent<RectTransform>().sizeDelta;
         if (xElementsPixels < 0) {
             plane.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX, sizeY);
         } else {

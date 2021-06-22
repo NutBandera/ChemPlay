@@ -63,8 +63,12 @@ public static class BaseTemplate
                 item.AddComponent<DragAndDrop>(); 
                 item.GetComponent<DragAndDrop>().setName(images[i]); 
             }
-            
-            
+            item.AddComponent<BoxCollider2D>();
+            item.GetComponent<BoxCollider2D>().isTrigger = true;
+            item.AddComponent<Rigidbody2D>();
+            item.GetComponent<Rigidbody2D>().gravityScale = 0;
+            item.GetComponent<Rigidbody2D>().freezeRotation = true;
+        
             index++;
         }
     }

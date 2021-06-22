@@ -8,62 +8,64 @@ using UnityEngine.UI;
 public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [SerializeField] private Canvas canvas;
-    
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private GameObject clone;
     private Vector3 defaultPos;
-    private bool droppedOnSlot = false;
     private string name;
     private string image;
     private Vector2 slotSize;
     private bool inInitialPos;
+    private bool droppedOnSlot;
+    private Vector2 pos;
+    private Vector2 startPos;
 
-    private void Awake(){
-        rectTransform = GetComponent<RectTransform>();
-        canvasGroup = GetComponent<CanvasGroup>();
-        canvasGroup.blocksRaycasts = true;
-        defaultPos = rectTransform.localPosition;
+    void Start() {
+        startPos = transform.position;
         inInitialPos = true;
+        droppedOnSlot = false;
     }
 
      public void OnBeginDrag(PointerEventData eventData){
-        if (!droppedOnSlot) {
-            canvasGroup.blocksRaycasts = false;
-            // Create clon if in initial position only
-            if (inInitialPos) {
-                clone = Instantiate(gameObject);
-                clone.transform.parent = gameObject.transform.parent;
-                clone.transform.position = gameObject.transform.position;
-            } 
-        } 
+        if (inInitialPos) {
+            clone = Instantiate(gameObject);
+            clone.transform.parent = gameObject.transform.parent;
+            clone.transform.position = gameObject.transform.position;
+            clone.GetComponent<DragAndDrop>().setName(name);
+        }
     }
     public void OnPointerDown(PointerEventData eventData){
     }
 
       public void OnDrag(PointerEventData eventData){
-          if (!droppedOnSlot){
-              rectTransform.anchoredPosition += eventData.delta;
-          }
+        transform.position = Input.mousePosition;
     }
 
      public void OnEndDrag(PointerEventData eventData){
-        canvasGroup.blocksRaycasts = true;
         if (droppedOnSlot){
-            defaultPos = this.rectTransform.localPosition; 
-            if (!string.IsNullOrEmpty(image)){
-                // change image 
-                gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(image);
-                gameObject.GetComponent<Image>().rectTransform.sizeDelta = slotSize;
-            }
+            transform.position = pos;
+            inInitialPos = false;
+            startPos = transform.position;
         } else {
-            this.rectTransform.localPosition = defaultPos;   
-            // Delete clon if coming from initial position
+            transform.position = startPos;
             if (inInitialPos) {
                 Destroy(clone);
             }
         }
     }
+
+     private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.GetComponent<Collider2D>().gameObject.GetComponent<ItemSlot>().getCorrectItem()
+        .Equals(this.getName())) {
+            droppedOnSlot = true;
+            pos = collision.transform.position;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision) {
+        droppedOnSlot = false;
+    }
+
     public string getName(){
         return name;
     }
@@ -93,6 +95,6 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     }
     public void setInInitialPos(bool inInitialPos){
         this.inInitialPos = inInitialPos;
-    }
+    } 
 
 }

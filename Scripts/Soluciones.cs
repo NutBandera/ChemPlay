@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class Soluciones : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
-    private InterfaceItemSlot[] slots;
+    private ItemSlot[] slots;
     private Dictionary<int, string> dic;
     [SerializeField] private InputField xInput;
     [SerializeField] private InputField yInput;
@@ -36,8 +36,8 @@ public class Soluciones : MonoBehaviour
     
    public void aceptar() {
        // iterar por slots, crear diccionario
-        slots = FindObjectsOfType<InterfaceItemSlot>();
-        foreach (InterfaceItemSlot slot in slots)
+        slots = FindObjectsOfType<ItemSlot>();
+        foreach (ItemSlot slot in slots)
         {
            if (!string.IsNullOrEmpty(slot.getCorrectItem())){
                dic.Add(slot.getPosition(), slot.getCorrectItem());
@@ -50,8 +50,8 @@ public class Soluciones : MonoBehaviour
    }
 
    private void clear() {
-       slots = FindObjectsOfType<InterfaceItemSlot>();
-       foreach (InterfaceItemSlot slot in slots) {
+       slots = FindObjectsOfType<ItemSlot>();
+       foreach (ItemSlot slot in slots) {
             Destroy(slot.gameObject);
         }
    }
@@ -89,8 +89,8 @@ public class Soluciones : MonoBehaviour
            if (!item.getInInitialPos())
             Destroy(item.gameObject);
         }
-        slots = FindObjectsOfType<InterfaceItemSlot>();
-        foreach (InterfaceItemSlot slot in slots) {
+        slots = FindObjectsOfType<ItemSlot>();
+        foreach (ItemSlot slot in slots) {
             slot.setCorrectItem(null);
         }
    }
