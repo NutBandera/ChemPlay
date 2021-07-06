@@ -3,22 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
+using SFB;
 
 public static class SaveManager
 {
    public static void SaveToJson()
     {
-        Exercises exercises = new Exercises();
-        List<Exercise> exercisesList = CurrentExercise.getExercises();
-        exercises.exercises = exercisesList;
- 
-        string json = JsonUtility.ToJson(exercises, true);
-        File.WriteAllText("Assets/Resources/Ejercicios.json", json); // use SFB
+        if (CurrentExercise.getExercises().Count > 0) {
+            Exercises exercises = new Exercises();
+            List<Exercise> exercisesList = CurrentExercise.getExercises();
+            exercises.exercises = exercisesList;
+    
+            string json = JsonUtility.ToJson(exercises, true);
+
+            var extensionList = new [] {
+                new ExtensionFilter("JSON", "json")
+            };
+            var path = StandaloneFileBrowser.SaveFilePanel("Save File", "", "exercises", extensionList);
+
+            File.WriteAllText(path, json);
+        } else {
+            // show message
+        }
+        
     }
  
-    public static void LoadFromJson()
+    public static List<Exercise> LoadFromJson()
     {
-        string json = File.ReadAllText("Assets/Resources/Ejercicios.json");
+        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "json", false);
+        string json = File.ReadAllText(path[0]);
         Exercises data = JsonUtility.FromJson<Exercises>(json);
+        return data.getExercises();
     }
 }

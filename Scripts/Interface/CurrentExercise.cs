@@ -69,6 +69,9 @@ public static class CurrentExercise
     public static List<Exercise> getExercises() {
         return exercises;
     }
+    public static void setExercises(List<Exercise> _exercises) {
+        exercises = _exercises;
+    }
     public static void removeExercise(string name) {
         Exercise exercise = findExerciseByName(name);
         if (exercise != null){

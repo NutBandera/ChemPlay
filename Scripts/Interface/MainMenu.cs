@@ -18,6 +18,13 @@ public class MainMenu : MonoBehaviour
     }
     public void guardarEjercicios() {
         SaveManager.SaveToJson();
-        //SaveManager.LoadFromJson();
+    }
+    public void cargarEjercicios() {
+        // Cargar
+        List<Exercise> exercises = SaveManager.LoadFromJson();
+        // Set
+        CurrentExercise.setExercises(exercises);
+        // Probar
+        SceneManager.LoadScene("Scenes/Interface/ProbarEjercicios");
     }
 }
