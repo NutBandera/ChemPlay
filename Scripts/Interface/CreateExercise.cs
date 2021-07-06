@@ -9,28 +9,29 @@ using SFB;
 
 public class CreateExercise : MonoBehaviour
 {
-    [SerializeField] private Text selectedEnunciado;
+    [SerializeField] private GameObject selectedEnunciado;
     [SerializeField] private Button contenidoButton;
     [SerializeField] private GameObject panelItems;
     [SerializeField] private InputField inputNombre;
+    [SerializeField] private Text noItemsText;
     private int xItem = 400;
     private int xCross = 730;
     private float y;
     private List<GameObject> items = new List<GameObject>();
     private List<GameObject> buttons = new List<GameObject>();
 
+    void Start() {
+        CurrentExercise.reset();
+    }
+
     public void selectEnunciado() {
         var paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", false); // accepted extions
         // Comprobar que es una ruta válida
         // if selected 
-        // let choose one only
-        var pathSplitted = paths[0].Split('/');
-        var elementName = pathSplitted[pathSplitted.Length - 1].ToString();
-        CurrentExercise.setEnunciado("Enunciados/" + elementName.Split('.')[0]); // removes extension
-        // show file selected
-        selectedEnunciado.text = elementName; // set image ?
-
-         if (CurrentExercise.getItems().Count > 0) {
+        var element = Regex.Split(paths[0], "Resources/")[1].ToString().Split('.')[0];
+        CurrentExercise.setEnunciado(element);
+        selectedEnunciado.GetComponent<Image>().sprite = Resources.Load<Sprite>(element);
+        if (items.Count > 0 && !string.IsNullOrEmpty(inputNombre.text)) {
             contenidoButton.interactable = true;
         } 
     }
@@ -69,12 +70,14 @@ public class CreateExercise : MonoBehaviour
             items.Add(item);
             buttons.Add(button);
 
+            noItemsText.gameObject.SetActive(false);
+
         } else {
             // show message
             Debug.Log("Ya has seleccionado ese elemento");
         }
 
-        if (!string.IsNullOrEmpty(CurrentExercise.getEnunciado())) {
+        if (!string.IsNullOrEmpty(CurrentExercise.getEnunciado()) && !string.IsNullOrEmpty(inputNombre.text)) {
             contenidoButton.interactable = true;
         } 
     }
@@ -100,11 +103,24 @@ public class CreateExercise : MonoBehaviour
         }
         items.Remove(item);
         buttons.Remove(button);
-    }
 
+        if (items.Count == 0){
+            contenidoButton.interactable = false;
+            noItemsText.gameObject.SetActive(true);
+        }
+    }
     public void crearContenido() {
         // Go to "Crear contenido" page
         CurrentExercise.setNombre(inputNombre.text);
         SceneManager.LoadScene("Scenes/Interface/CrearContenido");
+    }
+    public void nameChanged() {
+        if (string.IsNullOrEmpty(inputNombre.text)){
+            contenidoButton.interactable = false;
+        } else {
+            if (items.Count > 0 && !string.IsNullOrEmpty(CurrentExercise.getEnunciado())) {
+                contenidoButton.interactable = true;
+            }
+        }
     }
 }

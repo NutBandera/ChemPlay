@@ -8,11 +8,17 @@ public class VerEjercicios : MonoBehaviour
     private List<GameObject> exercises = new List<GameObject>();
     private List<GameObject> buttons = new List<GameObject>();
     [SerializeField] private GameObject panelParts;
+    [SerializeField] private Text noExercisesText;
     private int xPart = 400;
     private int xCross = 950;
     private float y;
     void Start()
     {
+        if (exercises.Count > 0) {
+            noExercisesText.gameObject.SetActive(false);
+        } else {
+            noExercisesText.gameObject.SetActive(true);
+        }
         foreach (Exercise exercise in CurrentExercise.getExercises()){
             this.addExercise(exercise.getNombre());
         }
@@ -48,11 +54,13 @@ public class VerEjercicios : MonoBehaviour
 
         exercises.Add(exercise);
         buttons.Add(button);
+
+         noExercisesText.gameObject.SetActive(false);
     }
 
-    private void deletePart(string partName, GameObject part, GameObject button) {
+    private void deletePart(string name, GameObject part, GameObject button) {
         // Delete from list
-        CurrentExercise.removePart(partName);
+        CurrentExercise.removeExercise(name);
         // Delete from scroll
         Destroy(button.gameObject);
         Destroy(part.gameObject);
@@ -69,5 +77,9 @@ public class VerEjercicios : MonoBehaviour
         }
         exercises.Remove(part);
         buttons.Remove(button);
+
+        if (exercises.Count == 0) {
+            noExercisesText.gameObject.SetActive(true);
+        } 
     }
 }

@@ -42,14 +42,20 @@ public static class CurrentExercise
 
     public static void removePart(string partName) {
         // search by name
-        ParteContenido part = findByName(partName);
+        ParteContenido part = findPartByName(partName);
         if (part != null){
             contenido.Remove(part);
         }
     }
-    private static ParteContenido findByName(string name) {
+    private static ParteContenido findPartByName(string name) {
         foreach (ParteContenido part in contenido) {
             if (name.Equals(part.getBaseName())) return part;
+        }
+        return null;
+    }
+    private static Exercise findExerciseByName(string name) {
+        foreach (Exercise exercise in exercises) {
+            if (name.Equals(exercise.getNombre())) return exercise;
         }
         return null;
     }
@@ -63,12 +69,24 @@ public static class CurrentExercise
     public static List<Exercise> getExercises() {
         return exercises;
     }
-
+    public static void removeExercise(string name) {
+        Exercise exercise = findExerciseByName(name);
+        if (exercise != null){
+            exercises.Remove(exercise);
+        }
+    }
     public static void setNombre(string nombre) {
         _nombre = nombre;
     }
     public static string getNombre() {
         return _nombre;
+    }
+    public static void reset() {
+        _nombre = "";
+        _enunciado = "";
+        _items = new List<string>();
+        _solutions = new Dictionary<int, string>();
+        contenido = new List<ParteContenido>();
     }
 
 }

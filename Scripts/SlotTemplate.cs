@@ -235,7 +235,7 @@ public static class SlotTemplate
         } else {
             plane.GetComponent<RectTransform>().sizeDelta = new Vector2(width/xElementsPixels, height/yElementsPixels);
         }
-       // plane.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
+        plane.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
         plane.transform.parent = panel.transform;
         int[] coordinates;
         foreach (var item in slots){
@@ -244,7 +244,6 @@ public static class SlotTemplate
             GameObject gridPlane = (GameObject)Object.Instantiate(plane);
             GameObject gridPlane2 = (GameObject)Object.Instantiate(gridPlane);
 
-            Debug.Log(item.Value);
 
             if (item.Value.Contains("double")){
                 // clonar
@@ -314,6 +313,10 @@ public static class SlotTemplate
                 index++;
             }
         }
+    }
+
+    public static void resetExerciseItems() {
+        exerciseItems = new List<GameObject>();
     }
 
   public static void createSlotsFromNumberOfElements(Dictionary <int, string> slots, float x, 

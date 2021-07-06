@@ -1,0 +1,28 @@
+{
+    "exercises": [
+        {
+            "nombre": "Ejercicio",
+            "enunciado": "Tema1/Parte1/ejercicio1/enunciado1",
+            "items": [
+                "8",
+                "10"
+            ],
+            "contenido": [
+                {
+                    "width": 20,
+                    "height": 20,
+                    "pixelsX": 5,
+                    "pixelsY": 5,
+                    "baseName": "Tema1/Parte1/ejercicio1/base1"
+                },
+                {
+                    "width": 5,
+                    "height": 7,
+                    "pixelsX": -1,
+                    "pixelsY": -1,
+                    "baseName": "Tema1/Parte1/ejercicio1/base3"
+                }
+            ]
+        }
+    ]
+}

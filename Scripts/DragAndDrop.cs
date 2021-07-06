@@ -46,6 +46,7 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
             transform.position = pos;
             inInitialPos = false;
             startPos = transform.position;
+            // destroy and set image
         } else {
             transform.position = startPos;
             if (inInitialPos) {
@@ -56,7 +57,7 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
      private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.GetComponent<Collider2D>().gameObject.GetComponent<ItemSlot>().getCorrectItem()
-        .Equals(this.getName())) {
+        .Equals(this.getName())) {// contains
             droppedOnSlot = true;
             pos = collision.transform.position;
         }

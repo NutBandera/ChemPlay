@@ -15,6 +15,7 @@ public class CrearContenido : MonoBehaviour
     private List<GameObject> parts = new List<GameObject>();
     private List<GameObject> buttons = new List<GameObject>();
     [SerializeField] private GameObject panelParts;
+    [SerializeField] private Text noContentText;
 
     public void Start() {
         foreach (ParteContenido part in CurrentExercise.getContenido()) {
@@ -73,8 +74,10 @@ public class CrearContenido : MonoBehaviour
         parts.Add(part);
         buttons.Add(button);
 
+        noContentText.gameObject.SetActive(false);
+
         // panelParts.transform.localCorners[0].Set(0.5f, 0.5f, 1f);
-        // change bottom????
+        // change bottom
     }
      private void deletePart(string partName, GameObject part, GameObject button) {
         // Delete from list
@@ -95,6 +98,10 @@ public class CrearContenido : MonoBehaviour
         }
         parts.Remove(part);
         buttons.Remove(button);
+
+        if (parts.Count == 0) {
+            noContentText.gameObject.SetActive(true);
+        }
     }
 
 }

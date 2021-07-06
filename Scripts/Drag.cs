@@ -22,7 +22,6 @@ public class Drag : MonoBehaviour
     public void OnMouseUp() {
         isDragging = false;
         if (inUse){
-            Debug.Log("WORKS");
             transform.position = pos;
         }
     }

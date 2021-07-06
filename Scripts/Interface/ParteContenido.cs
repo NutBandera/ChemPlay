@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class ParteContenido
 {
-    private int width;
-    private int height;
-    private int pixelsX;
-    private int pixelsY;
-    private string baseName;
-    private Dictionary<int, string> solutions;
+    public int width;
+    public int height;
+    public int pixelsX;
+    public int pixelsY;
+    public string baseName;
+    public Dictionary<int, string> solutions;
 
     public int getWidth() {
         return width;

@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class Exercise
 {
-    private string nombre;
-    private string enunciado;
-    private List<string> items = new List<string>();
-    private Dictionary<int, string> solutions;
-    private List<ParteContenido> contenido = new List<ParteContenido>();
+    public string nombre;
+    public string enunciado;
+    public List<string> items = new List<string>();
+    public Dictionary<int, string> solutions;
+    public List<ParteContenido> contenido = new List<ParteContenido>();
 
     public Exercise(string nombre, string enunciado, List<string> items, Dictionary<int, string> solutions,
     List<ParteContenido> contenido) {
@@ -19,7 +19,21 @@ public class Exercise
         this.contenido = contenido;
     }
 
+    public Exercise() {}
+
     public string getNombre() {
         return nombre;
+    }
+    public void setNombre(string nombre) {
+        this.nombre = nombre;
+    }
+    public string getEnunciado() {
+        return enunciado;
+    }
+    public List<ParteContenido> getContenido() {
+        return contenido;
+    }
+    public List<string> getItems() {
+        return items;
     }
 }
