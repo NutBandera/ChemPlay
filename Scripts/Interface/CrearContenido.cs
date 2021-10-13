@@ -16,8 +16,10 @@ public class CrearContenido : MonoBehaviour
     private List<GameObject> buttons = new List<GameObject>();
     [SerializeField] private GameObject panelParts;
     [SerializeField] private Text noContentText;
-
+    [SerializeField] GameObject logoutConfirmation;
+    
     public void Start() {
+        logoutConfirmation.SetActive(false);
         foreach (ParteContenido part in CurrentExercise.getContenido()) {
             this.addPart(part.getBaseName());
         }
@@ -33,8 +35,9 @@ public class CrearContenido : MonoBehaviour
         }
     }
     public void createExercise() {
-        Exercise exercise = new Exercise(CurrentExercise.getNombre(), CurrentExercise.getEnunciado(), CurrentExercise.getItems(),
-        CurrentExercise.getSolutions(), CurrentExercise.getContenido());
+        // dont allow if no content
+        Exercise exercise = new Exercise(CurrentExercise.getNombre(),
+        CurrentExercise.getEnunciado(), CurrentExercise.getItems(), CurrentExercise.getContenido());
         CurrentExercise.addExercise(exercise);
         SceneManager.LoadScene("Scenes/ExerciseType1");
     }
@@ -102,6 +105,16 @@ public class CrearContenido : MonoBehaviour
         if (parts.Count == 0) {
             noContentText.gameObject.SetActive(true);
         }
+    }
+
+    public void logout() {
+        logoutConfirmation.SetActive(true);
+    }
+    public void yesClicked() {
+        SceneManager.LoadScene("Scenes/Interface/RolMenu");
+    }
+    public void noClicked() {
+        logoutConfirmation.SetActive(false);
     }
 
 }

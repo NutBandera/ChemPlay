@@ -12,6 +12,7 @@ public class Soluciones : MonoBehaviour
     private Dictionary<int, string> dic;
     [SerializeField] private InputField xInput;
     [SerializeField] private InputField yInput;
+    [SerializeField] private GameObject logoutConfirmation;
     private ParteContenido part;
     private static string selectedBase;
 
@@ -22,6 +23,8 @@ public class Soluciones : MonoBehaviour
         // permitir quitar elemento arrastrado
         BaseTemplate.setup(panel);
         SlotTemplate.setup(panel);
+
+        logoutConfirmation.SetActive(false);
 
         part.setWidth(5);
         part.setHeight(5);
@@ -98,5 +101,14 @@ public class Soluciones : MonoBehaviour
    public static void setSelectedBase(string name) {
        selectedBase = name;
    }
+    public void logout() {
+        logoutConfirmation.SetActive(true);
+    }
+    public void yesClicked() {
+        SceneManager.LoadScene("Scenes/Interface/RolMenu");
+    }
+    public void noClicked() {
+        logoutConfirmation.SetActive(false);
+    }
    
 }

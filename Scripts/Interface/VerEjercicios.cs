@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class VerEjercicios : MonoBehaviour
 {
     private List<GameObject> exercises = new List<GameObject>();
     private List<GameObject> buttons = new List<GameObject>();
     [SerializeField] private GameObject panelParts;
     [SerializeField] private Text noExercisesText;
+    [SerializeField] private GameObject logoutConfirmation;
     private int xPart = 400;
     private int xCross = 950;
     private float y;
     void Start()
     {
+        logoutConfirmation.SetActive(false);
         if (exercises.Count > 0) {
             noExercisesText.gameObject.SetActive(false);
         } else {
@@ -81,5 +84,14 @@ public class VerEjercicios : MonoBehaviour
         if (exercises.Count == 0) {
             noExercisesText.gameObject.SetActive(true);
         } 
+    }
+     public void logout() {
+        logoutConfirmation.SetActive(true);
+    }
+    public void yesClicked() {
+        SceneManager.LoadScene("Scenes/Interface/RolMenu");
+    }
+    public void noClicked() {
+        logoutConfirmation.SetActive(false);
     }
 }

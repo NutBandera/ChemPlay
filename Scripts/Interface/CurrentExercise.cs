@@ -7,7 +7,6 @@ public static class CurrentExercise
     private static string _nombre;
     private static string _enunciado;
     private static List<string> _items = new List<string>();
-    private static Dictionary<int, string> _solutions;
     private static List<ParteContenido> contenido = new List<ParteContenido>();
     private static List<Exercise> exercises = new List<Exercise>();
     
@@ -26,14 +25,6 @@ public static class CurrentExercise
 
     public static void removeItem(string item) {
         _items.Remove(item);
-    }
-
-    public static void setSolutions(Dictionary<int, string> solutions) {
-        _solutions = solutions;
-    }
-
-     public static Dictionary<int, string> getSolutions() {
-        return _solutions;
     }
 
     public static void addContenido(ParteContenido parte) {
@@ -88,7 +79,6 @@ public static class CurrentExercise
         _nombre = "";
         _enunciado = "";
         _items = new List<string>();
-        _solutions = new Dictionary<int, string>();
         contenido = new List<ParteContenido>();
     }
 

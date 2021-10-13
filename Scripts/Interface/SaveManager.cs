@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using UnityEngine.UI;
 using SFB;
+using Newtonsoft.Json;
 
 public static class SaveManager
 {
@@ -13,8 +12,8 @@ public static class SaveManager
             Exercises exercises = new Exercises();
             List<Exercise> exercisesList = CurrentExercise.getExercises();
             exercises.exercises = exercisesList;
-    
-            string json = JsonUtility.ToJson(exercises, true);
+
+            string json = JsonConvert.SerializeObject(exercises);
 
             var extensionList = new [] {
                 new ExtensionFilter("JSON", "json")
@@ -22,6 +21,7 @@ public static class SaveManager
             var path = StandaloneFileBrowser.SaveFilePanel("Save File", "", "exercises", extensionList);
 
             File.WriteAllText(path, json);
+
         } else {
             // show message
         }
@@ -30,9 +30,10 @@ public static class SaveManager
  
     public static List<Exercise> LoadFromJson()
     {
-        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "json", false);
+        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "json", false); // JSON too
+
         string json = File.ReadAllText(path[0]);
-        Exercises data = JsonUtility.FromJson<Exercises>(json);
+        Exercises data = JsonConvert.DeserializeObject<Exercises>(json);
         return data.getExercises();
     }
 }
