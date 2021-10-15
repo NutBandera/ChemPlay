@@ -16,9 +16,11 @@ public class CrearContenido : MonoBehaviour
     private List<GameObject> buttons = new List<GameObject>();
     [SerializeField] private GameObject panelParts;
     [SerializeField] private GameObject panel;
+    [SerializeField] private Button buttonCreateExercise;
     private Button[] panelButtons;
     private InputField[] inputFields;
     [SerializeField] GameObject dialogMessage;
+    [SerializeField] GameObject limitPartsMessage;
     [SerializeField] private Text noContentText;
     private string partName;
     private GameObject part;
@@ -29,17 +31,23 @@ public class CrearContenido : MonoBehaviour
             this.addPart(part.getBaseName());
         }
         dialogMessage.SetActive(false);
+        limitPartsMessage.SetActive(false);
         panelButtons = panel.GetComponentsInChildren<Button>();
         inputFields = panel.GetComponentsInChildren<InputField>();
     }
     public void addSolutions() {
-        // Examinar
-        var selectedBase = this.selectBase();
-        // Si el path no es null -> go to "Soluciones" page
-        if (!string.IsNullOrEmpty(selectedBase)){
-            Soluciones.setSelectedBase(selectedBase);
-            
-            SceneManager.LoadScene("Scenes/Interface/Soluciones");
+         if (parts.Count < 6) {
+            // Examinar
+            var selectedBase = this.selectBase();
+            // Si el path no es null -> go to "Soluciones" page
+            if (!string.IsNullOrEmpty(selectedBase)){
+                Soluciones.setSelectedBase(selectedBase);
+                
+                SceneManager.LoadScene("Scenes/Interface/Soluciones");
+            }
+        } else  {
+            limitPartsMessage.SetActive(true);
+            deactivateBasePanel();
         }
     }
     public void yesDeleteClicked() {
@@ -62,14 +70,20 @@ public class CrearContenido : MonoBehaviour
         parts.Remove(part);
         buttons.Remove(button);
 
-        if (parts.Count == 0) {
-            noContentText.gameObject.SetActive(true);
-        }
         dialogMessage.SetActive(false);
         activateBasePanel();
+
+        if (parts.Count == 0) {
+            noContentText.gameObject.SetActive(true);
+            buttonCreateExercise.interactable = false;
+        }
     }
     public void noDeleteClicked() {
         dialogMessage.SetActive(false);
+        activateBasePanel();
+    }
+    public void aceptarClicked() {
+        limitPartsMessage.SetActive(false);
         activateBasePanel();
     }
     public void deactivateBasePanel() {
@@ -92,7 +106,6 @@ public class CrearContenido : MonoBehaviour
         SceneManager.LoadScene("Scenes/Interface/NuevoEjercicio");
     }
     public void createExercise() {
-        // dont allow if no content
         Exercise exercise = new Exercise(CurrentExercise.getNombre(),
         CurrentExercise.getEnunciado(), CurrentExercise.getItems(), CurrentExercise.getContenido());
         CurrentExercise.addExercise(exercise);
@@ -128,7 +141,7 @@ public class CrearContenido : MonoBehaviour
         button.AddComponent<Button>();
         button.transform.position = new Vector3(xCross, y, 0f); 
         button.AddComponent<Image>();
-        button.GetComponent<Image>().sprite = Resources.Load<Sprite>("cross");
+        button.GetComponent<Image>().sprite = Resources.Load<Sprite>("cross"); //TODO ???
         button.GetComponent<Button>().onClick.AddListener(delegate{deletePart(partName, part, button);});
 
         parts.Add(part);
@@ -137,7 +150,7 @@ public class CrearContenido : MonoBehaviour
         noContentText.gameObject.SetActive(false);
 
         // panelParts.transform.localCorners[0].Set(0.5f, 0.5f, 1f);
-        // change bottom
+        buttonCreateExercise.interactable = true;
     }
      private void deletePart(string partName, GameObject part, GameObject button) {
         this.partName = partName;

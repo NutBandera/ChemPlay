@@ -81,5 +81,8 @@ public static class CurrentExercise
         _items = new List<string>();
         contenido = new List<ParteContenido>();
     }
+    public static void resetExercises() {
+        exercises = new List<Exercise>();
+    }
 
 }

@@ -11,6 +11,8 @@ public class Soluciones : MonoBehaviour
     private Button[] panelButtons;
     private InputField[] inputFields;
     [SerializeField] GameObject dialogMessage;
+    [SerializeField] GameObject incorrectFormatMessage;
+    [SerializeField] GameObject changeMatrixSizeMessage;
     private ItemSlot[] slots;
     private Dictionary<int, string> dic;
     [SerializeField] private InputField xInput;
@@ -20,6 +22,8 @@ public class Soluciones : MonoBehaviour
 
     void Start() {
         dialogMessage.SetActive(false);
+        incorrectFormatMessage.SetActive(false);
+        changeMatrixSizeMessage.SetActive(false);
         panelButtons = panel.GetComponentsInChildren<Button>();
         inputFields = panel.GetComponentsInChildren<InputField>();
 
@@ -64,7 +68,12 @@ public class Soluciones : MonoBehaviour
    }
 
    public void yesClearClicked() {
-      var items = FindObjectsOfType<InterfaceDragAndDrop>();
+        clearItems();
+        dialogMessage.SetActive(false);
+        activateBasePanel();
+   }
+   private void clearItems() {
+       var items = FindObjectsOfType<InterfaceDragAndDrop>();
        foreach (InterfaceDragAndDrop item in items) {
            if (!item.getInInitialPos())
             Destroy(item.gameObject);
@@ -73,11 +82,13 @@ public class Soluciones : MonoBehaviour
         foreach (ItemSlot slot in slots) {
             slot.setCorrectItem(null);
         }
+   }
+   public void noClearClicked() {
         dialogMessage.SetActive(false);
         activateBasePanel();
    }
-   public void noClearClicked() {
-       dialogMessage.SetActive(false);
+   public void aceptarClicked() {
+        incorrectFormatMessage.SetActive(false);
         activateBasePanel();
    }
      public void deactivateBasePanel() {
@@ -96,20 +107,39 @@ public class Soluciones : MonoBehaviour
             inputField.interactable = true;
         }
     }
-
-   public void changeMatrixSize() {
-        // limite 25
-        // check not blank or negative
-       // look for better way
-       // eliminar lo anterior
-       this.clear();
-       SlotTemplate.colocarSlotsCompleto(450, 1000, int.Parse(xInput.text), int.Parse(yInput.text), 700, 500, false);
-    
-       part.setPixelsX(-1);
-       part.setPixelsY(-1);
-       part.setWidth(int.Parse(xInput.text));
-       part.setHeight(int.Parse(yInput.text));
-       this.clearItems();
+    public void changeMatrixSizeClicked() {
+        changeMatrixSizeMessage.SetActive(true);
+    }
+    public void changeSizeYesClicked() {
+        changeMatrixSize();
+        changeMatrixSizeMessage.SetActive(false);
+        activateBasePanel();
+    }
+    public void changeSizeNoClicked() {
+        changeMatrixSizeMessage.SetActive(false);
+        activateBasePanel();
+    }
+   private void changeMatrixSize() {
+       if (string.IsNullOrEmpty(xInput.text) || string.IsNullOrEmpty(yInput.text)){
+           incorrectFormatMessage.SetActive(true);
+           deactivateBasePanel();
+       } else {
+            var x = int.Parse(xInput.text);
+            var y = int.Parse(yInput.text);
+            if (x > 25 || y > 25 || x < 1 || y < 1) {
+                incorrectFormatMessage.SetActive(true);
+                deactivateBasePanel();
+            } else {
+                this.clear();
+                    SlotTemplate.colocarSlotsCompleto(450, 1000, int.Parse(xInput.text), int.Parse(yInput.text), 700, 500, false);
+                    
+                    part.setPixelsX(-1);
+                    part.setPixelsY(-1);
+                    part.setWidth(int.Parse(xInput.text));
+                    part.setHeight(int.Parse(yInput.text));
+                    this.clearItems();
+            }
+       }
    }
 
    public void changeToPixels() {
@@ -122,11 +152,10 @@ public class Soluciones : MonoBehaviour
    }
  
    public void cancelar() {
-       // go back to "crear contenido" page
        SceneManager.LoadScene("Scenes/Interface/CrearContenido");
    }
 
-   public void clearItems() {
+   public void clearItemsClicked() {
        dialogMessage.SetActive(true);
        deactivateBasePanel();
    }
