@@ -99,7 +99,7 @@ public class CrearContenido : MonoBehaviour
         SceneManager.LoadScene("Scenes/ExerciseType1");
     }
     public string selectBase() {
-        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", false); // accepted extions
+        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", false); // accepted extentions
         var pathSplitted = Regex.Split(path[0], "Resources/");
         var elementName = pathSplitted[1].ToString();
         // si ya existe -> mensaje + return null

@@ -14,6 +14,12 @@ public class CreateExercise : MonoBehaviour
     [SerializeField] private GameObject panelItems;
     [SerializeField] private InputField inputNombre;
     [SerializeField] private Text noItemsText;
+    [SerializeField] private GameObject panel;
+    private Button[] panelButtons;
+    private InputField[] inputFields;
+    [SerializeField] GameObject dialogMessage;
+    [SerializeField] GameObject itemsLimitMessage;
+    [SerializeField] GameObject itemAlreadyAddedMessage;
     private int xItem = 400;
     private int xCross = 730;
     private float y;
@@ -22,6 +28,33 @@ public class CreateExercise : MonoBehaviour
 
     void Start() {
         CurrentExercise.reset();
+        dialogMessage.SetActive(false);
+        itemsLimitMessage.SetActive(false);
+        itemAlreadyAddedMessage.SetActive(false);
+        panelButtons = panel.GetComponentsInChildren<Button>();
+        inputFields = panel.GetComponentsInChildren<InputField>();
+    }
+    public void aceptarClicked() {
+       dialogMessage.SetActive(false);
+       itemsLimitMessage.SetActive(false);
+       itemAlreadyAddedMessage.SetActive(false);
+       activateBasePanel();
+   }
+     public void deactivateBasePanel() {
+        foreach (Button button in panelButtons) {
+            button.interactable = false;
+        }
+        foreach (InputField inputField in inputFields) {
+            inputField.interactable = false;
+        }
+    }
+    public void activateBasePanel() {
+         foreach (Button button in panelButtons) {
+            button.interactable = true;
+        }
+        foreach (InputField inputField in inputFields) {
+            inputField.interactable = true;
+        }
     }
 
     public void selectEnunciado() {
@@ -36,50 +69,56 @@ public class CreateExercise : MonoBehaviour
         } 
     }
 
-    public void selectItems() {
-        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", true);
-        var pathSplitted = path[0].Split('/');
-        var elementName = pathSplitted[pathSplitted.Length - 1].ToString().Split('.')[0];
+    public void addItem() {
+        if (items.Count < 12) {
+            var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", true);
+            var pathSplitted = path[0].Split('/');
+            var elementName = pathSplitted[pathSplitted.Length - 1].ToString().Split('.')[0];
 
-        if (!CurrentExercise.getItems().Contains(elementName)) {
-            CurrentExercise.addItem(elementName);
-            if (items.Count > 0){
-                y = items[items.Count-1].transform.position.y - 100;
+            if (!CurrentExercise.getItems().Contains(elementName)) {
+                CurrentExercise.addItem(elementName);
+                if (items.Count > 0){
+                    y = items[items.Count-1].transform.position.y - 100;
+                } else {
+                    y = 600;
+                }
+                // Crear item
+                GameObject item = new GameObject();
+                item.AddComponent<Image>();
+                item.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/"+elementName);
+                item.transform.position = new Vector3(xItem, y, 0f);
+                item.transform.parent = panelItems.transform;
+                item.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80); 
+
+                // Create delete button and associate it with the element
+                GameObject button = new GameObject();
+                button.transform.parent = panelItems.transform;
+                button.AddComponent<RectTransform>();
+                button.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80); 
+                button.AddComponent<Button>();
+                button.transform.position = new Vector3(xCross, y, 0f); 
+                button.AddComponent<Image>();
+                button.GetComponent<Image>().sprite = Resources.Load<Sprite>("cross");
+                button.GetComponent<Button>().onClick.AddListener(delegate{deleteItem(elementName, item, button);});
+
+                items.Add(item);
+                buttons.Add(button);
+
+                noItemsText.gameObject.SetActive(false);
+
             } else {
-                y = 600;
+                itemAlreadyAddedMessage.SetActive(true);
+                deactivateBasePanel();
             }
-            // Crear item
-            GameObject item = new GameObject();
-            item.AddComponent<Image>();
-            item.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/"+elementName);
-            item.transform.position = new Vector3(xItem, y, 0f);
-            item.transform.parent = panelItems.transform;
-            item.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80); 
 
-            // Create delete button and associate it with the element
-            GameObject button = new GameObject();
-            button.transform.parent = panelItems.transform;
-            button.AddComponent<RectTransform>();
-            button.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80); 
-            button.AddComponent<Button>();
-            button.transform.position = new Vector3(xCross, y, 0f); 
-            button.AddComponent<Image>();
-            button.GetComponent<Image>().sprite = Resources.Load<Sprite>("cross");
-	        button.GetComponent<Button>().onClick.AddListener(delegate{deleteItem(elementName, item, button);});
-
-            items.Add(item);
-            buttons.Add(button);
-
-            noItemsText.gameObject.SetActive(false);
-
+            if (!string.IsNullOrEmpty(CurrentExercise.getEnunciado()) && !string.IsNullOrEmpty(inputNombre.text)) {
+                contenidoButton.interactable = true;
+            } 
         } else {
             // show message
-            Debug.Log("Ya has seleccionado ese elemento");
+            itemsLimitMessage.SetActive(true);
+            deactivateBasePanel();
         }
-
-        if (!string.IsNullOrEmpty(CurrentExercise.getEnunciado()) && !string.IsNullOrEmpty(inputNombre.text)) {
-            contenidoButton.interactable = true;
-        } 
     }
 
     private void deleteItem(string elementName, GameObject item, GameObject button) {
@@ -111,8 +150,14 @@ public class CreateExercise : MonoBehaviour
     }
     public void crearContenido() {
         // Go to "Crear contenido" page
-        CurrentExercise.setNombre(inputNombre.text);
-        SceneManager.LoadScene("Scenes/Interface/CrearContenido");
+        // Comprobar que el nombre está entre 3 y 20 caracteres
+        if (inputNombre.text.Length < 3 || inputNombre.text.Length > 20) {
+            dialogMessage.SetActive(true);
+            deactivateBasePanel();
+        } else {
+            CurrentExercise.setNombre(inputNombre.text);
+            SceneManager.LoadScene("Scenes/Interface/CrearContenido");
+        }
     }
     public void nameChanged() {
         if (string.IsNullOrEmpty(inputNombre.text)){

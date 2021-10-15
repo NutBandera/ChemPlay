@@ -28,8 +28,8 @@ public class ExerciseType1 : MonoBehaviour
             index, part.getWidth(), part.getHeight(), part.getPixelsX(), part.getPixelsY());
             index++;
         }
-         // create exercise items
-        BaseTemplate.createItems(CurrentExercise.getItems(), 1, 100); // number of lines !!!! -> create another method that does it alone?
+
+        BaseTemplate.createItems(CurrentExercise.getItems(), 1, 100);
 
     }
 }

@@ -37,22 +37,35 @@ public static class BaseTemplate
         slot.transform.parent = panel.transform;
     }
 
-      public static void createItems(List<string> images, int numeroFilas, int size, int y = 0, bool isInterface = false){ 
-        var nItemsPerRow = images.Count/numeroFilas;
-        var pos = Screen.width/(nItemsPerRow+1)+50; 
+      public static void createItems(List<string> images, int size, int y = 0, bool isInterface = false){ 
+          var numeroFilas = 0;
+        if (images.Count < 6){
+            numeroFilas = 1;
+        } else {
+            numeroFilas = 2;
+        }
+        var nItemsPerRow = 0;
+        // Si el número de elementos es par
+        if (images.Count%2 == 0) {
+            nItemsPerRow= images.Count/numeroFilas;
+        } else {
+            nItemsPerRow= images.Count/numeroFilas + 1;
+        }
+        // check impares
+        var pos = Screen.width/(nItemsPerRow+1); 
         if (y == 0){
             y = Screen.height-Screen.height/3-100;
         }
         var index = 0;
         for (int i=0; i<images.Count; i++){
             if (i == nItemsPerRow){
-                y -= 100;
+                y -= 150;
                 index = 0;
             }
             GameObject item = new GameObject();
             item.AddComponent<Image>();
             item.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/"+images[i]);
-            item.transform.position = new Vector3(pos+(index+1)*100, y, 0f);
+            item.transform.position = new Vector3(pos+(index+1)*150, y, 0f);
             item.transform.parent = panel.transform;
             item.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size); 
             item.AddComponent<CanvasGroup>();

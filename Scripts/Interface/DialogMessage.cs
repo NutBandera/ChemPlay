@@ -15,7 +15,7 @@ public class DialogMessage : MonoBehaviour
         panelButtons = basePanel.GetComponentsInChildren<Button>();
         inputFields = basePanel.GetComponentsInChildren<InputField>();
     }
-    public void login() { // -> mover a su script
+    public void login() { //TODO -> mover a su script
         if (inputPass.text.Equals(password)) {
             SceneManager.LoadScene("Scenes/Interface/TeacherMenu");
         } else {

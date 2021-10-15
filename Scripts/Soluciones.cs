@@ -38,7 +38,7 @@ public class Soluciones : MonoBehaviour
         // posiciones relativas
         SlotTemplate.createEmptyExerciseItem(part.getBaseName(), 5, 5, 450, 1000, false);// which dimensions??
         // maybe separate in two
-        BaseTemplate.createItems(CurrentExercise.getItems(), 1, 100, 1500, true); // + pos
+        BaseTemplate.createItems(CurrentExercise.getItems(), 100, 1500, true); // + pos
     }
     
    public void aceptar() {
