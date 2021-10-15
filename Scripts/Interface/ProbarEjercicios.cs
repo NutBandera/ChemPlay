@@ -11,13 +11,11 @@ public class ProbarEjercicios : MonoBehaviour
     [SerializeField] private GameObject buttonBack;
     [SerializeField] private GameObject buttonHome;
     [SerializeField] private Text noExercisesText;
-    [SerializeField] GameObject logoutConfirmation;
     private int index;
     void Start()
     {
         SlotTemplate.setup(panel);
         BaseTemplate.setup(panel);
-        logoutConfirmation.SetActive(false);
 
         if (CurrentExercise.getExercises().Count > 0) {
             noExercisesText.gameObject.SetActive(false);
@@ -82,15 +80,5 @@ public class ProbarEjercicios : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-    public void logout() {
-        logoutConfirmation.SetActive(true);
-    }
-    public void yesClicked() {
-        SceneManager.LoadScene("Scenes/Interface/RolMenu");
-    }
-    public void noClicked() {
-        logoutConfirmation.SetActive(false);
-    }
-
     // Idea: un panel para cada ejercicio. Si ya está creado -> ocultar al pasar de ejercicio
 }

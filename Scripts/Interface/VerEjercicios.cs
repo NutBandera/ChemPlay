@@ -9,14 +9,19 @@ public class VerEjercicios : MonoBehaviour
     private List<GameObject> exercises = new List<GameObject>();
     private List<GameObject> buttons = new List<GameObject>();
     [SerializeField] private GameObject panelParts;
+    [SerializeField] private GameObject panel;
+    private Button[] panelButtons;
+    private InputField[] inputFields;
+    [SerializeField] GameObject dialogMessage;
     [SerializeField] private Text noExercisesText;
-    [SerializeField] private GameObject logoutConfirmation;
     private int xPart = 400;
     private int xCross = 950;
     private float y;
+    private string exName;
+    private GameObject part;
+    private GameObject button;
     void Start()
     {
-        logoutConfirmation.SetActive(false);
         if (exercises.Count > 0) {
             noExercisesText.gameObject.SetActive(false);
         } else {
@@ -25,6 +30,55 @@ public class VerEjercicios : MonoBehaviour
         foreach (Exercise exercise in CurrentExercise.getExercises()){
             this.addExercise(exercise.getNombre());
         }
+        dialogMessage.SetActive(false);
+        panelButtons = panel.GetComponentsInChildren<Button>();
+        inputFields = panel.GetComponentsInChildren<InputField>();
+    }
+     public void deactivateBasePanel() {
+        foreach (Button button in panelButtons) {
+            button.interactable = false;
+        }
+        foreach (InputField inputField in inputFields) {
+            inputField.interactable = false;
+        }
+    }
+    public void activateBasePanel() {
+         foreach (Button button in panelButtons) {
+            button.interactable = true;
+        }
+        foreach (InputField inputField in inputFields) {
+            inputField.interactable = true;
+        }
+    }
+    public void yesDeleteClicked() {
+        // Delete from list
+        CurrentExercise.removeExercise(name);
+        // Delete from scroll
+        Destroy(button.gameObject);
+        Destroy(part.gameObject);
+        // reassign positions
+        int index = exercises.IndexOf(part);
+        int i;
+        for (i=index+1; i<exercises.Count; i++){
+            exercises[i].transform.position = new Vector3(exercises[i].transform.position.x,
+            exercises[i].transform.position.y + 350, 0f);
+        }
+        for (i=index+1; i<buttons.Count; i++){
+            buttons[i].transform.position = new Vector3(buttons[i].transform.position.x,
+            buttons[i].transform.position.y + 350, 0f);
+        }
+        exercises.Remove(part);
+        buttons.Remove(button);
+
+        if (exercises.Count == 0) {
+            noExercisesText.gameObject.SetActive(true);
+        } 
+        dialogMessage.SetActive(false);
+        activateBasePanel();
+    }
+    public void noDeleteClicked() {
+        dialogMessage.SetActive(false);
+        activateBasePanel();
     }
     private void addExercise(string name) {
         if (exercises.Count > 0){
@@ -62,36 +116,11 @@ public class VerEjercicios : MonoBehaviour
     }
 
     private void deletePart(string name, GameObject part, GameObject button) {
-        // Delete from list
-        CurrentExercise.removeExercise(name);
-        // Delete from scroll
-        Destroy(button.gameObject);
-        Destroy(part.gameObject);
-        // reassign positions
-        int index = exercises.IndexOf(part);
-        int i;
-        for (i=index+1; i<exercises.Count; i++){
-            exercises[i].transform.position = new Vector3(exercises[i].transform.position.x,
-            exercises[i].transform.position.y + 350, 0f);
-        }
-        for (i=index+1; i<buttons.Count; i++){
-            buttons[i].transform.position = new Vector3(buttons[i].transform.position.x,
-            buttons[i].transform.position.y + 350, 0f);
-        }
-        exercises.Remove(part);
-        buttons.Remove(button);
+        this.exName = name;
+        this.part = part;
+        this.button = button;
 
-        if (exercises.Count == 0) {
-            noExercisesText.gameObject.SetActive(true);
-        } 
-    }
-     public void logout() {
-        logoutConfirmation.SetActive(true);
-    }
-    public void yesClicked() {
-        SceneManager.LoadScene("Scenes/Interface/RolMenu");
-    }
-    public void noClicked() {
-        logoutConfirmation.SetActive(false);
+        dialogMessage.SetActive(true);
+        deactivateBasePanel();
     }
 }

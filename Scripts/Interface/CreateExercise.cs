@@ -14,7 +14,6 @@ public class CreateExercise : MonoBehaviour
     [SerializeField] private GameObject panelItems;
     [SerializeField] private InputField inputNombre;
     [SerializeField] private Text noItemsText;
-    [SerializeField] GameObject logoutConfirmation;
     private int xItem = 400;
     private int xCross = 730;
     private float y;
@@ -23,7 +22,6 @@ public class CreateExercise : MonoBehaviour
 
     void Start() {
         CurrentExercise.reset();
-        logoutConfirmation.SetActive(false);
     }
 
     public void selectEnunciado() {
@@ -124,14 +122,5 @@ public class CreateExercise : MonoBehaviour
                 contenidoButton.interactable = true;
             }
         }
-    }
-     public void logout() {
-        logoutConfirmation.SetActive(true);
-    }
-    public void yesClicked() {
-        SceneManager.LoadScene("Scenes/Interface/RolMenu");
-    }
-    public void noClicked() {
-        logoutConfirmation.SetActive(false);
     }
 }

@@ -8,23 +8,27 @@ using UnityEngine.SceneManagement;
 public class Soluciones : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
+    private Button[] panelButtons;
+    private InputField[] inputFields;
+    [SerializeField] GameObject dialogMessage;
     private ItemSlot[] slots;
     private Dictionary<int, string> dic;
     [SerializeField] private InputField xInput;
     [SerializeField] private InputField yInput;
-    [SerializeField] private GameObject logoutConfirmation;
     private ParteContenido part;
     private static string selectedBase;
 
     void Start() {
+        dialogMessage.SetActive(false);
+        panelButtons = panel.GetComponentsInChildren<Button>();
+        inputFields = panel.GetComponentsInChildren<InputField>();
+
         part = new ParteContenido();
         part.setBaseName(selectedBase);
         dic = new Dictionary<int, string>();
         // permitir quitar elemento arrastrado
         BaseTemplate.setup(panel);
         SlotTemplate.setup(panel);
-
-        logoutConfirmation.SetActive(false);
 
         part.setWidth(5);
         part.setHeight(5);
@@ -59,12 +63,48 @@ public class Soluciones : MonoBehaviour
         }
    }
 
+   public void yesClearClicked() {
+      var items = FindObjectsOfType<InterfaceDragAndDrop>();
+       foreach (InterfaceDragAndDrop item in items) {
+           if (!item.getInInitialPos())
+            Destroy(item.gameObject);
+        }
+        slots = FindObjectsOfType<ItemSlot>();
+        foreach (ItemSlot slot in slots) {
+            slot.setCorrectItem(null);
+        }
+        dialogMessage.SetActive(false);
+        activateBasePanel();
+   }
+   public void noClearClicked() {
+       dialogMessage.SetActive(false);
+        activateBasePanel();
+   }
+     public void deactivateBasePanel() {
+        foreach (Button button in panelButtons) {
+            button.interactable = false;
+        }
+        foreach (InputField inputField in inputFields) {
+            inputField.interactable = false;
+        }
+    }
+    public void activateBasePanel() {
+         foreach (Button button in panelButtons) {
+            button.interactable = true;
+        }
+        foreach (InputField inputField in inputFields) {
+            inputField.interactable = true;
+        }
+    }
+
    public void changeMatrixSize() {
+        // limite 25
+        // check not blank or negative
        // look for better way
        // eliminar lo anterior
        this.clear();
        SlotTemplate.colocarSlotsCompleto(450, 1000, int.Parse(xInput.text), int.Parse(yInput.text), 700, 500, false);
-       // no dejar dar a aceptar sin numeros
+    
        part.setPixelsX(-1);
        part.setPixelsY(-1);
        part.setWidth(int.Parse(xInput.text));
@@ -87,28 +127,12 @@ public class Soluciones : MonoBehaviour
    }
 
    public void clearItems() {
-       var items = FindObjectsOfType<InterfaceDragAndDrop>();
-       foreach (InterfaceDragAndDrop item in items) {
-           if (!item.getInInitialPos())
-            Destroy(item.gameObject);
-        }
-        slots = FindObjectsOfType<ItemSlot>();
-        foreach (ItemSlot slot in slots) {
-            slot.setCorrectItem(null);
-        }
+       dialogMessage.SetActive(true);
+       deactivateBasePanel();
    }
 
    public static void setSelectedBase(string name) {
        selectedBase = name;
    }
-    public void logout() {
-        logoutConfirmation.SetActive(true);
-    }
-    public void yesClicked() {
-        SceneManager.LoadScene("Scenes/Interface/RolMenu");
-    }
-    public void noClicked() {
-        logoutConfirmation.SetActive(false);
-    }
    
 }

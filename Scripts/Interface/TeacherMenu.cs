@@ -5,11 +5,7 @@ using UnityEngine;
 
 public class TeacherMenu : MonoBehaviour
 {
-    [SerializeField] GameObject logoutConfirmation;
-    
-    void Start() {
-        logoutConfirmation.SetActive(false);
-    }
+
     public void nuevoEjercicio() {
         SceneManager.LoadScene("Scenes/Interface/NuevoEjercicio");
     }
@@ -33,13 +29,5 @@ public class TeacherMenu : MonoBehaviour
         // Probar
         SceneManager.LoadScene("Scenes/Interface/ProbarEjercicios");
     }
-    public void logout() {
-        logoutConfirmation.SetActive(true);
-    }
-    public void yesClicked() {
-        SceneManager.LoadScene("Scenes/Interface/RolMenu");
-    }
-    public void noClicked() {
-        logoutConfirmation.SetActive(false);
-    }
+
 }

@@ -157,7 +157,6 @@ MonoBehaviour:
   buttonBack: {fileID: 844192401}
   buttonHome: {fileID: 275223431}
   noExercisesText: {fileID: 63717145}
-  logoutConfirmation: {fileID: 512760169}
 --- !u!4 &2316214
 Transform:
   m_ObjectHideFlags: 0
@@ -622,6 +621,52 @@ RectTransform:
   m_AnchoredPosition: {x: 7, y: -800.75024}
   m_SizeDelta: {x: 170.3451, y: 155.4723}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &284813450
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 284813452}
+  - component: {fileID: 284813451}
+  m_Layer: 0
+  m_Name: DialogAction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &284813451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284813450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afed814c497b5714290010637e2ba3da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogMessage: {fileID: 512760169}
+  basePanel: {fileID: 1550014784}
+  inputPass: {fileID: 0}
+--- !u!4 &284813452
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284813450}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 501.89185, y: 1628.4613, z: -63.77234}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &309537056
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,8 +884,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2316213}
-        m_TargetAssemblyTypeName: ProbarEjercicios, Assembly-CSharp
+      - m_Target: {fileID: 284813451}
+        m_TargetAssemblyTypeName: DialogMessage, Assembly-CSharp
         m_MethodName: logout
         m_Mode: 1
         m_Arguments:
@@ -1208,8 +1253,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2316213}
-        m_TargetAssemblyTypeName: ProbarEjercicios, Assembly-CSharp
+      - m_Target: {fileID: 284813451}
+        m_TargetAssemblyTypeName: DialogMessage, Assembly-CSharp
         m_MethodName: yesClicked
         m_Mode: 1
         m_Arguments:
@@ -2106,9 +2151,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2316213}
-        m_TargetAssemblyTypeName: ProbarEjercicios, Assembly-CSharp
-        m_MethodName: noClicked
+      - m_Target: {fileID: 284813451}
+        m_TargetAssemblyTypeName: DialogMessage, Assembly-CSharp
+        m_MethodName: close
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
