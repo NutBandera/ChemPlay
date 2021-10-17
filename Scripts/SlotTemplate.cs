@@ -245,7 +245,7 @@ public static class SlotTemplate
             GameObject gridPlane2 = (GameObject)Object.Instantiate(gridPlane);
 
 
-            if (item.Value.Contains("double")){
+            if (item.Value.Contains("double")){ //TODO eliminar
                 // clonar
                 if (item.Value.Contains("vertical")){
                     gridPlane.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeX/2, sizeY);
@@ -280,7 +280,7 @@ public static class SlotTemplate
                 gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1],
                 plane.transform.position.y - sizeY*coordinates[0], 0f);
                 gridPlane.GetComponent<ItemSlot>().setCorrectItem(item.Value);
-                gridPlane.GetComponent<ItemSlot>().setFinalImage("Items-final/"+item.Value);
+                gridPlane.GetComponent<ItemSlot>().setFinalImage("Items/"+item.Value); // not this route
             }
             gridPlane.transform.parent = panel.transform;
         }

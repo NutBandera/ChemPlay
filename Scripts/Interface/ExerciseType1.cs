@@ -29,7 +29,7 @@ public class ExerciseType1 : MonoBehaviour
             index++;
         }
 
-        BaseTemplate.createItems(CurrentExercise.getItems(), 1, 100);
+        BaseTemplate.createItems(CurrentExercise.getItems(), 100);
 
     }
 }

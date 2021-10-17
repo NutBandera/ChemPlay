@@ -27,8 +27,17 @@ public static class CurrentExercise
         _items.Remove(item);
     }
 
-    public static void addContenido(ParteContenido parte) {
-        contenido.Add(parte);
+    public static void addContenido(ParteContenido part) {
+        bool found = false;
+        foreach (ParteContenido parte in contenido) {
+            if (parte.getBaseName().Equals(part.getBaseName())) {
+                parte.setSolutions(part.getSolutions());
+                found = true;
+            }
+        }; 
+        if (!found) {
+            contenido.Add(part);
+        }
     }
 
     public static void removePart(string partName) {
@@ -38,7 +47,7 @@ public static class CurrentExercise
             contenido.Remove(part);
         }
     }
-    private static ParteContenido findPartByName(string name) {
+    public static ParteContenido findPartByName(string name) {
         foreach (ParteContenido part in contenido) {
             if (name.Equals(part.getBaseName())) return part;
         }

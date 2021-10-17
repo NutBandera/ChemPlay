@@ -72,6 +72,7 @@ public static class BaseTemplate
             if (isInterface){
                 item.AddComponent<InterfaceDragAndDrop>(); 
                 item.GetComponent<InterfaceDragAndDrop>().setName(images[i]); 
+                item.GetComponent<InterfaceDragAndDrop>().setInInitialPos(true); 
             } else {
                 item.AddComponent<DragAndDrop>(); 
                 item.GetComponent<DragAndDrop>().setName(images[i]); 

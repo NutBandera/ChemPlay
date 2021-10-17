@@ -15,6 +15,8 @@ public class Soluciones : MonoBehaviour
     [SerializeField] GameObject changeMatrixSizeMessage;
     private ItemSlot[] slots;
     private Dictionary<int, string> dic;
+    private static Dictionary<int, string> _solutions;
+    private static ParteContenido _part;
     [SerializeField] private InputField xInput;
     [SerializeField] private InputField yInput;
     private ParteContenido part;
@@ -27,22 +29,58 @@ public class Soluciones : MonoBehaviour
         panelButtons = panel.GetComponentsInChildren<Button>();
         inputFields = panel.GetComponentsInChildren<InputField>();
 
-        part = new ParteContenido();
-        part.setBaseName(selectedBase);
-        dic = new Dictionary<int, string>();
-        // permitir quitar elemento arrastrado
         BaseTemplate.setup(panel);
         SlotTemplate.setup(panel);
 
-        part.setWidth(5);
-        part.setHeight(5);
-        part.setPixelsX(-1);
-        part.setPixelsY(-1);
+        dic = new Dictionary<int, string>();
 
-        // posiciones relativas
-        SlotTemplate.createEmptyExerciseItem(part.getBaseName(), 5, 5, 450, 1000, false);// which dimensions??
-        // maybe separate in two
-        BaseTemplate.createItems(CurrentExercise.getItems(), 100, 1500, true); // + pos
+        if (_part == null) {
+            dic = new Dictionary<int, string>();
+
+            part = new ParteContenido();
+            part.setBaseName(selectedBase);
+            
+            part.setWidth(5);
+            part.setHeight(5);
+            part.setPixelsX(-1);
+            part.setPixelsY(-1);
+
+            // posiciones relativas
+            SlotTemplate.createEmptyExerciseItem(part.getBaseName(), 5, 5, 450, 1000, false); // which dimensions??
+        } else {
+            // edit mode
+            SlotTemplate.createEmptyExerciseItem(_part.getBaseName(), _part.getWidth(),
+             _part.getHeight(), 450, 1000, false); // which dimensions??
+            colocarItems();
+            part = _part;
+        }
+
+        BaseTemplate.createItems(CurrentExercise.getItems(), 100, 1500, true);
+    }
+    private void colocarItems() {
+        foreach (var solution in _solutions) {
+            GameObject item = new GameObject();
+            item.AddComponent<Image>();
+            item.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + solution.Value);
+            var coordinates = SlotTemplate.convertPosition(solution.Key, _part.getWidth(), _part.getHeight());
+            var sizeX = 700/_part.getWidth();
+            var sizeY = 500/_part.getHeight();
+            var initialPosX = 450 - 700/2 + sizeX/2;
+            var initialPosY = 1000 + 500/2 - sizeY/2;   
+            item.transform.position = new Vector3(initialPosX+sizeX*coordinates[1],
+            initialPosY-sizeY*coordinates[0], 0f);
+            item.transform.parent = panel.transform;
+            item.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100); 
+            item.AddComponent<CanvasGroup>();
+            item.AddComponent<InterfaceDragAndDrop>(); 
+            item.GetComponent<InterfaceDragAndDrop>().setName(solution.Value); 
+            item.GetComponent<InterfaceDragAndDrop>().setInInitialPos(false); 
+            item.AddComponent<BoxCollider2D>();
+            item.GetComponent<BoxCollider2D>().isTrigger = true;
+            item.AddComponent<Rigidbody2D>();
+            item.GetComponent<Rigidbody2D>().gravityScale = 0;
+            item.GetComponent<Rigidbody2D>().freezeRotation = true;
+        }
     }
     
    public void aceptar() {
@@ -56,6 +94,7 @@ public class Soluciones : MonoBehaviour
         }
         part.setSolutions(dic);
         CurrentExercise.addContenido(part);
+        setSolutions(null);
         SceneManager.LoadScene("Scenes/Interface/CrearContenido");
         // Set part in scroll
    }
@@ -65,6 +104,13 @@ public class Soluciones : MonoBehaviour
        foreach (ItemSlot slot in slots) {
             Destroy(slot.gameObject);
         }
+   }
+   public static void setSolutions(Dictionary<int, string> solutions) {
+       // colocar las soluciones que ya tiene esa parte
+        _solutions = solutions;
+   }
+   public static void setPart(ParteContenido part) {
+       _part = part;
    }
 
    public void yesClearClicked() {

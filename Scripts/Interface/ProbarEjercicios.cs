@@ -45,7 +45,7 @@ public class ProbarEjercicios : MonoBehaviour
             i++;
         }
          // create exercise items
-        BaseTemplate.createItems(ex.getItems(), 1, 100); // number of lines !!!! -> create another method that does it alone?
+        BaseTemplate.createItems(ex.getItems(), 100);
         //plane.GetComponent<Image>().color = new Color(1f,1f,1f,0f);
 
         // last exercise

@@ -22,6 +22,9 @@ public class ItemSlot : MonoBehaviour
     public void setFinalImage(string name){
         finalImage = name;
     }
+    public string getFinalImage() {
+        return finalImage;
+    }
     public void setPosition(int pos){
         position = pos;
     }

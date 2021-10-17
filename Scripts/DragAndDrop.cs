@@ -13,6 +13,7 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     private GameObject clone;
     private Vector3 defaultPos;
     private string name;
+    private GameObject slot;
     private string image;
     private Vector2 slotSize;
     private bool inInitialPos;
@@ -47,6 +48,11 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
             inInitialPos = false;
             startPos = transform.position;
             // destroy and set image
+            var finalImage = slot.GetComponent<ItemSlot>().getFinalImage();
+            Debug.Log(finalImage);
+            slot.GetComponent<Image>().sprite = Resources.Load<Sprite>(finalImage);
+            slot.GetComponent<Image>().color = new Color(1f,1f,1f,1f);
+            Destroy(gameObject);
         } else {
             transform.position = startPos;
             if (inInitialPos) {
@@ -60,6 +66,7 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         .Equals(this.getName())) {// contains
             droppedOnSlot = true;
             pos = collision.transform.position;
+            slot = collision.GetComponent<Collider2D>().gameObject;
         }
     }
 

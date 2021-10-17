@@ -33,7 +33,6 @@ public class InterfaceDragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDr
 
     void Start() {
         startPos = transform.position;
-        inInitialPos = true;
         droppedOnSlot = false;
         isInPapelera = false;
     }

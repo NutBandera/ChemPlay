@@ -4861,7 +4861,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Al cambiar el tama\xF1o de la matriz se perder\xE1n las soluciones. \xBFContinuar?"
+  m_Text: "Al cambiar el tama\xF1o de la matriz se borrar\xE1n las soluciones. \xBFContinuar?"
 --- !u!222 &2094012877
 CanvasRenderer:
   m_ObjectHideFlags: 0
