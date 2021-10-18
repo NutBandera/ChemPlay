@@ -37,6 +37,9 @@ public class CrearContenido : MonoBehaviour
         limitPartsMessage.SetActive(false);
         partAlreadyAddedMessage.SetActive(false);
         inputFields = panel.GetComponentsInChildren<InputField>();
+        if (CurrentExercise.getEditMode()) {
+            buttonCreateExercise.GetComponentInChildren<Text>().text = "Guardar cambios";
+        }
     }
     public void addSolutions() {
          if (parts.Count < 6) {
@@ -46,6 +49,7 @@ public class CrearContenido : MonoBehaviour
             ParteContenido part = CurrentExercise.findPartByName(selectedBase);
             if (!string.IsNullOrEmpty(selectedBase) && part == null){
                 Soluciones.setSelectedBase(selectedBase);
+                Soluciones.setIsEditing(false);
                 SceneManager.LoadScene("Scenes/Interface/Soluciones");
             } else {
                 // show message
@@ -121,10 +125,15 @@ public class CrearContenido : MonoBehaviour
         SceneManager.LoadScene("Scenes/Interface/NuevoEjercicio");
     }
     public void createExercise() {
-        Exercise exercise = new Exercise(CurrentExercise.getNombre(),
+        Exercise exercise = new Exercise(CurrentExercise.getIndex(), CurrentExercise.getNombre(),
         CurrentExercise.getEnunciado(), CurrentExercise.getItems(), CurrentExercise.getContenido());
-        CurrentExercise.addExercise(exercise);
-        SceneManager.LoadScene("Scenes/ExerciseType1");
+        if (CurrentExercise.getEditMode()) {
+            CurrentExercise.updateExercise(exercise);
+        } else {
+            CurrentExercise.addExercise(exercise);
+        }
+        CurrentExercise.setEditMode(false);
+        SceneManager.LoadScene("Scenes/ExerciseType1"); //TODO change scene name
     }
     public string selectBase() {
         var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", false); // accepted extentions
@@ -191,9 +200,8 @@ public class CrearContenido : MonoBehaviour
     private void editPart(string partName, GameObject part, GameObject button) {
         var editedPart = CurrentExercise.findPartByName(partName);
         Soluciones.setSolutions(editedPart.getSolutions());
-        Debug.Log(editedPart.getBaseName());
-        Debug.Log(editedPart.getSolutions());
         Soluciones.setPart(editedPart);
+        Soluciones.setIsEditing(true);
         SceneManager.LoadScene("Scenes/Interface/Soluciones");
     }
 

@@ -25,12 +25,26 @@ public class CreateExercise : MonoBehaviour
     private List<GameObject> buttons = new List<GameObject>();
 
     void Start() {
-        CurrentExercise.reset();
+        if (CurrentExercise.getEditMode()) {
+            setFields();
+            contenidoButton.GetComponentInChildren<Text>().text = "Editar contenido";
+        } else {
+            CurrentExercise.reset();
+        }
+        
         dialogMessage.SetActive(false);
         itemsLimitMessage.SetActive(false);
         itemAlreadyAddedMessage.SetActive(false);
         panelButtons = panel.GetComponentsInChildren<Button>();
         inputFields = panel.GetComponentsInChildren<InputField>();
+    }
+    private void setFields(){
+        inputNombre.text = CurrentExercise.getNombre();
+        selectedEnunciado.GetComponent<Image>().sprite = Resources.Load<Sprite>(CurrentExercise.getEnunciado());
+        contenidoButton.interactable = true;
+        foreach (string item in CurrentExercise.getItems()) {
+            addItem(item);
+        }
     }
     public void aceptarClicked() {
        dialogMessage.SetActive(false);
@@ -66,8 +80,38 @@ public class CreateExercise : MonoBehaviour
             contenidoButton.interactable = true;
         } 
     }
+    private void addItem(string elementName){
+        if (items.Count > 0){
+            y = items[items.Count-1].transform.position.y - 100;
+        } else {
+            y = 600;
+        }
+        // Crear item
+        GameObject item = new GameObject();
+        item.AddComponent<Image>();
+        item.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/"+elementName);
+        item.transform.position = new Vector3(xItem, y, 0f);
+        item.transform.parent = panelItems.transform;
+        item.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80); 
 
-    public void addItem() {
+        // Create delete button and associate it with the element
+        GameObject button = new GameObject();
+        button.transform.parent = panelItems.transform;
+        button.AddComponent<RectTransform>();
+        button.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80); 
+        button.AddComponent<Button>();
+        button.transform.position = new Vector3(xCross, y, 0f); 
+        button.AddComponent<Image>();
+        button.GetComponent<Image>().sprite = Resources.Load<Sprite>("cross");
+        button.GetComponent<Button>().onClick.AddListener(delegate{deleteItem(elementName, item, button);});
+
+        items.Add(item);
+        buttons.Add(button);
+
+        noItemsText.gameObject.SetActive(false);
+    }
+
+    public void selectItem() {
         if (items.Count < 12) {
             var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", true);
             var pathSplitted = path[0].Split('/');
@@ -75,34 +119,7 @@ public class CreateExercise : MonoBehaviour
 
             if (!CurrentExercise.getItems().Contains(elementName)) {
                 CurrentExercise.addItem(elementName);
-                if (items.Count > 0){
-                    y = items[items.Count-1].transform.position.y - 100;
-                } else {
-                    y = 600;
-                }
-                // Crear item
-                GameObject item = new GameObject();
-                item.AddComponent<Image>();
-                item.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/"+elementName);
-                item.transform.position = new Vector3(xItem, y, 0f);
-                item.transform.parent = panelItems.transform;
-                item.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80); 
-
-                // Create delete button and associate it with the element
-                GameObject button = new GameObject();
-                button.transform.parent = panelItems.transform;
-                button.AddComponent<RectTransform>();
-                button.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80); 
-                button.AddComponent<Button>();
-                button.transform.position = new Vector3(xCross, y, 0f); 
-                button.AddComponent<Image>();
-                button.GetComponent<Image>().sprite = Resources.Load<Sprite>("cross");
-                button.GetComponent<Button>().onClick.AddListener(delegate{deleteItem(elementName, item, button);});
-
-                items.Add(item);
-                buttons.Add(button);
-
-                noItemsText.gameObject.SetActive(false);
+                addItem(elementName);
 
             } else {
                 itemAlreadyAddedMessage.SetActive(true);

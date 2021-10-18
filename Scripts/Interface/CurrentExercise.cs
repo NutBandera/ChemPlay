@@ -4,11 +4,14 @@ using UnityEngine;
 
 public static class CurrentExercise
 {
+    private static int _index = 0;
+    private static string _ID;
     private static string _nombre;
     private static string _enunciado;
     private static List<string> _items = new List<string>();
     private static List<ParteContenido> contenido = new List<ParteContenido>();
     private static List<Exercise> exercises = new List<Exercise>();
+    private static bool _editMode;
     
     public static string getEnunciado() {
         return _enunciado;
@@ -28,16 +31,18 @@ public static class CurrentExercise
     }
 
     public static void addContenido(ParteContenido part) {
-        bool found = false;
+        contenido.Add(part);
+    }
+    public static int getIndex() {
+        return _index;
+    }
+    public static void updateContenido(ParteContenido part) {
         foreach (ParteContenido parte in contenido) {
             if (parte.getBaseName().Equals(part.getBaseName())) {
                 parte.setSolutions(part.getSolutions());
-                found = true;
+                break;
             }
         }; 
-        if (!found) {
-            contenido.Add(part);
-        }
     }
 
     public static void removePart(string partName) {
@@ -53,9 +58,9 @@ public static class CurrentExercise
         }
         return null;
     }
-    private static Exercise findExerciseByName(string name) {
+    private static Exercise findExerciseByID(int ID) {
         foreach (Exercise exercise in exercises) {
-            if (name.Equals(exercise.getNombre())) return exercise;
+            if (ID.Equals(exercise.getID())) return exercise;
         }
         return null;
     }
@@ -65,6 +70,18 @@ public static class CurrentExercise
     }
     public static void addExercise(Exercise exercise){
         exercises.Add(exercise);
+        _index++;
+    }
+    public static void updateExercise(Exercise exercise){
+        foreach (Exercise ex in exercises) {
+            if (ex.getID().Equals(exercise.getID())) {
+                ex.setNombre(exercise.getNombre());
+                ex.setEnunciado(exercise.getEnunciado());
+                ex.setItems(exercise.getItems());
+                ex.setContenido(exercise.getContenido());
+                break;
+            }
+        };
     }
     public static List<Exercise> getExercises() {
         return exercises;
@@ -72,8 +89,19 @@ public static class CurrentExercise
     public static void setExercises(List<Exercise> _exercises) {
         exercises = _exercises;
     }
-    public static void removeExercise(string name) {
-        Exercise exercise = findExerciseByName(name);
+    public static void setExercise(int ID) {
+        // find exercise from list
+        Exercise exercise = findExerciseByID(ID);
+        if (exercise != null) {
+            _nombre = exercise.getNombre();
+            _enunciado = exercise.getEnunciado();
+            _items = exercise.getItems();
+            contenido = exercise.getContenido();
+        }
+        
+    }
+    public static void removeExercise(int ID) {
+        Exercise exercise = findExerciseByID(ID);
         if (exercise != null){
             exercises.Remove(exercise);
         }
@@ -84,6 +112,12 @@ public static class CurrentExercise
     public static string getNombre() {
         return _nombre;
     }
+    public static void setID(string ID) {
+        _ID = ID;
+    }
+    public static string getID() {
+        return _ID;
+    }
     public static void reset() {
         _nombre = "";
         _enunciado = "";
@@ -92,6 +126,12 @@ public static class CurrentExercise
     }
     public static void resetExercises() {
         exercises = new List<Exercise>();
+    }
+    public static bool getEditMode() {
+        return _editMode;
+    }
+    public static void setEditMode(bool editMode) {
+        _editMode = editMode;
     }
 
 }

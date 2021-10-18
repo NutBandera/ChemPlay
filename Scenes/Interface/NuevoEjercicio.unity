@@ -954,7 +954,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 688973963}
         m_TargetAssemblyTypeName: CreateExercise, Assembly-CSharp
-        m_MethodName: addItem
+        m_MethodName: selectItem
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3625,7 +3625,7 @@ GameObject:
   - component: {fileID: 1685004661}
   - component: {fileID: 1685004660}
   m_Layer: 5
-  m_Name: ButtonContenido
+  m_Name: ButtonAddContenido
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

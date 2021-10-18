@@ -21,6 +21,7 @@ public class Soluciones : MonoBehaviour
     [SerializeField] private InputField yInput;
     private ParteContenido part;
     private static string selectedBase;
+    private static bool _isEditing;
 
     void Start() {
         dialogMessage.SetActive(false);
@@ -34,7 +35,7 @@ public class Soluciones : MonoBehaviour
 
         dic = new Dictionary<int, string>();
 
-        if (_part == null) {
+        if (!_isEditing) {
             dic = new Dictionary<int, string>();
 
             part = new ParteContenido();
@@ -59,27 +60,29 @@ public class Soluciones : MonoBehaviour
     }
     private void colocarItems() {
         foreach (var solution in _solutions) {
-            GameObject item = new GameObject();
-            item.AddComponent<Image>();
-            item.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + solution.Value);
-            var coordinates = SlotTemplate.convertPosition(solution.Key, _part.getWidth(), _part.getHeight());
-            var sizeX = 700/_part.getWidth();
-            var sizeY = 500/_part.getHeight();
-            var initialPosX = 450 - 700/2 + sizeX/2;
-            var initialPosY = 1000 + 500/2 - sizeY/2;   
-            item.transform.position = new Vector3(initialPosX+sizeX*coordinates[1],
-            initialPosY-sizeY*coordinates[0], 0f);
-            item.transform.parent = panel.transform;
-            item.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100); 
-            item.AddComponent<CanvasGroup>();
-            item.AddComponent<InterfaceDragAndDrop>(); 
-            item.GetComponent<InterfaceDragAndDrop>().setName(solution.Value); 
-            item.GetComponent<InterfaceDragAndDrop>().setInInitialPos(false); 
-            item.AddComponent<BoxCollider2D>();
-            item.GetComponent<BoxCollider2D>().isTrigger = true;
-            item.AddComponent<Rigidbody2D>();
-            item.GetComponent<Rigidbody2D>().gravityScale = 0;
-            item.GetComponent<Rigidbody2D>().freezeRotation = true;
+            if (CurrentExercise.getItems().Contains(solution.Value)) {
+                GameObject item = new GameObject();
+                item.AddComponent<Image>();
+                item.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + solution.Value);
+                var coordinates = SlotTemplate.convertPosition(solution.Key, _part.getWidth(), _part.getHeight());
+                var sizeX = 700/_part.getWidth();
+                var sizeY = 500/_part.getHeight();
+                var initialPosX = 450 - 700/2 + sizeX/2;
+                var initialPosY = 1000 + 500/2 - sizeY/2;   
+                item.transform.position = new Vector3(initialPosX+sizeX*coordinates[1],
+                initialPosY-sizeY*coordinates[0], 0f);
+                item.transform.parent = panel.transform;
+                item.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100); 
+                item.AddComponent<CanvasGroup>();
+                item.AddComponent<InterfaceDragAndDrop>(); 
+                item.GetComponent<InterfaceDragAndDrop>().setName(solution.Value); 
+                item.GetComponent<InterfaceDragAndDrop>().setInInitialPos(false); 
+                item.AddComponent<BoxCollider2D>();
+                item.GetComponent<BoxCollider2D>().isTrigger = true;
+                item.AddComponent<Rigidbody2D>();
+                item.GetComponent<Rigidbody2D>().gravityScale = 0;
+                item.GetComponent<Rigidbody2D>().freezeRotation = true;
+            }
         }
     }
     
@@ -93,10 +96,14 @@ public class Soluciones : MonoBehaviour
            }
         }
         part.setSolutions(dic);
-        CurrentExercise.addContenido(part);
         setSolutions(null);
+        if (_isEditing) {
+            CurrentExercise.updateContenido(part);
+        } else {
+            CurrentExercise.addContenido(part);
+        }
+        setIsEditing(false);
         SceneManager.LoadScene("Scenes/Interface/CrearContenido");
-        // Set part in scroll
    }
 
    private void clear() {
@@ -208,6 +215,9 @@ public class Soluciones : MonoBehaviour
 
    public static void setSelectedBase(string name) {
        selectedBase = name;
+   }
+   public static void setIsEditing(bool isEditing) {
+       _isEditing = isEditing;
    }
    
 }

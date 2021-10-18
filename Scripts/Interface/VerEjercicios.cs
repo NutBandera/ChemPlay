@@ -7,19 +7,21 @@ using UnityEngine.SceneManagement;
 public class VerEjercicios : MonoBehaviour
 {
     private List<GameObject> exercises = new List<GameObject>();
-    private List<GameObject> buttons = new List<GameObject>();
+    private List<GameObject> deleteButtons = new List<GameObject>();
+    private List<GameObject> editButtons = new List<GameObject>();
     [SerializeField] private GameObject panelParts;
     [SerializeField] private GameObject panel;
-    private Button[] panelButtons;
-    private InputField[] inputFields;
     [SerializeField] GameObject dialogMessage;
     [SerializeField] private Text noExercisesText;
     private int xPart = 400;
     private int xCross = 950;
+    private int xEdit = 850;
     private float y;
-    private string exName;
-    private GameObject part;
-    private GameObject button;
+    private int exID;
+    private GameObject exercise;
+    private GameObject deleteButton;
+    private GameObject editButton;
+
     void Start()
     {
         if (exercises.Count > 0) {
@@ -28,47 +30,45 @@ public class VerEjercicios : MonoBehaviour
             noExercisesText.gameObject.SetActive(true);
         }
         foreach (Exercise exercise in CurrentExercise.getExercises()){
-            this.addExercise(exercise.getNombre());
+            this.addExercise(exercise.getID(), exercise.getNombre());
         }
         dialogMessage.SetActive(false);
-        panelButtons = panel.GetComponentsInChildren<Button>();
-        inputFields = panel.GetComponentsInChildren<InputField>();
     }
      public void deactivateBasePanel() {
-        foreach (Button button in panelButtons) {
+        foreach (Button button in panel.GetComponentsInChildren<Button>()) {
             button.interactable = false;
-        }
-        foreach (InputField inputField in inputFields) {
-            inputField.interactable = false;
         }
     }
     public void activateBasePanel() {
-         foreach (Button button in panelButtons) {
+         foreach (Button button in panel.GetComponentsInChildren<Button>()) {
             button.interactable = true;
-        }
-        foreach (InputField inputField in inputFields) {
-            inputField.interactable = true;
         }
     }
     public void yesDeleteClicked() {
         // Delete from list
-        CurrentExercise.removeExercise(name);
+        CurrentExercise.removeExercise(exID);
         // Delete from scroll
-        Destroy(button.gameObject);
-        Destroy(part.gameObject);
+        Destroy(deleteButton.gameObject);
+        Destroy(editButton.gameObject);
+        Destroy(exercise.gameObject);
         // reassign positions
-        int index = exercises.IndexOf(part);
+        int index = exercises.IndexOf(exercise);
         int i;
         for (i=index+1; i<exercises.Count; i++){
             exercises[i].transform.position = new Vector3(exercises[i].transform.position.x,
             exercises[i].transform.position.y + 350, 0f);
         }
-        for (i=index+1; i<buttons.Count; i++){
-            buttons[i].transform.position = new Vector3(buttons[i].transform.position.x,
-            buttons[i].transform.position.y + 350, 0f);
+        for (i=index+1; i<deleteButtons.Count; i++){
+            deleteButtons[i].transform.position = new Vector3(deleteButtons[i].transform.position.x,
+            deleteButtons[i].transform.position.y + 350, 0f);
         }
-        exercises.Remove(part);
-        buttons.Remove(button);
+        for (i=index+1; i<editButtons.Count; i++){
+            editButtons[i].transform.position = new Vector3(editButtons[i].transform.position.x,
+            editButtons[i].transform.position.y + 350, 0f);
+        }
+        exercises.Remove(exercise);
+        deleteButtons.Remove(deleteButton);
+        editButtons.Remove(editButton);
 
         if (exercises.Count == 0) {
             noExercisesText.gameObject.SetActive(true);
@@ -80,7 +80,7 @@ public class VerEjercicios : MonoBehaviour
         dialogMessage.SetActive(false);
         activateBasePanel();
     }
-    private void addExercise(string name) {
+    private void addExercise(int ID, string name) {
         if (exercises.Count > 0){
             y = exercises[exercises.Count-1].transform.position.y - 350;
         } else {
@@ -98,29 +98,48 @@ public class VerEjercicios : MonoBehaviour
         exercise.transform.parent = panelParts.transform;
         exercise.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 300); 
 
+        // Create edit button and associate it with the element
+        GameObject editButton = new GameObject();
+        editButton.transform.parent = panelParts.transform;
+        editButton.AddComponent<RectTransform>();
+        editButton.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80); 
+        editButton.AddComponent<Button>();
+        editButton.transform.position = new Vector3(xEdit, y+100, 0f); 
+        editButton.AddComponent<Image>();
+        editButton.GetComponent<Image>().sprite = Resources.Load<Sprite>("edit");
+        editButton.GetComponent<Button>().onClick.AddListener(delegate{editPart(ID, exercise, editButton);});
+
         // Create delete button and associate it with the element
-        GameObject button = new GameObject();
-        button.transform.parent = panelParts.transform;
-        button.AddComponent<RectTransform>();
-        button.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80); 
-        button.AddComponent<Button>();
-        button.transform.position = new Vector3(xCross, y+100, 0f); 
-        button.AddComponent<Image>();
-        button.GetComponent<Image>().sprite = Resources.Load<Sprite>("cross");
-        button.GetComponent<Button>().onClick.AddListener(delegate{deletePart(name, exercise, button);});
+        GameObject deleteButton = new GameObject();
+        deleteButton.transform.parent = panelParts.transform;
+        deleteButton.AddComponent<RectTransform>();
+        deleteButton.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80); 
+
+        deleteButton.AddComponent<Button>();
+        deleteButton.transform.position = new Vector3(xCross, y+100, 0f); 
+        deleteButton.AddComponent<Image>();
+        deleteButton.GetComponent<Image>().sprite = Resources.Load<Sprite>("cross");
+        deleteButton.GetComponent<Button>().onClick.AddListener(delegate{deletePart(ID, exercise, deleteButton, editButton);});
 
         exercises.Add(exercise);
-        buttons.Add(button);
+        deleteButtons.Add(deleteButton);
+        editButtons.Add(editButton);
 
-         noExercisesText.gameObject.SetActive(false);
+        noExercisesText.gameObject.SetActive(false);
     }
 
-    private void deletePart(string name, GameObject part, GameObject button) {
-        this.exName = name;
-        this.part = part;
-        this.button = button;
+    private void deletePart(int ID, GameObject exercise, GameObject deleteButton, GameObject editButton) {
+        this.exID = ID;
+        this.exercise = exercise;
+        this.deleteButton = deleteButton;
+        this.editButton = editButton;
 
         dialogMessage.SetActive(true);
         deactivateBasePanel();
+    }
+    private void editPart(int ID, GameObject exercise, GameObject button) {
+        CurrentExercise.setEditMode(true);
+        CurrentExercise.setExercise(ID);
+        SceneManager.LoadScene("Scenes/Interface/NuevoEjercicio");
     }
 }
