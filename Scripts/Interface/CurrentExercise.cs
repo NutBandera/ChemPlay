@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public static class CurrentExercise
 {
@@ -8,7 +6,9 @@ public static class CurrentExercise
     private static string _ID;
     private static string _nombre;
     private static string _enunciado;
-    private static List<string> _items = new List<string>();
+    private static List<string> _items = new List<string>(); // Crear objeto item con nombre y bytes?
+    // si almaceno bytes necesito que el alumno suba los recursos?
+    private static List<Item> _items2 = new List<Item>();
     private static List<ParteContenido> contenido = new List<ParteContenido>();
     private static List<Exercise> exercises = new List<Exercise>();
     private static bool _editMode;
@@ -22,8 +22,14 @@ public static class CurrentExercise
     public static List<string> getItems() {
         return _items;
     }
+    public static List<Item> getItems2() {
+        return _items2;
+    }
     public static void addItem(string item) {
         _items.Add(item);
+    }
+    public static void addItem2(Item item) {
+        _items2.Add(item);
     }
 
     public static void removeItem(string item) {

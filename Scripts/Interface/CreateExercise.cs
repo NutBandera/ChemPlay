@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
+using System.IO;
 using SFB; 
 
 public class CreateExercise : MonoBehaviour
@@ -43,7 +44,7 @@ public class CreateExercise : MonoBehaviour
         selectedEnunciado.GetComponent<Image>().sprite = Resources.Load<Sprite>(CurrentExercise.getEnunciado());
         contenidoButton.interactable = true;
         foreach (string item in CurrentExercise.getItems()) {
-            addItem(item);
+            // addItem(item);
         }
     }
     public void aceptarClicked() {
@@ -80,7 +81,7 @@ public class CreateExercise : MonoBehaviour
             contenidoButton.interactable = true;
         } 
     }
-    private void addItem(string elementName){
+    private void addItem(Texture2D tex, string elementName){
         if (items.Count > 0){
             y = items[items.Count-1].transform.position.y - 100;
         } else {
@@ -89,7 +90,7 @@ public class CreateExercise : MonoBehaviour
         // Crear item
         GameObject item = new GameObject();
         item.AddComponent<Image>();
-        item.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/"+elementName);
+        item.GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
         item.transform.position = new Vector3(xItem, y, 0f);
         item.transform.parent = panelItems.transform;
         item.GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80); 
@@ -118,8 +119,14 @@ public class CreateExercise : MonoBehaviour
             var elementName = pathSplitted[pathSplitted.Length - 1].ToString().Split('.')[0];
 
             if (!CurrentExercise.getItems().Contains(elementName)) {
-                CurrentExercise.addItem(elementName);
-                addItem(elementName);
+                byte[] bytes = File.ReadAllBytes(path[0]);
+
+                Texture2D tex = new Texture2D(2, 2);
+                tex.LoadImage(bytes);
+
+                CurrentExercise.addItem2(new Item(elementName, bytes));
+
+                addItem(tex, elementName);
 
             } else {
                 itemAlreadyAddedMessage.SetActive(true);

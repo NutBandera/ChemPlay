@@ -126,7 +126,7 @@ public class CrearContenido : MonoBehaviour
     }
     public void createExercise() {
         Exercise exercise = new Exercise(CurrentExercise.getIndex(), CurrentExercise.getNombre(),
-        CurrentExercise.getEnunciado(), CurrentExercise.getItems(), CurrentExercise.getContenido());
+        CurrentExercise.getEnunciado(), CurrentExercise.getItems2(), CurrentExercise.getContenido());
         if (CurrentExercise.getEditMode()) {
             CurrentExercise.updateExercise(exercise);
         } else {

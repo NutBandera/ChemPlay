@@ -8,12 +8,13 @@ public class Exercise
     public string nombre;
     public string enunciado;
     public List<string> items = new List<string>();
+    public List<Item> items2 = new List<Item>();
     public List<ParteContenido> contenido = new List<ParteContenido>();
 
-    public Exercise(int ID, string nombre, string enunciado, List<string> items, List<ParteContenido> contenido) {
+    public Exercise(int ID, string nombre, string enunciado, List<Item> items, List<ParteContenido> contenido) {
         this.nombre = nombre;
         this.enunciado = enunciado;
-        this.items = items;
+        this.items2 = items;
         this.contenido = contenido;
     }
 
