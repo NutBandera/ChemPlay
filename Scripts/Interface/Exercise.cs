@@ -6,15 +6,14 @@ public class Exercise
 {
     public int ID;
     public string nombre;
-    public string enunciado;
-    public List<string> items = new List<string>();
-    public List<Item> items2 = new List<Item>();
+    public byte[] enunciado;
+    public List<Item> items = new List<Item>();
     public List<ParteContenido> contenido = new List<ParteContenido>();
 
-    public Exercise(int ID, string nombre, string enunciado, List<Item> items, List<ParteContenido> contenido) {
+    public Exercise(int ID, string nombre, byte[] enunciado, List<Item> items, List<ParteContenido> contenido) {
         this.nombre = nombre;
         this.enunciado = enunciado;
-        this.items2 = items;
+        this.items = items;
         this.contenido = contenido;
     }
 
@@ -32,10 +31,10 @@ public class Exercise
     public void setID(int ID) {
         this.ID = ID;
     }
-    public string getEnunciado() {
+    public byte[] getEnunciado() {
         return enunciado;
     }
-    public void setEnunciado(string enunciado) {
+    public void setEnunciado(byte[] enunciado) {
         this.enunciado = enunciado;
     }
     public List<ParteContenido> getContenido() {
@@ -44,10 +43,10 @@ public class Exercise
     public void setContenido(List<ParteContenido> contenido) {
         this.contenido = contenido;
     }
-    public List<string> getItems() {
+    public List<Item> getItems() {
         return items;
     }
-    public void setItems(List<string> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 }

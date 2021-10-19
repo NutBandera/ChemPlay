@@ -14,6 +14,7 @@ public class TeacherMenu : MonoBehaviour
         panelButtons = panel.GetComponentsInChildren<Button>();
     }
     public void nuevoEjercicio() {
+        CurrentExercise.reset();
         SceneManager.LoadScene("Scenes/Interface/NuevoEjercicio");
     }
 

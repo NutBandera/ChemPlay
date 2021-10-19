@@ -33,8 +33,6 @@ public class Soluciones : MonoBehaviour
         BaseTemplate.setup(panel);
         SlotTemplate.setup(panel);
 
-        dic = new Dictionary<int, string>();
-
         if (!_isEditing) {
             dic = new Dictionary<int, string>();
 
@@ -50,6 +48,7 @@ public class Soluciones : MonoBehaviour
             SlotTemplate.createEmptyExerciseItem(part.getBaseName(), 5, 5, 450, 1000, false); // which dimensions??
         } else {
             // edit mode
+            dic = _solutions;
             SlotTemplate.createEmptyExerciseItem(_part.getBaseName(), _part.getWidth(),
              _part.getHeight(), 450, 1000, false); // which dimensions??
             colocarItems();
@@ -60,10 +59,15 @@ public class Soluciones : MonoBehaviour
     }
     private void colocarItems() {
         foreach (var solution in _solutions) {
-            if (CurrentExercise.getItems().Contains(solution.Value)) {
+            if (CurrentExercise.findItemByName(solution.Value) != null) {
                 GameObject item = new GameObject();
                 item.AddComponent<Image>();
-                item.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + solution.Value);
+                
+                Item foundItem = CurrentExercise.findItemByName(solution.Value);
+                Texture2D tex = new Texture2D(2, 2);
+                tex.LoadImage(foundItem.getBytes());
+
+                item.GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
                 var coordinates = SlotTemplate.convertPosition(solution.Key, _part.getWidth(), _part.getHeight());
                 var sizeX = 700/_part.getWidth();
                 var sizeY = 500/_part.getHeight();
@@ -74,9 +78,9 @@ public class Soluciones : MonoBehaviour
                 item.transform.parent = panel.transform;
                 item.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100); 
                 item.AddComponent<CanvasGroup>();
-                item.AddComponent<InterfaceDragAndDrop>(); 
-                item.GetComponent<InterfaceDragAndDrop>().setName(solution.Value); 
-                item.GetComponent<InterfaceDragAndDrop>().setInInitialPos(false); 
+                item.AddComponent<SolutionsDragAndDrop>(); 
+                item.GetComponent<SolutionsDragAndDrop>().setName(solution.Value); 
+                item.GetComponent<SolutionsDragAndDrop>().setInInitialPos(false); 
                 item.AddComponent<BoxCollider2D>();
                 item.GetComponent<BoxCollider2D>().isTrigger = true;
                 item.AddComponent<Rigidbody2D>();
@@ -126,8 +130,8 @@ public class Soluciones : MonoBehaviour
         activateBasePanel();
    }
    private void clearItems() {
-       var items = FindObjectsOfType<InterfaceDragAndDrop>();
-       foreach (InterfaceDragAndDrop item in items) {
+       var items = FindObjectsOfType<SolutionsDragAndDrop>();
+       foreach (SolutionsDragAndDrop item in items) {
            if (!item.getInInitialPos())
             Destroy(item.gameObject);
         }

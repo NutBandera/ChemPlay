@@ -46,8 +46,7 @@ public class CrearContenido : MonoBehaviour
             // Examinar
             var selectedBase = this.selectBase();
             // Si el path no es null -> go to "Soluciones" page
-            ParteContenido part = CurrentExercise.findPartByName(selectedBase);
-            if (!string.IsNullOrEmpty(selectedBase) && part == null){
+            if (!string.IsNullOrEmpty(selectedBase) && CurrentExercise.findPartByName(selectedBase) == null){
                 Soluciones.setSelectedBase(selectedBase);
                 Soluciones.setIsEditing(false);
                 SceneManager.LoadScene("Scenes/Interface/Soluciones");
@@ -126,7 +125,7 @@ public class CrearContenido : MonoBehaviour
     }
     public void createExercise() {
         Exercise exercise = new Exercise(CurrentExercise.getIndex(), CurrentExercise.getNombre(),
-        CurrentExercise.getEnunciado(), CurrentExercise.getItems2(), CurrentExercise.getContenido());
+        CurrentExercise.getEnunciado(), CurrentExercise.getItems(), CurrentExercise.getContenido());
         if (CurrentExercise.getEditMode()) {
             CurrentExercise.updateExercise(exercise);
         } else {

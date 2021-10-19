@@ -27,11 +27,9 @@ public class CreateExercise : MonoBehaviour
 
     void Start() {
         if (CurrentExercise.getEditMode()) {
-            setFields();
             contenidoButton.GetComponentInChildren<Text>().text = "Editar contenido";
-        } else {
-            CurrentExercise.reset();
         }
+        setFields();
         
         dialogMessage.SetActive(false);
         itemsLimitMessage.SetActive(false);
@@ -41,10 +39,16 @@ public class CreateExercise : MonoBehaviour
     }
     private void setFields(){
         inputNombre.text = CurrentExercise.getNombre();
-        selectedEnunciado.GetComponent<Image>().sprite = Resources.Load<Sprite>(CurrentExercise.getEnunciado());
+
+        if (CurrentExercise.getEnunciado() != null) {
+            Texture2D tex = new Texture2D(2, 2);
+            tex.LoadImage(CurrentExercise.getEnunciado());
+            selectedEnunciado.GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
+        }
         contenidoButton.interactable = true;
-        foreach (string item in CurrentExercise.getItems()) {
-            // addItem(item);
+
+        foreach (Item item in CurrentExercise.getItems()) {
+            addItem(item.getBytes(), item.getNombre());
         }
     }
     public void aceptarClicked() {
@@ -69,19 +73,49 @@ public class CreateExercise : MonoBehaviour
             inputField.interactable = true;
         }
     }
+    public void selectItem() {
+        if (items.Count < 12) {
+            var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", true);
+            var pathSplitted = path[0].Split('/');
+            var elementName = pathSplitted[pathSplitted.Length - 1].ToString().Split('.')[0];
+
+            if (CurrentExercise.findItemByName(elementName) == null) {
+                byte[] bytes = File.ReadAllBytes(path[0]);
+
+                CurrentExercise.addItem(new Item(elementName, bytes));
+
+                addItem(bytes, elementName);
+
+            } else {
+                itemAlreadyAddedMessage.SetActive(true);
+                deactivateBasePanel();
+            }
+
+            if (CurrentExercise.getEnunciado() != null && !string.IsNullOrEmpty(inputNombre.text)) {
+                contenidoButton.interactable = true;
+            } 
+        } else {
+            // show message
+            itemsLimitMessage.SetActive(true);
+            deactivateBasePanel();
+        }
+    }
 
     public void selectEnunciado() {
-        var paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", false); // accepted extions
-        // Comprobar que es una ruta válida
-        // if selected 
-        var element = Regex.Split(paths[0], "Resources/")[1].ToString().Split('.')[0];
-        CurrentExercise.setEnunciado(element);
-        selectedEnunciado.GetComponent<Image>().sprite = Resources.Load<Sprite>(element);
+        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", true);
+        byte[] bytes = File.ReadAllBytes(path[0]);
+
+        Texture2D tex = new Texture2D(2, 2);
+        tex.LoadImage(bytes);
+
+        CurrentExercise.setEnunciado(bytes);
+        selectedEnunciado.GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
+        
         if (items.Count > 0 && !string.IsNullOrEmpty(inputNombre.text)) {
             contenidoButton.interactable = true;
         } 
     }
-    private void addItem(Texture2D tex, string elementName){
+    private void addItem(byte[] bytes, string elementName){
         if (items.Count > 0){
             y = items[items.Count-1].transform.position.y - 100;
         } else {
@@ -90,6 +124,10 @@ public class CreateExercise : MonoBehaviour
         // Crear item
         GameObject item = new GameObject();
         item.AddComponent<Image>();
+
+        Texture2D tex = new Texture2D(2, 2);
+        tex.LoadImage(bytes);
+
         item.GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
         item.transform.position = new Vector3(xItem, y, 0f);
         item.transform.parent = panelItems.transform;
@@ -110,37 +148,6 @@ public class CreateExercise : MonoBehaviour
         buttons.Add(button);
 
         noItemsText.gameObject.SetActive(false);
-    }
-
-    public void selectItem() {
-        if (items.Count < 12) {
-            var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", true);
-            var pathSplitted = path[0].Split('/');
-            var elementName = pathSplitted[pathSplitted.Length - 1].ToString().Split('.')[0];
-
-            if (!CurrentExercise.getItems().Contains(elementName)) {
-                byte[] bytes = File.ReadAllBytes(path[0]);
-
-                Texture2D tex = new Texture2D(2, 2);
-                tex.LoadImage(bytes);
-
-                CurrentExercise.addItem2(new Item(elementName, bytes));
-
-                addItem(tex, elementName);
-
-            } else {
-                itemAlreadyAddedMessage.SetActive(true);
-                deactivateBasePanel();
-            }
-
-            if (!string.IsNullOrEmpty(CurrentExercise.getEnunciado()) && !string.IsNullOrEmpty(inputNombre.text)) {
-                contenidoButton.interactable = true;
-            } 
-        } else {
-            // show message
-            itemsLimitMessage.SetActive(true);
-            deactivateBasePanel();
-        }
     }
 
     private void deleteItem(string elementName, GameObject item, GameObject button) {
@@ -185,7 +192,7 @@ public class CreateExercise : MonoBehaviour
         if (string.IsNullOrEmpty(inputNombre.text)){
             contenidoButton.interactable = false;
         } else {
-            if (items.Count > 0 && !string.IsNullOrEmpty(CurrentExercise.getEnunciado())) {
+            if (items.Count > 0 && CurrentExercise.getEnunciado() != null) {
                 contenidoButton.interactable = true;
             }
         }

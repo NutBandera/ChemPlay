@@ -270,17 +270,17 @@ public static class SlotTemplate
                 var finalCorrectItem = item.Value.Split('-')[0];
 
                 gridPlane.GetComponent<ItemSlot>().setCorrectItem(finalCorrectItem);
-                gridPlane.GetComponent<ItemSlot>().setFinalImage("Items-final/"+finalCorrectItem);
+                gridPlane.GetComponent<ItemSlot>().setFinalImage(CurrentExercise.findItemByName(finalCorrectItem).getBytes());
 
                 gridPlane2.GetComponent<ItemSlot>().setCorrectItem(finalCorrectItem);
-                gridPlane2.GetComponent<ItemSlot>().setFinalImage("Items-final/"+finalCorrectItem);
+                gridPlane2.GetComponent<ItemSlot>().setFinalImage(CurrentExercise.findItemByName(finalCorrectItem).getBytes());
 
                 gridPlane2.transform.parent = panel.transform;
             } else { 
                 gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1],
                 plane.transform.position.y - sizeY*coordinates[0], 0f);
                 gridPlane.GetComponent<ItemSlot>().setCorrectItem(item.Value);
-                gridPlane.GetComponent<ItemSlot>().setFinalImage("Items/"+item.Value); // not this route
+                gridPlane.GetComponent<ItemSlot>().setFinalImage(CurrentExercise.findItemByName(item.Value).getBytes()); // not this route
             }
             gridPlane.transform.parent = panel.transform;
         }

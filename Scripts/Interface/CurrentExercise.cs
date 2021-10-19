@@ -5,35 +5,30 @@ public static class CurrentExercise
     private static int _index = 0;
     private static string _ID;
     private static string _nombre;
-    private static string _enunciado;
-    private static List<string> _items = new List<string>(); // Crear objeto item con nombre y bytes?
-    // si almaceno bytes necesito que el alumno suba los recursos?
-    private static List<Item> _items2 = new List<Item>();
+    private static byte[] _enunciado;
+    private static List<Item> _items = new List<Item>();
     private static List<ParteContenido> contenido = new List<ParteContenido>();
     private static List<Exercise> exercises = new List<Exercise>();
     private static bool _editMode;
     
-    public static string getEnunciado() {
+    public static byte[] getEnunciado() {
         return _enunciado;
     }
-    public static void setEnunciado(string enunciado) {
+    public static void setEnunciado(byte[] enunciado) {
         _enunciado = enunciado;
     }
-    public static List<string> getItems() {
+    public static List<Item> getItems() {
         return _items;
     }
-    public static List<Item> getItems2() {
-        return _items2;
-    }
-    public static void addItem(string item) {
+    public static void addItem(Item item) {
         _items.Add(item);
     }
-    public static void addItem2(Item item) {
-        _items2.Add(item);
-    }
 
-    public static void removeItem(string item) {
-        _items.Remove(item);
+    public static void removeItem(string itemName) {
+        Item item = findItemByName(itemName);
+        if (item != null) {
+            _items.Remove(item);
+        }   
     }
 
     public static void addContenido(ParteContenido part) {
@@ -67,6 +62,14 @@ public static class CurrentExercise
     private static Exercise findExerciseByID(int ID) {
         foreach (Exercise exercise in exercises) {
             if (ID.Equals(exercise.getID())) return exercise;
+        }
+        return null;
+    }
+    public static Item findItemByName(string itemName) {
+        foreach (Item item in _items) {
+            if (item.getNombre().Equals(itemName)) {
+                return item;
+            }
         }
         return null;
     }
@@ -126,8 +129,8 @@ public static class CurrentExercise
     }
     public static void reset() {
         _nombre = "";
-        _enunciado = "";
-        _items = new List<string>();
+        _enunciado = null;
+        _items = new List<Item>();
         contenido = new List<ParteContenido>();
     }
     public static void resetExercises() {

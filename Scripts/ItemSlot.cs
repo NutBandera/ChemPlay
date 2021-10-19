@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class ItemSlot : MonoBehaviour
 {
     public string correctItem;
-    public string finalImage = "";
+    public byte[] finalImage;
     private int errors; 
     private int position;
 
@@ -19,10 +19,10 @@ public class ItemSlot : MonoBehaviour
     public void removeCorrectItem() {
         correctItem = null;
     }
-    public void setFinalImage(string name){
-        finalImage = name;
+    public void setFinalImage(byte[] bytes){
+        finalImage = bytes;
     }
-    public string getFinalImage() {
+    public byte[] getFinalImage() {
         return finalImage;
     }
     public void setPosition(int pos){

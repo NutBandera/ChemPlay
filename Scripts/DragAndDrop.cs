@@ -47,10 +47,9 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
             transform.position = pos;
             inInitialPos = false;
             startPos = transform.position;
-            // destroy and set image
-            var finalImage = slot.GetComponent<ItemSlot>().getFinalImage();
-            Debug.Log(finalImage);
-            slot.GetComponent<Image>().sprite = Resources.Load<Sprite>(finalImage);
+            Texture2D tex = new Texture2D(2, 2);
+            tex.LoadImage(slot.GetComponent<ItemSlot>().getFinalImage());
+            slot.GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
             slot.GetComponent<Image>().color = new Color(1f,1f,1f,1f);
             Destroy(gameObject);
         } else {
@@ -63,7 +62,7 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
      private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.GetComponent<Collider2D>().gameObject.GetComponent<ItemSlot>().getCorrectItem()
-        .Equals(this.getName())) {// contains
+        .Equals(this.getName())) {
             droppedOnSlot = true;
             pos = collision.transform.position;
             slot = collision.GetComponent<Collider2D>().gameObject;

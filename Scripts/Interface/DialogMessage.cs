@@ -42,7 +42,7 @@ public class DialogMessage : MonoBehaviour
         foreach (InputField inputField in inputFields) {
             inputField.interactable = false;
         }
-        foreach (InterfaceDragAndDrop item in basePanel.GetComponentsInChildren<InterfaceDragAndDrop>()){
+        foreach (SolutionsDragAndDrop item in basePanel.GetComponentsInChildren<SolutionsDragAndDrop>()){
             // item.SetActive();
         }
     }
