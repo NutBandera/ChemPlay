@@ -14,9 +14,9 @@ public class SolutionsDragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDr
     private Vector3 defaultPos;
     private string name;
     private GameObject slot;
+    private GameObject slotAnterior;
     private string image;
     private Vector2 slotSize;
-    private bool inInitialPos;
     private bool droppedOnSlot;
     private Vector2 pos;
     private Vector2 startPos;
@@ -24,13 +24,13 @@ public class SolutionsDragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDr
 
     void Start() {
         startPos = transform.position;
-        inInitialPos = true;
         droppedOnSlot = false;
         isInPapelera = false;
     }
 
      public void OnBeginDrag(PointerEventData eventData){
-        if (inInitialPos) {
+        slotAnterior = slot;
+        if (!isInMatrix()) {
             clone = Instantiate(gameObject);
             clone.transform.parent = gameObject.transform.parent;
             clone.transform.position = gameObject.transform.position;
@@ -45,18 +45,20 @@ public class SolutionsDragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDr
       public void OnDrag(PointerEventData eventData){
         transform.position = Input.mousePosition;
     }
+    public bool isInMatrix() {
+        return gameObject.transform.position.y >= 800 && gameObject.transform.position.y <= 1200;
+    }
 
      public void OnEndDrag(PointerEventData eventData){
         if (droppedOnSlot){
             transform.position = pos;
-            inInitialPos = false;
             startPos = transform.position;
             slot.GetComponent<ItemSlot>().setCorrectItem(name);
         } else if (isInPapelera){
             Destroy(gameObject);
         } else {
             transform.position = startPos;
-            if (inInitialPos) {
+            if (!isInMatrix()) {
                 Destroy(clone);
             }
         }
@@ -75,6 +77,9 @@ public class SolutionsDragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDr
     private void OnTriggerExit2D(Collider2D collision) {
         droppedOnSlot = false;
         isInPapelera = false;
+    }
+    public void removeCorrectItem() {
+        slotAnterior.GetComponent<ItemSlot>().removeCorrectItem();
     }
 
     public string getName(){
@@ -101,11 +106,6 @@ public class SolutionsDragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDr
     public void setSlotSize(Vector2 slotSize){
         this.slotSize = slotSize;
     }
-    public bool getInInitialPos(){
-        return inInitialPos;
-    }
-    public void setInInitialPos(bool inInitialPos){
-        this.inInitialPos = inInitialPos;
-    } 
+
 
 }

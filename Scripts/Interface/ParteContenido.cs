@@ -8,6 +8,7 @@ public class ParteContenido
     public int pixelsX;
     public int pixelsY;
     public string baseName;
+    public byte[] image;
     public Dictionary<int, string> solutions;
 
     public int getWidth() {
@@ -39,6 +40,12 @@ public class ParteContenido
     }
     public void setBaseName(string baseName) {
         this.baseName = baseName;
+    }
+    public byte[] getImage() {
+        return image;
+    }
+    public void setImage(byte[] image) {
+        this.image = image;
     }
     public Dictionary<int,string> getSolutions() {
         return solutions;

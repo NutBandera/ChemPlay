@@ -27,22 +27,26 @@ public static class SlotTemplate
        // BORRAR 
     }
 
-    public static void createBase(int xElements, int yElements, string photoName, int ajuste){
+    public static void createBase(int xElements, int yElements, byte[] image, int ajuste){
         GameObject photo = new GameObject();
         photo.AddComponent<RectTransform>();
         photo.GetComponent<RectTransform>().sizeDelta = new Vector2(ajuste*xElements, ajuste*yElements); 
         photo.AddComponent<Image>();
-        photo.GetComponent<Image>().sprite = Resources.Load<Sprite>(photoName);
+        Texture2D tex = new Texture2D(2, 2);
+        tex.LoadImage(image);
+        photo.GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
         photo.transform.parent = panel.transform;
         exerciseItems.Add(photo);
     }
 
-    public static void createEmptyeBase(int xElements, int yElements, string photoName, int ajuste, int x, int y){
+    public static void createEmptyeBase(int xElements, int yElements, byte[] image, int ajuste, int x, int y){
         GameObject photo = new GameObject();
         photo.AddComponent<RectTransform>();
         photo.GetComponent<RectTransform>().sizeDelta = new Vector2(ajuste*xElements+200, ajuste*yElements); 
         photo.AddComponent<Image>();
-        photo.GetComponent<Image>().sprite = Resources.Load<Sprite>(photoName);
+        Texture2D tex = new Texture2D(2, 2);
+        tex.LoadImage(image);
+        photo.GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
         photo.transform.parent = panel.transform;
         photo.transform.position = new Vector3(x, y, 0f);
     }
@@ -129,14 +133,14 @@ public static class SlotTemplate
         return res;
     }
 
-    public static void createExerciseItem(int ancho, int alto, int ajuste, string photoName){
-        createBase(ancho, alto, photoName, ajuste);
+    public static void createExerciseItem(int ancho, int alto, int ajuste, byte[] image){
+        createBase(ancho, alto, image, ajuste);
         thisAjuste = ajuste;
     }
 
-     public static void createEmptyExerciseItem(string photoName, int xElements, int yElements, int x, int y, bool hide){
+     public static void createEmptyExerciseItem(byte[] image, int xElements, int yElements, int x, int y, bool hide){
         // pass ancho y alto
-        createEmptyeBase(xElements, yElements, photoName, 100, x, y);
+        createEmptyeBase(xElements, yElements, image, 100, x, y);
         // put slots
         colocarSlotsCompleto(x, y, xElements, yElements, 700, 500, hide); // pass width and height
         // arreglar esto

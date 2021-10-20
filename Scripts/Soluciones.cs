@@ -20,7 +20,8 @@ public class Soluciones : MonoBehaviour
     [SerializeField] private InputField xInput;
     [SerializeField] private InputField yInput;
     private ParteContenido part;
-    private static string selectedBase;
+    private static string selectedBaseName;
+    private static byte[] selectedBaseImage;
     private static bool _isEditing;
 
     void Start() {
@@ -32,12 +33,14 @@ public class Soluciones : MonoBehaviour
 
         BaseTemplate.setup(panel);
         SlotTemplate.setup(panel);
+        dic = new Dictionary<int, string>();
 
         if (!_isEditing) {
             dic = new Dictionary<int, string>();
 
             part = new ParteContenido();
-            part.setBaseName(selectedBase);
+            part.setBaseName(selectedBaseName);
+            part.setImage(selectedBaseImage);
             
             part.setWidth(5);
             part.setHeight(5);
@@ -45,11 +48,10 @@ public class Soluciones : MonoBehaviour
             part.setPixelsY(-1);
 
             // posiciones relativas
-            SlotTemplate.createEmptyExerciseItem(part.getBaseName(), 5, 5, 450, 1000, false); // which dimensions??
+            SlotTemplate.createEmptyExerciseItem(part.getImage(), 5, 5, 450, 1000, false); // which dimensions??
         } else {
             // edit mode
-            dic = _solutions;
-            SlotTemplate.createEmptyExerciseItem(_part.getBaseName(), _part.getWidth(),
+            SlotTemplate.createEmptyExerciseItem(_part.getImage(), _part.getWidth(),
              _part.getHeight(), 450, 1000, false); // which dimensions??
             colocarItems();
             part = _part;
@@ -80,12 +82,22 @@ public class Soluciones : MonoBehaviour
                 item.AddComponent<CanvasGroup>();
                 item.AddComponent<SolutionsDragAndDrop>(); 
                 item.GetComponent<SolutionsDragAndDrop>().setName(solution.Value); 
-                item.GetComponent<SolutionsDragAndDrop>().setInInitialPos(false); 
                 item.AddComponent<BoxCollider2D>();
                 item.GetComponent<BoxCollider2D>().isTrigger = true;
                 item.AddComponent<Rigidbody2D>();
                 item.GetComponent<Rigidbody2D>().gravityScale = 0;
                 item.GetComponent<Rigidbody2D>().freezeRotation = true;
+
+                setSolutionToSlot(solution.Key, solution.Value);
+            }
+        }
+    }
+    private void setSolutionToSlot(int position, string correctItem) {
+        slots = FindObjectsOfType<ItemSlot>();
+        foreach (ItemSlot slot in slots)
+        {
+            if (slot.getPosition().Equals(position)) {
+                slot.setCorrectItem(correctItem);
             }
         }
     }
@@ -132,7 +144,7 @@ public class Soluciones : MonoBehaviour
    private void clearItems() {
        var items = FindObjectsOfType<SolutionsDragAndDrop>();
        foreach (SolutionsDragAndDrop item in items) {
-           if (!item.getInInitialPos())
+           if (item.isInMatrix())
             Destroy(item.gameObject);
         }
         slots = FindObjectsOfType<ItemSlot>();
@@ -165,7 +177,12 @@ public class Soluciones : MonoBehaviour
         }
     }
     public void changeMatrixSizeClicked() {
-        changeMatrixSizeMessage.SetActive(true);
+        if (string.IsNullOrEmpty(xInput.text) || string.IsNullOrEmpty(yInput.text)){
+           incorrectFormatMessage.SetActive(true);
+           deactivateBasePanel();
+        } else {
+            changeMatrixSizeMessage.SetActive(true);
+        }
     }
     public void changeSizeYesClicked() {
         changeMatrixSize();
@@ -177,26 +194,21 @@ public class Soluciones : MonoBehaviour
         activateBasePanel();
     }
    private void changeMatrixSize() {
-       if (string.IsNullOrEmpty(xInput.text) || string.IsNullOrEmpty(yInput.text)){
-           incorrectFormatMessage.SetActive(true);
-           deactivateBasePanel();
-       } else {
-            var x = int.Parse(xInput.text);
-            var y = int.Parse(yInput.text);
-            if (x > 25 || y > 25 || x < 1 || y < 1) {
-                incorrectFormatMessage.SetActive(true);
-                deactivateBasePanel();
-            } else {
-                this.clear();
-                    SlotTemplate.colocarSlotsCompleto(450, 1000, int.Parse(xInput.text), int.Parse(yInput.text), 700, 500, false);
-                    
-                    part.setPixelsX(-1);
-                    part.setPixelsY(-1);
-                    part.setWidth(int.Parse(xInput.text));
-                    part.setHeight(int.Parse(yInput.text));
-                    this.clearItems();
-            }
-       }
+        var x = int.Parse(xInput.text);
+        var y = int.Parse(yInput.text);
+        if (x > 25 || y > 25 || x < 1 || y < 1) {
+            incorrectFormatMessage.SetActive(true);
+            deactivateBasePanel();
+        } else {
+            this.clear();
+                SlotTemplate.colocarSlotsCompleto(450, 1000, int.Parse(xInput.text), int.Parse(yInput.text), 700, 500, false);
+                
+                part.setPixelsX(-1);
+                part.setPixelsY(-1);
+                part.setWidth(int.Parse(xInput.text));
+                part.setHeight(int.Parse(yInput.text));
+                this.clearItems();
+        }
    }
 
    public void changeToPixels() {
@@ -217,8 +229,11 @@ public class Soluciones : MonoBehaviour
        deactivateBasePanel();
    }
 
-   public static void setSelectedBase(string name) {
-       selectedBase = name;
+   public static void setSelectedBaseName(string name) {
+       selectedBaseName = name;
+   }
+   public static void setSelectedBaseImage(byte[] image) {
+       selectedBaseImage = image;
    }
    public static void setIsEditing(bool isEditing) {
        _isEditing = isEditing;

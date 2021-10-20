@@ -31,7 +31,7 @@ public class CrearContenido : MonoBehaviour
 
     public void Start() {
         foreach (ParteContenido part in CurrentExercise.getContenido()) {
-            this.addPart(part.getBaseName());
+            this.addPart(part.getImage(), part.getBaseName());
         }
         dialogMessage.SetActive(false);
         limitPartsMessage.SetActive(false);
@@ -44,10 +44,13 @@ public class CrearContenido : MonoBehaviour
     public void addSolutions() {
          if (parts.Count < 6) {
             // Examinar
-            var selectedBase = this.selectBase();
+            var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", false); // accepted extentions
+            var pathSplitted = path[0].Split('/');
+            var elementName = pathSplitted[pathSplitted.Length - 1].ToString().Split('.')[0];
             // Si el path no es null -> go to "Soluciones" page
-            if (!string.IsNullOrEmpty(selectedBase) && CurrentExercise.findPartByName(selectedBase) == null){
-                Soluciones.setSelectedBase(selectedBase);
+            if (!string.IsNullOrEmpty(elementName) && CurrentExercise.findPartByName(elementName) == null){
+                Soluciones.setSelectedBaseName(elementName);
+                Soluciones.setSelectedBaseImage(File.ReadAllBytes(path[0]));
                 Soluciones.setIsEditing(false);
                 SceneManager.LoadScene("Scenes/Interface/Soluciones");
             } else {
@@ -141,7 +144,7 @@ public class CrearContenido : MonoBehaviour
         return elementName.Split('.')[0];
     }
 
-    public void addPart(string partName) {
+    public void addPart(byte[] image, string partName) {
         if (parts.Count > 0){
             y = parts[parts.Count-1].transform.position.y - 350;
         } else {
@@ -150,7 +153,9 @@ public class CrearContenido : MonoBehaviour
         // Crear item
         GameObject part = new GameObject();
         part.AddComponent<Image>();
-        part.GetComponent<Image>().sprite = Resources.Load<Sprite>(partName);
+        Texture2D tex = new Texture2D(2, 2);
+        tex.LoadImage(image);
+        part.GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
         part.transform.position = new Vector3(xPart, y, 0f);
         part.transform.parent = panelParts.transform;
         part.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 300); 
