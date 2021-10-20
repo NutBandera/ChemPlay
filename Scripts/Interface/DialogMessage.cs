@@ -24,6 +24,7 @@ public class DialogMessage : MonoBehaviour
         }
     }
     public void logout() {
+        CurrentExercise.reset();
         dialogMessage.SetActive(true);
         deactivateBasePanel();
     }

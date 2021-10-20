@@ -29,10 +29,16 @@ public static class SaveManager
  
     public static List<Exercise> LoadFromJson()
     {
+        List<Exercise> exercises = new List<Exercise>();
         var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "json", false); // JSON too
-
-        string json = File.ReadAllText(path[0]);
-        Exercises data = JsonConvert.DeserializeObject<Exercises>(json);
-        return data.getExercises();
+        if (path.Length > 0) {
+            string json = File.ReadAllText(path[0]);
+            if (!string.IsNullOrEmpty(json)) {
+                Exercises data = JsonConvert.DeserializeObject<Exercises>(json);
+                exercises = data.getExercises();
+            }
+            return exercises;
+        }
+        return null;
     }
 }
