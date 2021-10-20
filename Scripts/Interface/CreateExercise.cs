@@ -82,7 +82,10 @@ public class CreateExercise : MonoBehaviour
             if (CurrentExercise.findItemByName(elementName) == null) {
                 byte[] bytes = File.ReadAllBytes(path[0]);
 
-                CurrentExercise.addItem(new Item(elementName, bytes));
+                Item item = new Item();
+                item.setNombre(elementName);
+                item.setBytes(bytes);
+                CurrentExercise.addItem(item);
 
                 addItem(bytes, elementName);
 

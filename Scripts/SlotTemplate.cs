@@ -65,8 +65,9 @@ public static class SlotTemplate
     }
 
 
-    public static void colocarExerciseItems(int itemsPerRow = -1, int rows = 2) {
-        if (itemsPerRow < 0){
+    public static void colocarExerciseItems(int itemsPerRow = -1, int rows = 2) { //TODO delete items per row and rows
+        /*if (itemsPerRow < 0){
+            itemsPerRow = exerciseItems.Count/2;
             if (exerciseItems.Count == 1){
                 itemsPerRow = 1;
                 rows = 1;
@@ -78,7 +79,24 @@ public static class SlotTemplate
                 }
             }
         }
-        int counter = 1;
+        var numeroFilas = 0;
+        if (exerciseItems.Count < 3){
+            numeroFilas = 1;
+        } else {
+            numeroFilas = 2;
+        }
+        // Si el número de elementos es par
+        if (exerciseItems.Count%2 == 0) {
+            itemsPerRow= exerciseItems.Count/numeroFilas;
+        } else {
+            itemsPerRow= exerciseItems.Count/numeroFilas + 1;
+        }*/
+        if (exerciseItems.Count.Equals(1)) {
+            itemsPerRow =  1;
+        } else {
+            itemsPerRow = 2;
+        }
+        /*int counter = 1;
         int index = 0;
         int ajuste = 0;
         int n = 300;
@@ -99,6 +117,16 @@ public static class SlotTemplate
                 y = y/2;
                 ajuste = 0;
             }
+        }*/
+        var x = Screen.width/(itemsPerRow+1)-100;
+        var y = Screen.height/2;
+        for (int i=0; i<exerciseItems.Count; i++){
+            if (i == itemsPerRow){
+                y -= y/2;
+                x = Screen.width/(itemsPerRow+1)-100;
+            }
+            exerciseItems[i].transform.position = new Vector3(x, y, 0f);
+            x *= 3;
         }
     }
 
@@ -284,7 +312,8 @@ public static class SlotTemplate
                 gridPlane.transform.position = new Vector3(plane.transform.position.x + sizeX*coordinates[1],
                 plane.transform.position.y - sizeY*coordinates[0], 0f);
                 gridPlane.GetComponent<ItemSlot>().setCorrectItem(item.Value);
-                gridPlane.GetComponent<ItemSlot>().setFinalImage(CurrentExercise.findItemByName(item.Value).getBytes()); // not this route
+                Debug.Log(CurrentExercise.findItemByName(item.Value));
+                gridPlane.GetComponent<ItemSlot>().setFinalImage(CurrentExercise.findItemByName(item.Value).getBytes());
             }
             gridPlane.transform.parent = panel.transform;
         }

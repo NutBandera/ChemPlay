@@ -42,7 +42,7 @@ public class CrearContenido : MonoBehaviour
         }
     }
     public void addSolutions() {
-         if (parts.Count < 6) {
+         if (parts.Count < 4) {
             // Examinar
             var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", false); // accepted extentions
             var pathSplitted = path[0].Split('/');

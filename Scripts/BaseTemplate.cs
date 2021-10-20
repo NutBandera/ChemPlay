@@ -41,7 +41,7 @@ public static class BaseTemplate
     }
 
       public static void createItems(List<Item> items, int size, int y = 0, bool isInterface = false){ 
-          var numeroFilas = 0;
+        var numeroFilas = 0;
         if (items.Count < 6){
             numeroFilas = 1;
         } else {
