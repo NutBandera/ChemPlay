@@ -43,22 +43,28 @@ public class CrearContenido : MonoBehaviour
     }
     public void addSolutions() {
          if (parts.Count < 4) {
-            // Examinar
-            var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", false); // accepted extentions
-            var pathSplitted = path[0].Split('/');
-            var elementName = pathSplitted[pathSplitted.Length - 1].ToString().Split('.')[0];
-            // Si el path no es null -> go to "Soluciones" page
-            if (!string.IsNullOrEmpty(elementName) && CurrentExercise.findPartByName(elementName) == null){
-                Soluciones.setSelectedBaseName(elementName);
-                Soluciones.setSelectedBaseImage(File.ReadAllBytes(path[0]));
-                Soluciones.setIsEditing(false);
-                SceneManager.LoadScene("Scenes/Interface/Soluciones");
-            } else {
-                // show message
-                partAlreadyAddedMessage.SetActive(true);
-                deactivateBasePanel();
-
+            string[] fileTypes = new string[] { "image/*" };
+            NativeFilePicker.PickFile( ( path ) =>
+			{
+				if( path == null )
+					Debug.Log( "Operation cancelled" );
+				else {
+                    var pathSplitted = path.Split('/');
+                    var elementName = pathSplitted[pathSplitted.Length - 1].ToString().Split('.')[0];
+                    // Si el path no es null -> go to "Soluciones" page
+                    if (!string.IsNullOrEmpty(elementName) && CurrentExercise.findPartByName(elementName) == null){
+                        Soluciones.setSelectedBaseName(elementName);
+                        Soluciones.setSelectedBaseImage(File.ReadAllBytes(path));
+                        Soluciones.setIsEditing(false);
+                        SceneManager.LoadScene("Scenes/Interface/Soluciones");
+                    } else {
+                        // show message
+                        partAlreadyAddedMessage.SetActive(true);
+                        deactivateBasePanel();
             }
+                }
+			}, fileTypes );
+            
         } else  {
             limitPartsMessage.SetActive(true);
             deactivateBasePanel();
@@ -137,13 +143,6 @@ public class CrearContenido : MonoBehaviour
         CurrentExercise.setEditMode(false);
         SceneManager.LoadScene("Scenes/ExerciseType1"); //TODO change scene name
     }
-    public string selectBase() {
-        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", false); // accepted extentions
-        var pathSplitted = Regex.Split(path[0], "Resources/");
-        var elementName = pathSplitted[1].ToString();
-        return elementName.Split('.')[0];
-    }
-
     public void addPart(byte[] image, string partName) {
         if (parts.Count > 0){
             y = parts[parts.Count-1].transform.position.y - 350;

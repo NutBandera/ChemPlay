@@ -30,7 +30,8 @@ public class TeacherMenu : MonoBehaviour
     }
     public void cargarEjercicios() {
         // Cargar
-        List<Exercise> exercises = SaveManager.LoadFromJson();
+        List<Exercise> exercises =SaveManager.LoadFromJson();
+        // TODO: Check everything correct otherwise message
         // Set
         CurrentExercise.setExercises(exercises);
         // Probar

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Text.RegularExpressions;
 using System.IO;
 using SFB; 
 
@@ -12,6 +11,7 @@ public class CreateExercise : MonoBehaviour
     [SerializeField] private Button contenidoButton;
     [SerializeField] private GameObject panelItems;
     [SerializeField] private InputField inputNombre;
+    [SerializeField] private InputField inputEnunciado;
     [SerializeField] private Text noItemsText;
     [SerializeField] private GameObject panel;
     private Button[] panelButtons;
@@ -39,10 +39,11 @@ public class CreateExercise : MonoBehaviour
     }
     private void setFields(){
         inputNombre.text = CurrentExercise.getNombre();
+        inputEnunciado.text = CurrentExercise.getEnunciado();
 
         if (CurrentExercise.getEnunciado() != null) {
             Texture2D tex = new Texture2D(2, 2);
-            tex.LoadImage(CurrentExercise.getEnunciado());
+            tex.LoadImage(File.ReadAllBytes(string.Concat(CurrentExercise.getRoute(), CurrentExercise.getEnunciado())));
             selectedEnunciado.GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
         }
         contenidoButton.interactable = true;
@@ -75,49 +76,43 @@ public class CreateExercise : MonoBehaviour
     }
     public void selectItem() {
         if (items.Count < 12) {
-            var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", true);
-            var pathSplitted = path[0].Split('/');
-            var elementName = pathSplitted[pathSplitted.Length - 1].ToString().Split('.')[0];
+            string[] fileTypes = new string[] { "image/*" };
+            NativeFilePicker.PickFile( ( path ) =>
+			{
+				if( path == null )
+					Debug.Log( "Operation cancelled" );
+				else {
+                    var pathSplitted = path.Split('/');
+                    var elementName = pathSplitted[pathSplitted.Length - 1].ToString().Split('.')[0];
 
-            if (CurrentExercise.findItemByName(elementName) == null) {
-                byte[] bytes = File.ReadAllBytes(path[0]);
+                    if (CurrentExercise.findItemByName(elementName) == null) {
+                        byte[] bytes = File.ReadAllBytes(path);
 
-                Item item = new Item();
-                item.setNombre(elementName);
-                item.setBytes(bytes);
-                CurrentExercise.addItem(item);
+                        Item item = new Item();
+                        item.setNombre(elementName);
+                        item.setBytes(bytes);
+                        CurrentExercise.addItem(item);
 
-                addItem(bytes, elementName);
+                        addItem(bytes, elementName);
 
-            } else {
-                itemAlreadyAddedMessage.SetActive(true);
-                deactivateBasePanel();
-            }
+                    } else {
+                        itemAlreadyAddedMessage.SetActive(true);
+                        deactivateBasePanel();
+                    }
 
-            if (CurrentExercise.getEnunciado() != null && !string.IsNullOrEmpty(inputNombre.text)) {
-                contenidoButton.interactable = true;
-            } 
+                    if (CurrentExercise.getEnunciado() != null && !string.IsNullOrEmpty(inputNombre.text)) {
+                        contenidoButton.interactable = true;
+                    } 
+                } 
+		}, fileTypes);
         } else {
-            // show message
-            itemsLimitMessage.SetActive(true);
-            deactivateBasePanel();
+        // show message
+        itemsLimitMessage.SetActive(true);
+        deactivateBasePanel();
         }
+            
     }
 
-    public void selectEnunciado() {
-        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", true);
-        byte[] bytes = File.ReadAllBytes(path[0]);
-
-        Texture2D tex = new Texture2D(2, 2);
-        tex.LoadImage(bytes);
-
-        CurrentExercise.setEnunciado(bytes);
-        selectedEnunciado.GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
-        
-        if (items.Count > 0 && !string.IsNullOrEmpty(inputNombre.text)) {
-            contenidoButton.interactable = true;
-        } 
-    }
     private void addItem(byte[] bytes, string elementName){
         if (items.Count > 0){
             y = items[items.Count-1].transform.position.y - 100;
@@ -181,18 +176,30 @@ public class CreateExercise : MonoBehaviour
         }
     }
     public void crearContenido() {
-        // Go to "Crear contenido" page
-        // Comprobar que el nombre está entre 3 y 20 caracteres
-        if (inputNombre.text.Length < 3 || inputNombre.text.Length > 20) {
+        if (inputNombre.text.Length < 3) {
+            dialogMessage.SetActive(true);
+            deactivateBasePanel();
+        } else if (inputEnunciado.text.Length < 20) {
+            // TODO: crear otro dialogo
             dialogMessage.SetActive(true);
             deactivateBasePanel();
         } else {
             CurrentExercise.setNombre(inputNombre.text);
+            CurrentExercise.setEnunciado(inputEnunciado.text);
             SceneManager.LoadScene("Scenes/Interface/CrearContenido");
         }
     }
     public void nameChanged() {
         if (string.IsNullOrEmpty(inputNombre.text)){
+            contenidoButton.interactable = false;
+        } else {
+            if (items.Count > 0 && CurrentExercise.getEnunciado() != null) {
+                contenidoButton.interactable = true;
+            }
+        }
+    }
+    public void enunciadoChanged() {
+        if (string.IsNullOrEmpty(inputEnunciado.text)){
             contenidoButton.interactable = false;
         } else {
             if (items.Count > 0 && CurrentExercise.getEnunciado() != null) {

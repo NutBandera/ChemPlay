@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -31,7 +30,7 @@ public class ProbarEjercicios : MonoBehaviour
         SlotTemplate.resetExerciseItems();
         Exercise ex = CurrentExercise.getExercises()[index];
         
-        BaseTemplate.colocarEnunciado(ex.getEnunciado());
+        BaseTemplate.colocarEnunciado(CurrentExercise.getEnunciado());
         // colocar bases SIZE
         foreach (ParteContenido part in ex.getContenido()) {
             SlotTemplate.createExerciseItem(500, 300, 1, part.getImage());   

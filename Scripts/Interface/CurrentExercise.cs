@@ -5,16 +5,17 @@ public static class CurrentExercise
     private static int _index = 0;
     private static string _ID;
     private static string _nombre;
-    private static byte[] _enunciado;
+    private static string _enunciado;
     private static List<Item> _items = new List<Item>();
     private static List<ParteContenido> contenido = new List<ParteContenido>();
     private static List<Exercise> exercises = new List<Exercise>();
     private static bool _editMode;
+    private static string _route;
     
-    public static byte[] getEnunciado() {
+    public static string getEnunciado() {
         return _enunciado;
     }
-    public static void setEnunciado(byte[] enunciado) {
+    public static void setEnunciado(string enunciado) {
         _enunciado = enunciado;
     }
     public static List<Item> getItems() {
@@ -142,5 +143,10 @@ public static class CurrentExercise
     public static void setEditMode(bool editMode) {
         _editMode = editMode;
     }
-
+    public static string getRoute() {
+        return _route;
+    }
+    public static void setRoute(string route) {
+        _route = route;
+    }
 }

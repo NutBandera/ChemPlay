@@ -1,6 +1,8 @@
-[System.Serializable]
+using System;
+
+[Serializable]
 public class Item
-{
+{   
     public string nombre;
     public byte[] bytes;
 

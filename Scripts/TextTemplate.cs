@@ -108,9 +108,9 @@ public static class TextTemplate
                         index++;
                     }
 
-                    SlotTemplate.createSlotsFromDimensions(slots, slot.transform.position.x, slot.transform.position.y, 
-                    slot.GetComponent<RectTransform>().rect.width, slot.GetComponent<RectTransform>().rect.height,
-                    width, height);
+                    // SlotTemplate.createSlotsFromDimensions(slots, slot.transform.position.x, slot.transform.position.y, 
+                   // slot.GetComponent<RectTransform>().rect.width, slot.GetComponent<RectTransform>().rect.height,
+                    // width, height);
                     }
                 increment+=100;
                 break;

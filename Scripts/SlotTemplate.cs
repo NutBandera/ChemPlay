@@ -1,6 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,16 +38,10 @@ public static class SlotTemplate
         exerciseItems.Add(photo);
     }
 
-    public static void createEmptyeBase(int xElements, int yElements, byte[] image, int ajuste, int x, int y){
-        GameObject photo = new GameObject();
-        photo.AddComponent<RectTransform>();
-        photo.GetComponent<RectTransform>().sizeDelta = new Vector2(ajuste*xElements+200, ajuste*yElements); 
-        photo.AddComponent<Image>();
+    public static void createEmptyeBase(byte[] image, Image photo){
         Texture2D tex = new Texture2D(2, 2);
         tex.LoadImage(image);
         photo.GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
-        photo.transform.parent = panel.transform;
-        photo.transform.position = new Vector3(x, y, 0f);
     }
 
       public static void createBase2(int width, int height, string photoName){
@@ -166,13 +159,12 @@ public static class SlotTemplate
         thisAjuste = ajuste;
     }
 
-     public static void createEmptyExerciseItem(byte[] image, int xElements, int yElements, int x, int y, bool hide){
+     public static void createEmptyExerciseItem(byte[] image, int xElements, int yElements, float x, float y, bool hide, Image photo){
         // pass ancho y alto
-        createEmptyeBase(xElements, yElements, image, 100, x, y);
+        createEmptyeBase(image, photo);
         // put slots
-        colocarSlotsCompleto(x, y, xElements, yElements, 700, 500, hide); // pass width and height
-        // arreglar esto
-        // x,y,xElements,yElements,width,height
+        colocarSlotsCompleto(x, y, xElements, yElements, photo.GetComponent<RectTransform>().rect.width,
+        photo.GetComponent<RectTransform>().rect.height, hide);
     }
 
     public static void clocarSlotsNumberOfElements(Dictionary <int, string> slots,
@@ -192,7 +184,8 @@ public static class SlotTemplate
         xElementsPixels, yElementsPixels);
     }
 
-    public static void colocarSlotsCompleto(int x, int y, int xElements, int yElements, float width, float height, bool hide) {
+    public static void colocarSlotsCompleto(float x, float y, int xElements, int yElements, float width, float height, bool hide) {
+        Debug.Log(Screen.width);
         GameObject baseSlot = new GameObject(); // move inside loop
         baseSlot.AddComponent<CanvasGroup>();
         baseSlot.AddComponent<ItemSlot>(); 
@@ -200,10 +193,11 @@ public static class SlotTemplate
         baseSlot.GetComponent<Image>().sprite = Resources.Load<Sprite>("Slots/matrix");
         float sizeX = 0;
         float sizeY = 0;
-        sizeX = width/xElements;
-        sizeY = height/yElements; 
-        var initialPosX = x-width/2 + sizeX/2;
-        var initialPosY = y+height/2 - sizeY/2;
+        float res = Convert.ToSingle(Screen.width/1000);
+        sizeX = (680*res)/xElements;
+        sizeY = (540*res)/yElements; 
+        var initialPosX = x-680/2 + sizeX/2;
+        var initialPosY = y+540/2 - sizeY/2;
         baseSlot.transform.position = new Vector3(initialPosX, 
         initialPosY, 0f); 
         baseSlot.AddComponent<RectTransform>();
@@ -219,7 +213,7 @@ public static class SlotTemplate
             for (int j=0; j<xElements; j++) {
                 // slot for coordinate
                 // set position
-                GameObject slot = (GameObject)Object.Instantiate(baseSlot);
+                GameObject slot = (GameObject)UnityEngine.Object.Instantiate(baseSlot, panel.transform, true);
                 //slot.tag = "slot";
                 slot.transform.position = new Vector3(baseSlot.transform.position.x + sizeX*j, 
                 baseSlot.transform.position.y - sizeY*i, 0f);
@@ -273,8 +267,8 @@ public static class SlotTemplate
         foreach (var item in slots){
             coordinates = convertPosition(item.Key, xElements, yElements);
             // if correct item contains "double" -> size/2
-            GameObject gridPlane = (GameObject)Object.Instantiate(plane);
-            GameObject gridPlane2 = (GameObject)Object.Instantiate(gridPlane);
+            GameObject gridPlane = (GameObject)UnityEngine.Object.Instantiate(plane);
+            GameObject gridPlane2 = (GameObject)UnityEngine.Object.Instantiate(gridPlane);
 
 
             if (item.Value.Contains("double")){ //TODO eliminar

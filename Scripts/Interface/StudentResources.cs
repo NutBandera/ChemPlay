@@ -34,6 +34,19 @@ public class StudentResources : MonoBehaviour
             deactivateBasePanel();
         }
     }
+    public void loadFolder() {
+        string[] fileTypes = new string[] { "*" };
+        NativeFilePicker.PickFile( ( path ) =>
+			{
+				if( path == null )
+					Debug.Log( "Operation cancelled" );
+				else {
+                    Debug.Log(path);
+					CurrentExercise.setRoute(path);
+                }
+			}, fileTypes);
+        
+    }
     public void play() {
         SceneManager.LoadScene("Scenes/Interface/ProbarEjercicios");
     }

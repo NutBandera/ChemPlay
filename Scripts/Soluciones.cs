@@ -13,6 +13,7 @@ public class Soluciones : MonoBehaviour
     [SerializeField] GameObject dialogMessage;
     [SerializeField] GameObject incorrectFormatMessage;
     [SerializeField] GameObject changeMatrixSizeMessage;
+    [SerializeField] Image photo;
     private ItemSlot[] slots;
     private Dictionary<int, string> dic;
     private static Dictionary<int, string> _solutions;
@@ -48,11 +49,12 @@ public class Soluciones : MonoBehaviour
             part.setPixelsY(-1);
 
             // posiciones relativas
-            SlotTemplate.createEmptyExerciseItem(part.getImage(), 5, 5, 450, 1000, false); // which dimensions??
+            SlotTemplate.createEmptyExerciseItem(part.getImage(), 5, 5, photo.transform.position.x,
+            photo.transform.position.y, false, photo); // which dimensions??
         } else {
             // edit mode
             SlotTemplate.createEmptyExerciseItem(_part.getImage(), _part.getWidth(),
-             _part.getHeight(), 450, 1000, false); // which dimensions??
+             _part.getHeight(), photo.transform.position.x, photo.transform.position.y, false, photo); // which dimensions??
             colocarItems();
             part = _part;
         }
@@ -201,7 +203,8 @@ public class Soluciones : MonoBehaviour
             deactivateBasePanel();
         } else {
             this.clear();
-                SlotTemplate.colocarSlotsCompleto(450, 1000, int.Parse(xInput.text), int.Parse(yInput.text), 700, 500, false);
+                SlotTemplate.colocarSlotsCompleto(photo.transform.position.x, photo.transform.position.y, 
+                int.Parse(xInput.text), int.Parse(yInput.text), 700, 500, false);
                 
                 part.setPixelsX(-1);
                 part.setPixelsY(-1);
@@ -212,6 +215,7 @@ public class Soluciones : MonoBehaviour
    }
 
    public void changeToPixels() {
+       // TODO ask if sure
        this.clear();
        SlotTemplate.colocarSlotsCompleto(450, 1000, 20, 20, 700, 500, true); // pas true to hide the pixels
        part.setPixelsX(5);

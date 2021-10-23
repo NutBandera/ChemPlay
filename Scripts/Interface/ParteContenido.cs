@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 [System.Serializable]
 public class ParteContenido
@@ -53,5 +54,4 @@ public class ParteContenido
     public void setSolutions(Dictionary<int,string> solutions) {
         this.solutions = solutions;
     }
-
 }

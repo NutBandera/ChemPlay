@@ -1,16 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 [System.Serializable]
 public class Exercise
 {
     public int ID;
     public string nombre;
-    public byte[] enunciado;
+    public string enunciado;
     public List<Item> items = new List<Item>();
     public List<ParteContenido> contenido = new List<ParteContenido>();
 
-    public Exercise(int ID, string nombre, byte[] enunciado, List<Item> items, List<ParteContenido> contenido) {
+    public Exercise(int ID, string nombre, string enunciado, List<Item> items, List<ParteContenido> contenido) {
         this.nombre = nombre;
         this.enunciado = enunciado;
         this.items = items;
@@ -31,10 +30,10 @@ public class Exercise
     public void setID(int ID) {
         this.ID = ID;
     }
-    public byte[] getEnunciado() {
+    public string getEnunciado() {
         return enunciado;
     }
-    public void setEnunciado(byte[] enunciado) {
+    public void setEnunciado(string enunciado) {
         this.enunciado = enunciado;
     }
     public List<ParteContenido> getContenido() {

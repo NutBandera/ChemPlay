@@ -12,15 +12,16 @@ public static class BaseTemplate
         panel = p;
     }
 
- public static void colocarEnunciado(byte[] enunciadoBytes){
+ public static void colocarEnunciado(string enunciadoText) {
+     // put image underneath
         GameObject enunciado = new GameObject();
         enunciado.AddComponent<RectTransform>();
         enunciado.GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height/3);
-        enunciado.AddComponent<Image>();
-        Texture2D tex = new Texture2D(2, 2);
-        tex.LoadImage(enunciadoBytes);
-        enunciado.GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
-        
+        enunciado.AddComponent<Text>();
+        enunciado.GetComponent<Text>().text = enunciadoText;
+        enunciado.GetComponent<Text>().color = Color.black;
+        enunciado.GetComponent<Text>().font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+        enunciado.GetComponent<Text>().fontSize = 50;
         enunciado.transform.position = new Vector3(Screen.width/2, Screen.height-Screen.height/6, 0f);
         enunciado.transform.parent = panel.transform;
     }

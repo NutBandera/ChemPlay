@@ -31,7 +31,7 @@ public class SolutionsDragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDr
      public void OnBeginDrag(PointerEventData eventData){
         slotAnterior = slot;
         if (!isInMatrix()) {
-            clone = Instantiate(gameObject);
+            clone = Instantiate(gameObject, gameObject.transform.parent, true);
             clone.transform.parent = gameObject.transform.parent;
             clone.transform.position = gameObject.transform.position;
             clone.GetComponent<SolutionsDragAndDrop>().setName(name);
